@@ -12,4 +12,5 @@ export const LoginResponseSchema = z.object({
 
 export const UserSchema = z.object({
     name: z.string(),
+    jobTitle: z.string(),
 })

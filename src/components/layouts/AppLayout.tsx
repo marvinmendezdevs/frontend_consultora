@@ -16,6 +16,7 @@ import {
   CheckCircle 
 } from 'lucide-react';
 import SidebarItem from './SidebarItem';
+import useAuth from '@/hooks/useAuth.hooks';
 
 const stats = [
   { title: 'Ingresos Totales', value: '$12,450', change: '+12%', icon: TrendingUp, color: 'bg-green-500' },
@@ -33,11 +34,13 @@ function AppLayout(){
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('Inicio');
 
+  const { data: user } = useAuth();
+
   const onLogout = () => {
     console.log('Logout clicked');
   };
 
-  return (
+  if(user) return (
     <div className="min-h-screen bg-slate-50 flex">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
@@ -112,11 +115,11 @@ function AppLayout(){
             </button>
             <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
               <div className="text-right hidden md:block">
-                <p className="text-sm font-medium text-slate-900">Dra. Claudia</p>
-                <p className="text-xs text-slate-500">Admin</p>
+                <p className="text-sm font-medium text-slate-900">{user.name}</p>
+                <p className="text-xs text-slate-500">{user.jobTitle}</p>
               </div>
               <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold border-2 border-white shadow-sm">
-                DC
+                {user.name[0]}
               </div>
             </div>
           </div>
