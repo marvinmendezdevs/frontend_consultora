@@ -1,6 +1,75 @@
+import { login } from "@/services/auth.services";
+import { useMutation } from "@tanstack/react-query";
 import { ArrowRight, Briefcase, Lock, Mail } from "lucide-react";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import type { LoginResponseType, LoginType } from "@/types/auth.types";
+import type { AxiosError } from "axios";
+import type { ErrorResponseApiType } from "@/types/index.types";
+import { useState } from "react";
+import SpinnerUIComponent from "@/components/ui/SpinnerUIComponent";
+import AlertUIComponent from "@/components/ui/AlertUIComponent";
+import { useNavigate } from "react-router";
+
+type AlertType = {
+  activate: boolean
+  type: 'success' | 'error'
+  msg: string
+}
 
 function Login() {
+  const appName = import.meta.env.VITE_APP_NAME || 'GestionPro';
+  const navigate = useNavigate();
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginType>();
+  const [alert, setAlert] = useState<AlertType>({
+    activate: false,
+    type: 'success',
+    msg: '',
+  });
+
+  // Enviar la peticion al backend
+  const mutation = useMutation<LoginResponseType, AxiosError<ErrorResponseApiType>, LoginType>({
+    mutationFn: login,
+    onSuccess: (data) => {
+      setAlert({
+        activate: true,
+        type: 'success',
+        msg: data.msg,
+      });
+
+      // Guardar el token en LS:
+      localStorage.setItem('AUTH_TOKEN', data.token);
+
+      setTimeout(() => {
+        navigate('/');
+      }, 500);
+    },
+    onError: (error) => {
+      if (error.response) {
+        setAlert({
+          activate: true,
+          type: 'error',
+          msg: error.response.data.msg,
+        });
+      } else {
+        setAlert({
+          activate: true,
+          type: 'error',
+          msg: "Error de conexión...",
+        });
+      }
+    },
+  });
+
+  const onSubmit: SubmitHandler<LoginType> = (data) => {
+    setAlert({
+      activate: false,
+      type: 'success',
+      msg: '',
+    });
+
+    mutation.mutate(data);
+  }
+
   return (
     <div className="h-screen flex items-center justify-center p-4 relative overflow-hidden bg-slate-50 font-sans">
       {/* Background Decor - Mesh Gradient Effects */}
@@ -18,14 +87,17 @@ function Login() {
             <Briefcase className="w-7 h-7 text-white" />
           </div>
           <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
-            Bienvenido a GestiónPro
+            Bienvenido a {appName}
           </h2>
           <p className="text-slate-500 text-sm mt-3 leading-relaxed">
             Accede a tu panel para gestionar tus citas.
           </p>
         </div>
 
-        {/* Social Mockup Buttons */}
+        {mutation.isPending && <SpinnerUIComponent />}
+        {alert.activate && <AlertUIComponent type={alert.type} msg={alert.msg} />}
+
+        {/* Social Mockup Buttons 
         <button className="flex items-center justify-center gap-2 py-2.5 px-4 bg-white border border-slate-200 rounded-lg text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition text-sm font-medium w-full cursor-pointer">
           <svg className="w-5 h-5" viewBox="0 0 24 24">
             <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4" />
@@ -42,25 +114,28 @@ function Login() {
           <div className="border-t flex-1 border-gray-200"></div>
         </div>
 
-        {/* Form Fields */}
-        <form className="space-y-5" onSubmit={() => { }}>
+         */}
+        <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1.5 ml-1">Email</label>
+            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1.5 ml-1" htmlFor="email">Email</label>
             <div className="relative group">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                 <Mail className="h-5 w-5 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
               </div>
               <input
                 type="email"
+                id="email"
                 className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 text-sm font-medium"
                 placeholder="hola@ejemplo.com"
+                {...register("email", { required: true })}
               />
             </div>
+            {errors.email && <p className="text-red-500 text-xs my-1">El correo electrónico es obligatorio</p>}
           </div>
 
           <div>
             <div className="flex justify-between items-center mb-1.5 ml-1">
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wide">Contraseña</label>
+              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wide" htmlFor="password">Contraseña</label>
               <a href="#" className="text-xs text-indigo-600 hover:text-indigo-700 font-medium">¿Olvidaste tu contraseña?</a>
             </div>
             <div className="relative group">
@@ -69,10 +144,13 @@ function Login() {
               </div>
               <input
                 type="password"
+                id="password"
                 className="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none transition-all placeholder:text-slate-400 text-sm font-medium"
                 placeholder="••••••••"
+                {...register("password", { required: true })}
               />
             </div>
+            {errors.email && <p className="text-red-500 text-xs my-1">La contraseña es obligatoria</p>}
           </div>
 
           <button type="submit" className="group w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2 cursor-pointer">
