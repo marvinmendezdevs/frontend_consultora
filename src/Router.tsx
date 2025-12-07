@@ -3,6 +3,7 @@ import Login from "./pages/Login"
 import AppLayout from "./components/layouts/AppLayout"
 import ProtectedRoute from "./components/layouts/ProtectedRoute"
 import Home from "./pages/Home"
+import Tutorship from "./pages/Tutorship"
 
 function Router() {
 
@@ -13,7 +14,7 @@ function Router() {
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/" element={<Home />} />
-            <Route path="/tutoria" element={<Home />} />
+            <Route path="/tutoria" element={<Tutorship />} />
           </Route>
         </Route>
       </Routes>

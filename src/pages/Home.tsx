@@ -1,6 +1,6 @@
+import Tutorship from "@/components/pages/Tutorship";
 import useAuth from "@/hooks/useAuth.hooks";
 import { Navigate } from "react-router";
-import Tutorship from "@/components/pages/Tutorship"
 
 function Home() {
   const { data: user } = useAuth(); 
