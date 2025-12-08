@@ -25,6 +25,10 @@ export const getDiagnostic = async () => {
 
 export const setDiagnostic = async (formData: DiagnosticMutationBody) => {
     const { data } = await api.post('/tutorship/diagnostic', formData);
-    console.log(data); 
+    return data;
+}
+
+export const getObservations = async (teacherDui: TeacherType['dui']) => {
+    const { data } = await api.get(`/tutorship/observation/${teacherDui}`);
     return data;
 }

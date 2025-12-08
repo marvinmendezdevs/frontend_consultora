@@ -5,6 +5,8 @@ import ProtectedRoute from "./components/layouts/ProtectedRoute"
 import Home from "./pages/Home"
 import Tutorship from "./pages/Tutorship"
 import Diagnostic from "./pages/Diagnostic"
+import Observations from "./pages/Observations"
+import ObservationForm from "./components/pages/ObservationForm"
 
 function Router() {
 
@@ -17,6 +19,8 @@ function Router() {
             <Route path="/" element={<Home />} />
             <Route path="/tutoria" element={<Tutorship />} />
             <Route path="/diagnostico/:teacher/:section" element={<Diagnostic />} />
+            <Route path="/observaciones/:teacherDui" element={<Observations />} />
+            <Route path="/observaciones/:teacherId/:sectionId" element={<ObservationForm />} />
           </Route>
         </Route>
       </Routes>

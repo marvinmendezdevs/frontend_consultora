@@ -1,26 +1,25 @@
-import DiagnosticForm from "@/components/pages/DiagnosticForm";
 import { getTeacherBySection } from "@/services/tutorship.services";
 import type { TeacherSectionUser } from "@/types/tutorship.types";
 import { useQuery } from "@tanstack/react-query";
-import { Navigate, useParams } from "react-router"
+import { Navigate, useParams } from "react-router";
 
-function Diagnostic() {
-    const {teacher, section} = useParams();
+function ObservationForm() {
+    const { teacherId, sectionId } = useParams();
 
-    const {data, isLoading, isError} = useQuery<TeacherSectionUser>({
+    const { data, isLoading, isError } = useQuery<TeacherSectionUser>({
         queryKey: ['teacher-section'],
         queryFn: async () => {
-            if (!teacher || !section) {
+            if (!teacherId || !sectionId) {
                 throw new Error("Parámetros faltantes");
             }
 
-            return await getTeacherBySection(Number(teacher), Number(section));
+            return await getTeacherBySection(Number(teacherId), Number(sectionId));
         },
         retry: false,
         refetchOnWindowFocus: false,
     });
 
-    if(!teacher || !section) return <Navigate to="/" replace />
+    if (!teacherId || !sectionId) return <Navigate to="/" replace />
 
     if (isLoading) return (
         <p className="text-xs text-slate-800 flex justify-center items-center gap-1 p-3">
@@ -35,8 +34,9 @@ function Diagnostic() {
         </p>
     );
 
+    console.log(data)
 
-    if(data) return (
+    if (data) return (
         <>
             <div className="flex gap-3 flex-col md:flex-row md:justify-between">
                 <div className="flex-1">
@@ -52,12 +52,8 @@ function Diagnostic() {
                     </p>
                 </div>
             </div>
-
-            <DiagnosticForm
-                dataAccess={data}
-            />
         </>
     )
 }
 
-export default Diagnostic
+export default ObservationForm

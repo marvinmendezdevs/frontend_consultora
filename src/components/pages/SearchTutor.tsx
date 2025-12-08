@@ -48,15 +48,15 @@ function SearchTutor({ search }: SearchTutorType) {
                     <p className="text-sm"><span>DUI:</span>{data.dui}</p>
                     <p className="text-sm"><span>Tel.:</span>{data.telephone}</p>
 
-                    {verifyDiagnostics() && (
-                        <Link to={"/"} className="text-xs bg-indigo-600 text-white py-1 px-3 rounded-lg mt-2 inline-block hover:bg-indigo-700">
+                    {verifyDiagnostics() > 0 && (
+                        <Link to={`/observaciones/${data.dui}`} className="text-xs bg-indigo-600 text-white py-1 px-3 rounded-lg mt-2 inline-block hover:bg-indigo-700">
                             Ver observaciones
                         </Link>
                     )}
                 </div>
 
                 <div>
-                    {verifyDiagnostics() && (
+                    {verifyDiagnostics() > 0 && (
                         <div>
                             <button className="text-xs bg-green-600 p-1 rounded text-white hover:bg-green-700">
                                 Diagnóstico: <span className="font-bold">{getCategoryFromScore(data.responses[0].payload.score)}</span>
@@ -87,7 +87,7 @@ function SearchTutor({ search }: SearchTutorType) {
                                     <td className="p-2">{assignament.section.shift}</td>
                                     <td className="p-2">
                                         {!verifyDiagnostics() && (
-                                            <Link className="text-xs rounded-lg bg-indigo-700 text-white p-1" to={`/diagnostico/${data.id}/${assignament.sectionId}`}>Diagnóstico</Link>
+                                            <Link className="text-xs rounded-lg bg-indigo-700 text-white p-1" to={`/diagnostico/${data.id}/${assignament.id}`}>Diagnóstico</Link>
                                         )}
                                     </td>
                                 </tr>
