@@ -2,6 +2,7 @@ import { getTeacherBySection } from "@/services/tutorship.services";
 import type { TeacherSectionUser } from "@/types/tutorship.types";
 import { useQuery } from "@tanstack/react-query";
 import { Navigate, useParams } from "react-router";
+import ObservationFormItem from "./ObservationFormItem";
 
 function ObservationForm() {
     const { teacherId, sectionId } = useParams();
@@ -34,8 +35,6 @@ function ObservationForm() {
         </p>
     );
 
-    console.log(data)
-
     if (data) return (
         <>
             <div className="flex gap-3 flex-col md:flex-row md:justify-between">
@@ -52,6 +51,10 @@ function ObservationForm() {
                     </p>
                 </div>
             </div>
+
+            <ObservationFormItem
+                dataAccess={data}
+            />
         </>
     )
 }

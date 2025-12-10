@@ -30,3 +30,13 @@ export const getCategoryFromScore = (score: number): Category => {
     // Cualquier cosa menor a 6 es Bajo
     return 'Bajo';
 };
+
+export const formatDate = (date: string) => {
+    const formatDate = new Date(date);
+
+    return new Intl.DateTimeFormat('es-SV', {
+        year: 'numeric',
+        month: 'long',
+        day: '2-digit'
+    }).format(formatDate);
+}

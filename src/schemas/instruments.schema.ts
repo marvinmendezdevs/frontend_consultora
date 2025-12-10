@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { ResponseSchema } from "./tutorship.schema";
+import { SectionSchema as SectionSchoolSchema } from "./school.schema";
 
 // 1. Esquema para las Opciones (ej: Bajo, Medio, Alto)
 // Coincide con: { "valor": 1, "etiqueta": "Bajo" }
@@ -45,7 +47,20 @@ export const InstrumentTableSchema = z.object({
 });
 
 export const DiagnosticResponseSchema = z.record(
-  // Key: Será el string "pregunta-ID"
-  z.string(), 
-  z.union([z.string(), z.number(), z.null()]).optional()
+    // Key: Será el string "pregunta-ID"
+    z.string(),
+    z.union([z.string(), z.number(), z.null()]).optional()
 );
+
+export const MultimediaSchema = z.object({
+    id: z.number(),
+    video: z.string(),
+    transcription: z.string(),
+})
+
+
+// Schemas de las respuestas
+export const ResponseSectionSchema = ResponseSchema.extend({
+    section: SectionSchoolSchema,
+    utilitiesLink: MultimediaSchema.nullable(),
+});

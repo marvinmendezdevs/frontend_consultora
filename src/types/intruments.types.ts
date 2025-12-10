@@ -1,5 +1,5 @@
 import z from "zod";
-import type { InstrumentContentSchema, SeccionSchema, IndicadorSchema, PreguntaSchema, OpcionSchema, InstrumentTableSchema, DiagnosticResponseSchema } from "@/schemas/instruments.schema";
+import type { InstrumentContentSchema, SeccionSchema, IndicadorSchema, PreguntaSchema, OpcionSchema, InstrumentTableSchema, DiagnosticResponseSchema, ResponseSectionSchema, MultimediaSchema } from "@/schemas/instruments.schema";
 
 export type PayloadType = {
     answers: Record<string, string | number | null | undefined>;
@@ -21,3 +21,7 @@ export type Pregunta = z.infer<typeof PreguntaSchema>;
 export type Opcion = z.infer<typeof OpcionSchema>;
 
 export type DiagnosticResponseValues = z.infer<typeof DiagnosticResponseSchema>;
+
+export type ResponseSectionSchema = z.infer<typeof ResponseSectionSchema>
+
+export type MultimediaType = z.infer<typeof MultimediaSchema>

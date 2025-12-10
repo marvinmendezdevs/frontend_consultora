@@ -51,7 +51,8 @@ export const ResponseSchema = z.object({
     payload: z.object({
         score: z.number(),
         answers: DiagnosticResponseSchema
-    })
+    }),
+    submittedAt: z.string(),
 });
 
 export const ResponseTableSchema = z.array(ResponseSchema);
