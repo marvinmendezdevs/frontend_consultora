@@ -60,7 +60,15 @@ export const MultimediaSchema = z.object({
 });
 
 export const CoachingSessionSchema = z.object({
-    id: z.number()
+    responseId: z.number(),
+    tutorId: z.number(),
+    teacherId: z.number(),
+    directorName: z.string(),
+    selectedCriteria: z.array(z.string()),
+    recommendations: z.string(),
+    commitments: z.string(),
+    directorObservation: z.boolean().nullable(),
+    tracking: z.string().nullable(),
 });
 
 

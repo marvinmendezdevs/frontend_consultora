@@ -74,7 +74,8 @@ function DiagnosticForm({ dataAccess }: DiagnosticFormType) {
             schoolCode: dataAccess.section.schoolCode,
             payload: {
                 answers,
-                score: finalScore
+                score: finalScore,
+                subject: dataAccess.subject
             }
         });
     }
@@ -146,20 +147,20 @@ function DiagnosticForm({ dataAccess }: DiagnosticFormType) {
                         <button className="bg-indigo-600 text-white py-2 px-4 rounded cursor-pointer">Enviar</button>
                     </div>
                 </form>
-                
-    ) : (
-        <div>
-            <p className="bg-orange-300 p-2 font-black">Diagnóstico enviado</p>
-            <div className="px-2 py-5 border border-gray-300">
-                <p>
-                    Puntaje obtenido: {getCategoryFromScore(obtainedScore)}
-                </p>
-                <Link className="bg-gray-300 py-2 px-6 rounded inline-block mt-3" to="/tutoria" replace>Cerrar</Link>
-            </div>
-        </div>
 
-    )
-}
+            ) : (
+                <div>
+                    <p className="bg-orange-300 p-2 font-black">Diagnóstico enviado</p>
+                    <div className="px-2 py-5 border border-gray-300">
+                        <p>
+                            Puntaje obtenido: {getCategoryFromScore(obtainedScore)}
+                        </p>
+                        <Link className="bg-gray-300 py-2 px-6 rounded inline-block mt-3" to="/tutoria" replace>Cerrar</Link>
+                    </div>
+                </div>
+
+            )
+            }
 
         </div >
     )

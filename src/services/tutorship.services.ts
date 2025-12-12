@@ -1,6 +1,6 @@
 import { api } from "@/config/axios.config"
 import type { SectionType, TeacherType } from "@/types/index.types";
-import type { DiagnosticMutationBody, MultimediaType } from "@/types/intruments.types";
+import type { CoachingSessionType, DiagnosticMutationBody, MultimediaType } from "@/types/intruments.types";
 
 export const getMetricsTutorship = async () => {
     const { data } = await api.get('/tutorship');
@@ -50,5 +50,10 @@ export const setObservation = async (formData: DiagnosticMutationBody) => {
 
 export const updateMultimediaJson = async (formData: MultimediaType) => {
     const { data } = await api.patch('/tutorship/observation', formData);
+    return data;
+}
+
+export const setFeedback = async (formData: CoachingSessionType) => {
+    const { data } = await api.post('/tutorship/feedback/create', formData);
     return data;
 }
