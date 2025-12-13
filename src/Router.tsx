@@ -9,6 +9,7 @@ import Observations from "./pages/Observations"
 import ObservationForm from "./components/pages/ObservationForm"
 import Feedback from "./pages/Feedback"
 import FeedBackCreate from "./components/pages/FeedBackCreate"
+import FeedBackView from "./components/pages/FeedBackView"
 
 function Router() {
 
@@ -26,6 +27,7 @@ function Router() {
             <Route path="/observaciones/:teacherId/:sectionId" element={<ObservationForm />} />
 
             <Route path="/retroalimentacion/:observationId" element={<Feedback />} />
+            <Route path="/retroalimentacion/:idFeedBack/view" element={<FeedBackView />} />
             <Route path="/retroalimentacion/:observationId/create" element={<FeedBackCreate />} />
           </Route>
         </Route>

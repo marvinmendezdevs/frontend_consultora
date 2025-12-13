@@ -43,7 +43,8 @@ export const TeacherTutorSchema = TeacherSchema.extend({
 });
 
 export const ResponseSchema = z.object({
-    id: z.number(),
+    id: z.number().nullable(),
+    responseId: z.number(),
     instrumentId: z.number(),
     schoolCode: z.number(),
     sectionId: z.number(),

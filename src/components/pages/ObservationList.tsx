@@ -10,7 +10,8 @@ import {
   FileText,
   ImagePlus,
   MapPin,
-  MessageCirclePlus
+  MessageCirclePlus,
+  MessageSquareDot
 } from "lucide-react";
 import { Link } from "react-router";
 import SideDrawer from "../ui/SideDrawer";
@@ -115,17 +116,36 @@ function ObservationList({ teacherDui }: ObservationListType) {
                       >
                         <FileText size={12} /> Ver transcripción
                       </a>
+
+                      {observation.coachingSession && (
+                        <Link
+                          className="text-indigo-500  text-xs flex items-center gap-1 p-1 rounded-lg hover:bg-indigo-100"
+                          to={`/retroalimentacion/${observation.coachingSession.id}/view`}
+                        >
+                          <MessageSquareDot size={12} /> Ver retroalimentación
+                        </Link>
+                      )}
                     </div>
                   )}
 
                   <div className="flex gap-3 items-center bg-gray-100 p-2 mt-3 text-indigo-700 text-sm">
-                    <Link
-                      className="py-1 px-3 rounded-lg flex items-center gap-1 hover:bg-gray-300/25"
-                      to={`/retroalimentacion/${observation.id}`}
-                    >
-                      <MessageCirclePlus size={15} />
-                      Retroalimentación
-                    </Link>
+                    {observation.coachingSession ? (
+                      <p
+                        className="py-1 px-3 rounded-lg flex items-center gap-1 hover:bg-gray-300/25 text-gray-600 cursor-not-allowed"
+                      >
+                        <MessageCirclePlus size={15} />
+                        Retroalimentación
+                      </p>
+                    ) : (
+
+                      <Link
+                        className="py-1 px-3 rounded-lg flex items-center gap-1 hover:bg-gray-300/25"
+                        to={`/retroalimentacion/${observation.id}`}
+                      >
+                        <MessageCirclePlus size={15} />
+                        Retroalimentación
+                      </Link>
+                    )}
 
                     <button
                       className="py-1 px-3 rounded-lg flex items-center gap-1 cursor-pointer hover:bg-gray-300/25"

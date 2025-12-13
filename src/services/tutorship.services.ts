@@ -57,3 +57,8 @@ export const setFeedback = async (formData: CoachingSessionType) => {
     const { data } = await api.post('/tutorship/feedback/create', formData);
     return data;
 }
+
+export const getFeedback = async (id: CoachingSessionType['id']) => {
+    const { data } = await api.get(`/tutorship/feedback/${id}/view`);
+    return data;
+}

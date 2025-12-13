@@ -60,6 +60,7 @@ export const MultimediaSchema = z.object({
 });
 
 export const CoachingSessionSchema = z.object({
+    id: z.number().nullable(),
     responseId: z.number(),
     tutorId: z.number(),
     teacherId: z.number(),
@@ -69,6 +70,7 @@ export const CoachingSessionSchema = z.object({
     commitments: z.string(),
     directorObservation: z.boolean().nullable(),
     tracking: z.string().nullable(),
+    createdAt: z.string(),
 });
 
 
@@ -81,4 +83,5 @@ export const ResponseSectionSchema = ResponseSchema.extend({
         coachingSessions: z.array(CoachingSessionSchema),
     }),
     school: SchoolSchema,
+    coachingSession: CoachingSessionSchema,
 });
