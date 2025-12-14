@@ -15,13 +15,20 @@ export const RoleSchema = z.object({
   name: z.string(),
 });
 
+export const InfoTutor = z.object({
+  id: z.number(),
+  type: z.string(),
+});
+
 export const UserSchema = z.object({
+  id: z.number(),
   name: z.string(),
   email: z.string(),
   username: z.string(),
   telephone: z.string(),
   dui: z.string(),
   roleId: z.number(),
-  createAt: z.string(),
+  createdAt: z.string(),
   role: RoleSchema,
+  infoTutores: InfoTutor
 });

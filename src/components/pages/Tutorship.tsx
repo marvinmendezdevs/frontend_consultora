@@ -4,6 +4,7 @@ import { getMetricsTutorship } from "@/services/tutorship.services";
 type MetricsTutorshipType = {
     diagnosticos: number
     observaciones: number
+    retroalimentaciones: number
 }
 
 function Tutorship() {
@@ -33,6 +34,13 @@ function Tutorship() {
                     <p className="text-xs">realizadas</p>
 
                     <p className="font-bold text-5xl">{data.observaciones}</p>
+                </div>
+                
+                <div className="shadow-inner p-4 bg-gray-50 rounded-lg">
+                    <p className="font-bold">Retroalimentaciones</p>
+                    <p className="text-xs">realizadas</p>
+
+                    <p className="font-bold text-5xl">{data.retroalimentaciones}</p>
                 </div>
             </div>
         </div>

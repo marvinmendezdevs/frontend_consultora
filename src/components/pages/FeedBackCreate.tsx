@@ -41,7 +41,7 @@ function FeedBackCreate() {
         if (!observation) return;
 
         const formData: CoachingSessionCreateType = {
-            responseId: observation.responseId,
+            responseId: observation.id,
             tutorId: observation.tutorId,
             teacherId: observation.teacherId,
             directorName: observation.school.directorName,

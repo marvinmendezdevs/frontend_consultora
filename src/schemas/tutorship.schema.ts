@@ -2,15 +2,15 @@ import z from "zod";
 import { DiagnosticResponseSchema } from "./instruments.schema";
 
 export const SchoolSchema = z.object({
-    code: z.number(),
+    code: z.string(),
     name: z.string(),
     directorName: z.string(),
 });
 
 export const SectionSchema = z.object({
     id: z.number(),
-    schoolCode: z.number(),
-    grade: z.number(),
+    schoolCode: z.string(),
+    grade: z.string(),
     track: z.string(),
     subtrack: z.string(),
     sectionClass: z.string(),
@@ -43,8 +43,8 @@ export const TeacherTutorSchema = TeacherSchema.extend({
 });
 
 export const ResponseSchema = z.object({
-    id: z.number().nullable(),
-    responseId: z.number(),
+    id: z.number(),
+        // responseId property removed
     instrumentId: z.number(),
     schoolCode: z.number(),
     sectionId: z.number(),

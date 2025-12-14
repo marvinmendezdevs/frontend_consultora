@@ -7,7 +7,7 @@ function Home() {
 
   if(!user) return <Navigate to="/login" replace />
 
-  if(user.role.name === 'Tutor') return <Tutorship />
+  if(user.role.name === 'Tutor' || user.role.name === 'Tutor (Supervisor)') return <Tutorship />
 
   return <p>Acceso denegado</p>
 }

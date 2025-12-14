@@ -1,3 +1,4 @@
+import TutorLeader from "@/components/pages/TutorLeader";
 import TutorshipTutor from "@/components/pages/TutorshipTutor";
 import useAuth from "@/hooks/useAuth.hooks"
 import { Navigate } from "react-router";
@@ -7,8 +8,10 @@ function Tutorship() {
     const { data: user } = useAuth();
 
     if(!user) return <Navigate replace to="/login" />
-
-    if(user.role.name === 'Tutor') return <TutorshipTutor />
+    if(user.role.name === 'Tutor (Supervisor)') return <TutorLeader />
+    if(user.role.name === 'Tutor') {
+        return <TutorshipTutor />
+    }
 
     return <p>Acceso denegado</p>
 }

@@ -4,7 +4,7 @@ import type { TeacherType } from "@/types/index.types";
 import type { CoachingSessionType } from "@/types/intruments.types";
 import { formatDate, getHours } from "@/utils/index.utils";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router"
+import { useNavigate, useParams } from "react-router"
 
 type UseQueryType = CoachingSessionType & {
     teacher: TeacherType,
@@ -13,6 +13,7 @@ type UseQueryType = CoachingSessionType & {
 
 function FeedBackView() {
     const { idFeedBack } = useParams();
+    const navigate = useNavigate();
 
     const { data, isLoading, isError } = useQuery<UseQueryType>({
         queryKey: ['feedback', idFeedBack],
@@ -40,12 +41,15 @@ function FeedBackView() {
         </p>
     );
 
-    console.log(data);
-
     if(data) return (
         <>
-            <h2 className="text-lg font-black text-indigo-600">Detalles del último informe</h2>
-            <p className="text-sm text-gray-600 mb-3">Propósito: dar a conocer al docente el informe de la sesión observada, resaltando fortalizas y presentando áreas de mejora para el fortalecimiento de su práctica</p>
+            <div className="flex justify-between items-center mb-3">
+                <h2 className="text-lg font-black text-indigo-600">Detalles del último informe</h2>
+                <button className="bg-indigo-600 text-white text-xs py-1 px-2 rounded-lg" onClick={ () => navigate(-1) }>
+                    Volver
+                </button>
+            </div>
+            <p className="text-sm text-gray-600 mb-3"><span className="font-bold">Propósito:</span> dar a conocer al docente el informe de la sesión observada, resaltando fortalizas y presentando áreas de mejora para el fortalecimiento de su práctica</p>
 
             <div className="bg-gray-100 border border-gray-300 p-3 rounded">
                 <p className="font-bold">Fecha: <span className="font-normal">{formatDate(data.createdAt)}, {getHours(data.createdAt)}</span></p>
@@ -56,8 +60,24 @@ function FeedBackView() {
 
             <div className="border-t border-gray-300 mt-5 py-5">
                 <p className="font-bold text-lg">1. Criterios de observación</p>
+                <ol className="ms-8 text-gray-700 list-disc mb-4">
+                    {data.selectedCriteria.map((criteria, index) => (
+                        <li key={index}>{criteria}</li>
+                    ))}
+                </ol>
                 <p className="font-bold text-lg">2. Recomendaciones</p>
+                <ol className="ms-8 text-gray-700 list-disc mb-4">
+                    {data.recommendations?.split('\n').map((criteria, index) => (
+                        <li key={index}>{criteria}</li>
+                    ))}
+                </ol>
+
                 <p className="font-bold text-lg">3. Compromisos</p>
+                <ol className="ms-8 text-gray-700 list-disc mb-4">
+                    {data.commitments?.split('\n').map((criteria, index) => (
+                        <li key={index}>{criteria}</li>
+                    ))}
+                </ol>
             </div>
         </>
     )

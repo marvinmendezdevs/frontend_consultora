@@ -62,3 +62,8 @@ export const getFeedback = async (id: CoachingSessionType['id']) => {
     const { data } = await api.get(`/tutorship/feedback/${id}/view`);
     return data;
 }
+
+export const getTutorsInfo = async () => {
+    const { data } = await api.get(`/tutorship/tutors`);
+    return data;
+}
