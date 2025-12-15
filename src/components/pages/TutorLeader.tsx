@@ -1,40 +1,28 @@
 import { getTutorsInfo } from "@/services/tutorship.services";
 import type { UserType } from "@/types/auth.types";
 import { useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useState } from "react";
+import TutorshipCountVirtualPresencial from "./TutorshipCountVirtualPresencial";
+import TutorshipInfoTutores from "./TutorshipInfoTutores";
 
-type GroupedTutorsType = Record<string, UserType[]>
+type QueryType = {
+    data: UserType[]
+    meta: {
+        page: number;
+        hasNextPage: boolean;
+        hasPreviousPage: boolean;
+    }
+}
 
 function TutorLeader() {
     const [tutorType, setTutorType] = useState("PRESENCIAL");
-    const { isLoading, isError, data } = useQuery<UserType[]>({
-        queryKey: ["tutors-info"],
-        queryFn: getTutorsInfo,
+    const [page, setPage] = useState(1);
+    const { isLoading, isError, data } = useQuery<QueryType>({
+        queryKey: ["tutors-info", tutorType, page],
+        queryFn: () => getTutorsInfo(tutorType, page),
         retry: false,
         refetchOnWindowFocus: false,
     });
-
-    const groupedTutors = useMemo(() => {
-        if (!data) return {}
-
-        return data.reduce((acc, item) => {
-            if (!item.infoTutores) return acc;
-
-            const type = item.infoTutores.type;
-
-            if (!acc[type]) {
-                acc[type] = [];
-            }
-
-            acc[type].push(item);
-
-            return acc;
-        }, {
-            PRESENCIAL: [],
-            VIRTUAL: []
-        } as GroupedTutorsType);
-
-    }, [data]);
 
     if (isLoading) return (
         <p className="text-xs text-slate-800 flex justify-center items-center gap-1 p-3">
@@ -52,27 +40,12 @@ function TutorLeader() {
     if (data) return (
         <>
             <h2 className="text-lg font-black text-indigo-600">Información de tutores</h2>
-
-            <div className="grid gap-4 md:grid-cols-3 my-3">
-                <button className="shadow-inner p-4 bg-gray-50 rounded-lg text-start cursor-pointer" onClick={() => setTutorType("PRESENCIAL")}>
-                    <p className="font-bold">Presenciales</p>
-                    <p className="font-bold text-5xl">{groupedTutors.PRESENCIAL.length}</p>
-                    <p className="text-xs">{groupedTutors.PRESENCIAL.length === 1 ? "Tutor" : "Tutores"}</p>
-                </button>
-
-                <button className="shadow-inner p-4 bg-gray-50 rounded-lg text-start cursor-pointer" onClick={() => setTutorType("VIRTUAL")}>
-                    <p className="font-bold">Virtuales</p>
-                    <p className="font-bold text-5xl">{groupedTutors.VIRTUAL.length}</p>
-                    <p className="text-xs">{groupedTutors.VIRTUAL.length === 1 ? "Tutor" : "Tutores"}</p>
-                </button>
-            </div>
-
-
-            <div>
-                {groupedTutors[tutorType].map(tutor => (
-                    <div>{tutor.name}</div>
-                ))}
-            </div>
+            <TutorshipCountVirtualPresencial tutorType={tutorType} setTutorType={setTutorType}/>
+            <TutorshipInfoTutores
+                tutor={data.data}
+                meta={data.meta}
+                setPage={setPage}
+            />
         </>
     )
 }

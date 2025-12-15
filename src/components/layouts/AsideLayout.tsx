@@ -2,10 +2,17 @@ import Env from "@/utils/index.utils";
 import { GraduationCap, LayoutDashboard, LogOut } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 import { useActiveNavItem, useNavbar } from "@/stores/index.store";
+import { useNavigate } from "react-router-dom";
 
 function AsideLayout() {
     const isOpen = useNavbar(state => state.isOpen);
     const activeTab = useActiveNavItem(state => state.tab);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        localStorage.removeItem('AUTH_TOKEN');
+        navigate('/login');
+    }
 
     return (
         <aside className={`
@@ -31,7 +38,7 @@ function AsideLayout() {
 
                 <div className="p-4 border-t border-slate-100">
                     <button
-                        onClick={() => { }}
+                        onClick={handleLogout}
                         className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
                     >
                         <LogOut size={20} />

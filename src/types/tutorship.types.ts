@@ -12,3 +12,8 @@ export type TeacherSectionUser = TeacherSection & {
     teacher: TeacherType
     section: SectionSchoolType
 };
+
+export type TutorCountType = {
+    presenciales: number;
+    virtuales: number;
+}
