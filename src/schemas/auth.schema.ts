@@ -1,13 +1,13 @@
 import z from "zod";
 
 export const LoginSchema = z.object({
-    email: z.string(),
-    password: z.string(),
+  email: z.string(),
+  password: z.string(),
 });
 
 export const LoginResponseSchema = z.object({
-    message: z.string(),
-    token: z.string(),
+  message: z.string(),
+  token: z.string(),
 });
 
 export const RoleSchema = z.object({
@@ -31,4 +31,19 @@ export const UserSchema = z.object({
   createdAt: z.string(),
   role: RoleSchema,
   infoTutores: InfoTutor
+});
+
+export const InfoTutorCountSchema = z.object({
+  districts: z.object({
+    id: z.number(),
+    district: z.string(),
+  }),
+  type: z.number(),
+})
+
+export const InfoTutorCountResponseSchema = UserSchema.extend({
+  countDiagnostico: z.number(),
+  countObservaciones: z.number(),
+  countRetroalimentaciones: z.number(),
+  infoTutores: InfoTutorCountSchema,
 });

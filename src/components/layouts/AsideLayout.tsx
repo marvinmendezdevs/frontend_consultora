@@ -2,7 +2,7 @@ import Env from "@/utils/index.utils";
 import { GraduationCap, LayoutDashboard, LogOut } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 import { useActiveNavItem, useNavbar } from "@/stores/index.store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 function AsideLayout() {
     const isOpen = useNavbar(state => state.isOpen);
