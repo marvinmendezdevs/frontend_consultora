@@ -1,4 +1,5 @@
 import type { UserType } from "@/types/auth.types";
+import type { Dispatch, SetStateAction } from "react";
 
 type TutorshipInfoTutoresProps = {
     tutor: UserType[];
@@ -7,7 +8,7 @@ type TutorshipInfoTutoresProps = {
       hasNextPage: boolean;
       hasPreviousPage: boolean;
     }
-    setPage: (page: number) => void;
+    setPage: Dispatch<SetStateAction<number>>;
 }
 
 function TutorshipInfoTutores({ tutor, meta, setPage }: TutorshipInfoTutoresProps) {
@@ -40,10 +41,9 @@ function TutorshipInfoTutores({ tutor, meta, setPage }: TutorshipInfoTutoresProp
           ))}
         </tbody>
       </table>
-      <div>
-        
-        <button disabled={meta.hasPreviousPage === false} onClick={() => setPage(prev => prev - 1)}>Anterior</button>
-        <button disabled={meta.hasNextPage === false} onClick={() => setPage(prev => prev + 1)}>Siguiente</button>
+      <div className="flex justify-between mt-5">
+        <button className="bg-indigo-600 text-white px-3 py-1 rounded cursor-pointer" disabled={meta.hasPreviousPage === false} onClick={() => setPage(prev => prev - 1)}>Anterior</button>
+        <button className="bg-indigo-600 text-white px-3 py-1 rounded cursor-pointer" disabled={meta.hasNextPage === false} onClick={() => setPage(prev => prev + 1)}>Siguiente</button>
       </div>
     </div>
     </>
