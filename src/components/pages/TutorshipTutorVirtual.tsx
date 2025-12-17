@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link } from "react-router";
 import { Funnel, Captions, Video, PencilLine, UserCheck, ChevronLeft, ChevronRight } from "lucide-react";
 import { getTutorshipInfo } from "@/services/tutorship.services";
@@ -7,10 +7,6 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "@/hooks/useAuth.hooks";
 
 const HOURS = Array.from({ length: 13 }, (_, i) => 7 + i);
-// export const calendarEvents = [
-// ... (omitted for brevity)
-// ];
-
 function InicioSemana(date: string | number | Date, weekStartsOnMonday = true) {
     const d = new Date(date);
     const day = d.getDay();
@@ -31,14 +27,6 @@ function addDays(date: string | number | Date, days: number) {
     const d = new Date(date);
     d.setDate(d.getDate() + days);
     return d;
-}
-
-function formatDayLabel(date: Date) {
-    return date.toLocaleDateString("es-ES", {
-        weekday: "short",
-        day: "numeric",
-        month: "short",
-    });
 }
 
 function formatHour(hour: number) {
@@ -63,7 +51,7 @@ function TutorshipTutorVirtual({
     onSlotClick,
 }: { initialDate?: Date | string | number, onSlotClick?: (date: Date, hour: number) => void }) {
     const { data: user } = useAuth();
-    const { isLoading, isError, data } = useQuery({
+    const { data } = useQuery({
         queryKey: ["tutorship-info", user?.username],
         queryFn: () => getTutorshipInfo(user?.username || ""),
         retry: false,
@@ -101,27 +89,6 @@ function TutorshipTutorVirtual({
             today.getDate() === date.getDate()
         );
     };
-
-    // const [subject, setSubject] = useState("Todos");
-    // const [eventsCalendar, setEventsCalendar] = useState(calendarEvents);
-
-    // useEffect(() => {
-    //     if (subject === "Todos") {
-    //         setEventsCalendar(calendarEvents);
-    //     } else {
-    //         const filtered = calendarEvents.filter(
-    //             ev => ev.subject.toLowerCase() === subject.toLowerCase()
-    //         );
-    //         setEventsCalendar(filtered);
-    //     }
-    // }, [subject]);
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedObservacion, setSelectedObservacion] = useState(null);
-    const [video, setVideo] = useState("");
-    const [transcription, setTranscription] = useState("");
-    const [asistencia, setAsistencia] = useState("");
-    const [quizDocente, setQuizDocente] = useState("");
 
     return (
         <div className="w-full max-w-6xl mx-auto">
@@ -208,7 +175,7 @@ function TutorshipTutorVirtual({
                                         onClick={() => onSlotClick && onSlotClick(day, hour)}
                                         className="h-15 border-r border-b border-gray-200 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 transition-colors"
                                     >
-                                        {eventsCalendar.map((event) => (
+                                        {eventsCalendar.map((event: any) => (
                                             event.date === day.toLocaleDateString("en-CA") && event.time === hour && (
                                                 <div key={event.id} className={`flex flex-col justify-evenly items-center ${event.subject === 'Matemática' ? 'text-indigo-700 bg-indigo-50 border-l-2 border-indigo-500' : 'text-orange-700 bg-orange-50 border-l-2 border-orange-500'} h-full`}>
                                                     <div className={`flex justify-between items-center text-[10px] p-1 rounded overflow-hidden leading-tight font-medium w-full`}>

@@ -1,6 +1,6 @@
 import type { TutorCountType } from "@/types/auth.types";
 import type { Dispatch, SetStateAction } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 type TutorshipInfoTutoresProps = {
   tutor: TutorCountType[];
@@ -22,7 +22,7 @@ function TutorshipInfoTutores({ tutor, meta, setPage }: TutorshipInfoTutoresProp
       <div className="overflow-x-auto ">
         <table className="w-full table-auto">
           <thead
-           className="bg-gray-50">
+            className="bg-gray-50">
             <tr>
               <th className="w-76 px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider rounded-tl-lg">TUTOR</th>
               <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TELÉFONO</th>
@@ -49,12 +49,12 @@ function TutorshipInfoTutores({ tutor, meta, setPage }: TutorshipInfoTutoresProp
       <div className="flex justify-between mt-5">
         {meta.hasPreviousPage === false ? (
           <button className="bg-indigo-400 text-white px-3 py-1 rounded cursor-not-allowed" >Anterior</button>
-        ):(
+        ) : (
           <button className="bg-indigo-600 text-white px-3 py-1 rounded cursor-pointer" onClick={() => setPage(prev => prev - 1)}>Anterior</button>
         )}
         {meta.hasNextPage === false ? (
           <button className="bg-indigo-400 text-white px-3 py-1 rounded cursor-not-allowed" >Siguiente</button>
-        ):(
+        ) : (
           <button className="bg-indigo-600 text-white px-3 py-1 rounded cursor-pointer" onClick={() => setPage(prev => prev + 1)}>Siguiente</button>
         )}
       </div>
