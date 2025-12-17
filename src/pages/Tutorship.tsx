@@ -10,13 +10,15 @@ function Tutorship() {
 
     if(!user) return <Navigate replace to="/login" />
     if(user.role.name === 'Tutor (Supervisor)') return <TutorLeader />
-    if(user.infoTutores.type === 'VIRTUAL') {
-        return <TutorshipTutorVirtual />
+    if(user.infoTutores){
+        if(user.infoTutores?.type === 'VIRTUAL') {
+            return <TutorshipTutorVirtual />
+        }else{
+            return <TutorshipTutor />
+        }
     }else{
-        return <TutorshipTutor />
+        return <p className="text-center text-gray-500 my-10">Hacen falta datos del tutor</p>
     }
-
-    return <p>Acceso denegado</p>
 }
 
 export default Tutorship

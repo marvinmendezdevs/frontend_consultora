@@ -40,7 +40,7 @@ function TutorshipTutor() {
 
             </div>
             {!search.length ? (
-                <p className="my-5 text-sm text-center">Realice un búsque de docente por DUI</p>
+                <p className="my-5 text-sm text-center">Realice una búsqueda de docente por DUI</p>
             ) : (
                 <SearchTutor
                     search={search}
