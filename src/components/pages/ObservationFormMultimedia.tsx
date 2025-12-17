@@ -9,19 +9,24 @@ type ObservationFormMultimediaType = {
 }
 
 function ObservationFormMultimedia({ creatingMultimedia, currentUtilitiesLink }: ObservationFormMultimediaType) {
-    const {register, handleSubmit, formState: {errors}} = useForm<MultimediaType>();
+    const defaultValues = {
+        video: currentUtilitiesLink?.video || '',
+        transcription: currentUtilitiesLink?.transcription || ''
+    }
 
+    const { register, handleSubmit, formState: { errors } } = useForm<MultimediaType>({ defaultValues });
+    console.log(currentUtilitiesLink)
     const queryClient = useQueryClient();
 
     const mutation = useMutation({
         mutationFn: updateMultimediaJson,
         onSuccess: () => {
-            queryClient.invalidateQueries({queryKey: ['observations-teacher']});
+            queryClient.invalidateQueries({ queryKey: ['observations-teacher'] });
         }
     });
 
     const onSubmit: SubmitHandler<MultimediaType> = (data) => {
-        
+
         mutation.mutate(data);
     }
 
@@ -40,7 +45,6 @@ function ObservationFormMultimedia({ creatingMultimedia, currentUtilitiesLink }:
                     className="p-2 border border-gray-200 rounded"
                     type="url"
                     id="video"
-                    value={ currentUtilitiesLink?.video }
                     placeholder="htts://www.dominio.com"
                     {...register('video', { required: true })}
                 />
@@ -54,7 +58,6 @@ function ObservationFormMultimedia({ creatingMultimedia, currentUtilitiesLink }:
                     type="url"
                     id="transcription"
                     placeholder="htts://www.dominio.com"
-                    value={ currentUtilitiesLink?.transcription }
                     {...register('transcription', { required: true })}
                 />
                 {errors.video && <p className="text-xs text-red-500">Debe adjuntar la transcripción.</p>}

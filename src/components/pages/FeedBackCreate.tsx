@@ -26,7 +26,7 @@ function FeedBackCreate() {
     const mutation = useMutation({
         mutationFn: setFeedback,
         onSuccess: () => {
-            navigate(-1);
+            navigate('/tutoria');
         }
     });
 
