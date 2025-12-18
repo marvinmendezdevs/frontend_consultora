@@ -61,11 +61,10 @@ export const MultimediaSchema = z.object({
 
 export const LinksSchema = z.object({
     id: z.number(),
-    meet: z.string(),
     recording: z.string(),
     transcription: z.string(),
     attendance: z.string(),
-    quiz: z.string(),
+    quizz: z.string(),
 });
 
 export type LinksSchema = z.infer<typeof LinksSchema>;

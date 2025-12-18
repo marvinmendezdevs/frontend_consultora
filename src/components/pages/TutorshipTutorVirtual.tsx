@@ -3,12 +3,12 @@ import { Link } from "react-router";
 import {
   Funnel,
   Captions,
-  Video,
   PencilLine,
   UserCheck,
   ChevronLeft,
   ChevronRight,
   List,
+  Video,
 } from "lucide-react";
 import {
   getTutorshipInfoVirtual,
@@ -24,10 +24,9 @@ interface VirtualTutorshipEvent {
   date: string;
   hour: string;
   subject: string;
-  meet?: string;
-  transcript?: string;
+  transcription?: string;
   attendance?: string;
-  quiz?: string;
+  quizz?: string;
   recording?: string;
 }
 
@@ -127,16 +126,15 @@ function TutorshipTutorVirtual({
     formState: { errors },
   } = useForm<Omit<LinksSchema, "id">>({
     defaultValues: {
-      meet: "",
       recording: "",
       transcription: "",
       attendance: "",
-      quiz: "",
+      quizz: "",
     },
   });
 
   const mutation = useMutation({
-    mutationFn: (data: LinksSchema) => updateVirtualSessionLinks(data),
+    mutationFn: (payload: LinksSchema) => updateVirtualSessionLinks(payload),
     onSuccess: async () => {
       await queryClient.invalidateQueries({ queryKey: ["tutorship-info"] });
       setCreatingLinks(null);
@@ -154,27 +152,26 @@ function TutorshipTutorVirtual({
   };
 
   const handleCreatingLinks = (event: VirtualTutorshipEvent) => {
-    const data: LinksSchema = {
+    const payload: LinksSchema = {
       id: event.id,
-      meet: event.meet || "",
       recording: event.recording || "",
-      transcription: event.transcript || "",
+      transcription: event.transcription || "",
       attendance: event.attendance || "",
-      quiz: event.quiz || "",
+      quizz: event.quizz || "",
     };
 
-    setCurrentUtilitiesLink(data);
+    setCurrentUtilitiesLink(payload);
 
     reset({
-      meet: data.meet,
-      recording: data.recording,
-      transcription: data.transcription,
-      attendance: data.attendance,
-      quiz: data.quiz,
+      recording: payload.recording,
+      transcription: payload.transcription,
+      attendance: payload.attendance,
+      quizz: payload.quizz,
     });
 
     setCreatingLinks(event.id);
   };
+
     if (isLoading) return (
         <p className="text-xs text-slate-800 flex justify-center items-center gap-1 p-3">
             <span className="h-5 w-5 block rounded-full border-2 border-gray-300 border-t-indigo-600 animate-spin"></span>
@@ -188,11 +185,6 @@ function TutorshipTutorVirtual({
         </p>
     );
 
-    if (!data) return (
-        <p className="text-xs text-slate-800 flex justify-center items-center gap-1 p-3">
-            No se encontraron tutorías.
-        </p>
-    );
   return (
     <div className="w-full max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-4 gap-2">
@@ -326,34 +318,29 @@ function TutorshipTutorVirtual({
                                 <List className="size-3 font-bold text-black cursor-pointer" />
                               </button>
                             </div>
-
-                            {event.meet && (
-                              <div className="flex gap-2 justify-center items-center">
-                                <a href={event.meet} target="_blank" rel="noreferrer">
-                                  <Video className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
-                                </a>
-                              </div>
-                            )}
-                            {event.transcript && (
-                              <div className="flex gap-2 justify-center items-center">
-                                <a href={event.transcript} target="_blank" rel="noreferrer">
-                                  <Captions className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
-                                </a>
-                              </div>
-                            )}
-                            {event.attendance && (
-                              <div className="flex gap-2 justify-center items-center">
-                                <a href={event.attendance} target="_blank" rel="noreferrer">
-                                  <UserCheck className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
-                                </a>
-                              </div>
-                            )}
-                            {event.quiz && (
-                              <div className="flex gap-2 justify-center items-center">
-                                <a href={event.quiz} target="_blank" rel="noreferrer">
-                                  <PencilLine className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
-                                </a>
-                              </div>
+                            { event.recording && event.transcription && event.attendance && event.quizz && (
+                                <div className="flex gap-2 justify-center items-center">
+                                    <div className="flex gap-2 justify-center items-center">
+                                        <a href={event.recording} target="_blank" rel="noreferrer">
+                                            <Video className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
+                                        </a>
+                                    </div>
+                                    <div className="flex gap-2 justify-center items-center">
+                                        <a href={event.transcription} target="_blank" rel="noreferrer">
+                                        <Captions className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
+                                        </a>
+                                    </div>
+                                    <div className="flex gap-2 justify-center items-center">
+                                        <a href={event.attendance} target="_blank" rel="noreferrer">
+                                        <UserCheck className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
+                                        </a>
+                                    </div>
+                                    <div className="flex gap-2 justify-center items-center">
+                                        <a href={event.quizz} target="_blank" rel="noreferrer">
+                                        <PencilLine className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
+                                        </a>
+                                    </div>
+                                </div>
                             )}
                           </div>
                         )
@@ -373,22 +360,6 @@ function TutorshipTutorVirtual({
             <h3 className="text-lg font-bold mb-4 text-indigo-700">Agregar Enlaces</h3>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Meet
-                  <input
-                    type="text"
-                    className="text-sm text-gray-900 truncate border border-gray-200 my-2 rounded-lg p-2 w-full"
-                    {...register("meet", {
-                      required: true,
-                      pattern: { value: /https:/, message: "Formato inválido" },
-                    })}
-                    placeholder="https://meet.google.com/abc123"
-                  />
-                </label>
-                {errors.meet && <p className="text-red-600 text-xs mt-1">El campo Meet es obligatorio</p>}
-              </div>
-
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Grabación
@@ -442,17 +413,17 @@ function TutorshipTutorVirtual({
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700">Quiz</label>
+                <label className="block text-sm font-medium text-gray-700">Quizz</label>
                 <input
                   type="text"
                   className="text-sm text-gray-900 truncate border border-gray-200 my-2 rounded-lg p-2 w-full"
-                  {...register("quiz", {
+                  {...register("quizz", {
                     required: true,
                     pattern: { value: /https:/, message: "Formato inválido" },
                   })}
                   placeholder="https://drive.google.com/file/d/abc123"
                 />
-                {errors.quiz && <p className="text-red-600 text-xs mt-1">El campo Quiz es obligatorio</p>}
+                {errors.quizz && <p className="text-red-600 text-xs mt-1">El campo Quiz es obligatorio</p>}
               </div>
 
               <button
