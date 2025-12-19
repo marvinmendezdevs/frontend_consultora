@@ -115,7 +115,7 @@ function TutorshipTutorVirtual({
     if (!data) return [];
     if (subject === "Todos") return data;
     return data.filter(
-      (ev: VirtualTutorshipEvent) => ev.subject.toLowerCase() === subject.toLowerCase()
+      (ev: VirtualTutorshipEvent) => ev.subject === subject
     );
   }, [data, subject]);
 
