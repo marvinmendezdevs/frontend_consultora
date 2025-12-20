@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { ResponseSchema, SchoolSchema, TeacherSchema } from "./tutorship.schema";
+import { ResponseSchema, ResponseTableSchema, SchoolSchema, TeacherSchema } from "./tutorship.schema";
 import { SectionSchema as SectionSchoolSchema } from "./school.schema";
-import { UserSchema } from "./auth.schema";
+import { DistrictShema, InfoTutor, UserSchema } from "./auth.schema";
 
 // 1. Esquema para las Opciones (ej: Bajo, Medio, Alto)
 // Coincide con: { "valor": 1, "etiqueta": "Bajo" }
@@ -90,4 +90,13 @@ export const ResponseSectionSchema = ResponseSchema.extend({
     }),
     school: SchoolSchema,
     coachingSession: CoachingSessionSchema,
+});
+
+export const TutorInfoViewSchema = UserSchema.extend({
+
+    coachingSessions: z.array(CoachingSessionSchema),
+    infoTutores: InfoTutor.extend({
+        districts: DistrictShema
+    }),
+    responses: ResponseTableSchema,
 });

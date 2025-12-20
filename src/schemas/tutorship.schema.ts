@@ -44,7 +44,7 @@ export const TeacherTutorSchema = TeacherSchema.extend({
 
 export const ResponseSchema = z.object({
     id: z.number(),
-        // responseId property removed
+    // responseId property removed
     instrumentId: z.number(),
     schoolCode: z.number(),
     sectionId: z.number(),
@@ -62,4 +62,16 @@ export const ResponseTableSchema = z.array(ResponseSchema);
 
 export const TeacherWithResponses = TeacherTutorSchema.extend({
     responses: ResponseTableSchema
-})
+});
+
+export const VirtualSessionShema = z.object({
+    id: z.number(),
+    tutorId: z.number(),
+    date: z.string(),
+    hour: z.string(),
+    meet: z.string(),
+    recording: z.string(),
+    transcription: z.string(),
+    attendance: z.string(),
+    quizz: z.string()
+});

@@ -85,14 +85,7 @@ export const getTutorshipInfo = async (username: string) => {
 
 export const getTutorshipInfoVirtual = async () => {
     const { data } = await api.get(`/tutorship/virtual-sessions`);
-    
-    // Normalizar datos de codificación si es necesario
-    const normalizedData = data.map((session: any) => ({
-        ...session,
-        subject: session.subject === "Matem_tica" ? "Matemática" : session.subject
-    }));
-
-    return normalizedData;
+    return data;
 }
 
 export const updateVirtualSessionLinks = async (formData: LinksSchema) => {

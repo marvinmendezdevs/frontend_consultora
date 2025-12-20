@@ -18,6 +18,8 @@ export const RoleSchema = z.object({
 export const InfoTutor = z.object({
   id: z.number(),
   type: z.string(),
+  typeVehicle: z.string(),
+  vehicle: z.boolean,
 });
 
 export const UserSchema = z.object({
@@ -33,11 +35,14 @@ export const UserSchema = z.object({
   infoTutores: InfoTutor
 });
 
+export const DistrictShema = z.object({
+  id: z.number(),
+  district: z.string(),
+  department: z.string(),
+});
+
 export const InfoTutorCountSchema = z.object({
-  districts: z.object({
-    id: z.number(),
-    district: z.string(),
-  }),
+  districts: DistrictShema,
   type: z.number(),
 })
 
