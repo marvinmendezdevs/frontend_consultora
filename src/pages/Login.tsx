@@ -42,19 +42,13 @@ const redirects: RedirectType = {
   'Tutor (Gestión Escolar)': '/tutoria',
 };
 
-const roleAlias: Record<string, RedirectKey> = {
-  'Administrador': 'Tutor (Gestión Escolar)',
-  'Tutor (Supervisor)': 'Tutor (Gestión Escolar)',
-  'Tutor': 'Tutor (Gestión Escolar)',
-};
-
   const mutation = useMutation<LoginResponseType, AxiosError<ErrorResponseApiType>, LoginType>({
     mutationFn: login,
     onSuccess: (data) => {
       localStorage.setItem('AUTH_TOKEN', data.token);
-
-      const key = (roleAlias[data.role] ?? data.role) as RedirectKey;
-      navigate(redirects[key]);
+      const userRole = data.role;
+      const uri = redirects[userRole as keyof typeof redirects] ?? '/';
+      navigate(uri);
     },
     
     onError: (error) => {

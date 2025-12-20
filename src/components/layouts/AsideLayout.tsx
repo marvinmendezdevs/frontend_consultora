@@ -1,11 +1,11 @@
 import Env from "@/utils/index.utils";
-import { GraduationCap, LayoutDashboard, LogOut } from "lucide-react";
+import { GraduationCap, HatGlasses, LayoutDashboard, LogOut } from "lucide-react";
 import SidebarItem from "./SidebarItem";
 import { useActiveNavItem, useNavbar } from "@/stores/index.store";
 import { useNavigate } from "react-router";
 import useAuth from "@/hooks/useAuth.hooks";
+import NavLinksVerificator from "./NavLinksVerificator";
 
-const tutorRoles = new Set(["Administrador", "Tutor (Supervisor)", "Tutor"]);
 
 function AsideLayout() {
   const { data: user } = useAuth();
@@ -19,10 +19,7 @@ function AsideLayout() {
     navigate("/login");
   };
 
-  const roleName = user?.role?.name;
-  const canSeeTutorMenu = roleName ? tutorRoles.has(roleName) : false;
-
-  return (
+  if (user) return (
     <aside
       className={`
         fixed lg:static inset-y-0 left-0 z-30 w-64 bg-white border-r border-slate-200 transform transition-transform duration-200 ease-in-out
@@ -38,32 +35,39 @@ function AsideLayout() {
         </div>
 
         <div className="flex-1 px-4 py-6 overflow-y-auto">
-          {canSeeTutorMenu && (
-            <>
-              <p className="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">
-                Principal
-              </p>
+          <p className="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">
+            Principal
+          </p>
 
-              <div>
-                <SidebarItem
-                  icon={<LayoutDashboard />}
-                  label="Inicio"
-                  active={activeTab === "/"}
-                  path="/"
-                />
-                <SidebarItem
-                  icon={<GraduationCap />}
-                  label="Tutoría"
-                  active={activeTab === "/tutoria"}
-                  path="tutoria"
-                />
-              </div>
+          <div>
+            <SidebarItem
+              icon={<LayoutDashboard />}
+              label="Inicio"
+              active={activeTab === "/"}
+              path="/"
+            />
+            <NavLinksVerificator allowedRoles={["Tutor", "Tutor (Supervisor)"]} userRole={user.role.name}>
+              <SidebarItem
+                icon={<GraduationCap />}
+                label="Tutoría"
+                active={activeTab === "/tutoria"}
+                path="tutoria"
+              />
+            </NavLinksVerificator>
 
-              <p className="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4 mt-8">
-                Administración
-              </p>
-            </>
-          )}
+            <NavLinksVerificator allowedRoles={["Monitor (Gestión Escolar)"]} userRole={user.role.name}>
+              <SidebarItem
+                icon={<HatGlasses />}
+                label="Monitoreo"
+                active={activeTab === "/monitores"}
+                path="monitores"
+              />
+            </NavLinksVerificator>
+          </div>
+
+          <p className="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4 mt-8">
+            Administración
+          </p>
         </div>
 
         <div className="p-4 border-t border-slate-100">

@@ -13,6 +13,7 @@ import FeedBackView from "./components/pages/FeedBackView"
 import TutorshipInfoTutor from "./components/pages/TutorshipInfoTutor"
 import Facilitadores from "./components/pages/Facilitadores"
 import Monitores from "./components/pages/Monitores"
+import AppRoleValidator from "./components/layouts/AppRoleValidator"
 
 function Router() {
 
@@ -23,19 +24,26 @@ function Router() {
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/" element={<Home />} />
+
+            {/* Tutoria */}
+            <Route element={<AppRoleValidator allowedRoles={["Tutor (Supervisor)", "Tutor"]} />}>
+              <Route path="/tutoria" element={<Tutorship />} />
+              <Route path="/diagnostico/:teacher/:section" element={<Diagnostic />} />
+              <Route path="/observaciones/:teacherDui" element={<Observations />} />
+              <Route path="/observaciones/:teacherId/:sectionId" element={<ObservationForm />} />
+              <Route path="/retroalimentacion/:observationId" element={<Feedback />} />
+              <Route path="/retroalimentacion/:idFeedBack/view" element={<FeedBackView />} />
+              <Route path="/retroalimentacion/:observationId/create" element={<FeedBackCreate />} />
+              <Route path="/tutoria/tutor/:username" element={<TutorshipInfoTutor />} />
+            </Route>
+
+            {/* Gestion Escolar */}
+            <Route element={<AppRoleValidator allowedRoles={["Monitor (Gestión Escolar)"]} />}>
+              <Route path="/monitores" element={<Monitores />} />
+            </Route>
             <Route path="/facilitadores" element={<Facilitadores />} />
-            <Route path="/monitores" element={<Monitores />} />
-            <Route path="/tutoria" element={<Tutorship />} />
 
-            <Route path="/diagnostico/:teacher/:section" element={<Diagnostic />} />
-            <Route path="/observaciones/:teacherDui" element={<Observations />} />
-            <Route path="/observaciones/:teacherId/:sectionId" element={<ObservationForm />} />
 
-            <Route path="/retroalimentacion/:observationId" element={<Feedback />} />
-            <Route path="/retroalimentacion/:idFeedBack/view" element={<FeedBackView />} />
-            <Route path="/retroalimentacion/:observationId/create" element={<FeedBackCreate />} />
-
-            <Route path="/tutoria/tutor/:username/" element={<TutorshipInfoTutor />} />
           </Route>
         </Route>
       </Routes>
