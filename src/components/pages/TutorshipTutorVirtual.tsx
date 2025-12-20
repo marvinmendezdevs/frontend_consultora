@@ -17,6 +17,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import SideDrawer from "../ui/SideDrawer";
 import { LinksSchema } from "@/schemas/instruments.schema";
 import { useForm } from "react-hook-form";
+import type { VirtualSessionType } from "@/types/tutorship.types";
 
 interface VirtualTutorshipEvent {
   id: number;
@@ -104,7 +105,7 @@ function TutorshipTutorVirtual({
     );
   };
 
-  const { isLoading, isError, data } = useQuery({
+  const { isLoading, isError, data } = useQuery<VirtualSessionType[]>({
     queryKey: ["tutorship-info"],
     queryFn: () => getTutorshipInfoVirtual(),
   });
@@ -175,7 +176,7 @@ function TutorshipTutorVirtual({
         </p>
     );
 
-  return (
+  if(data) return (
     <div className="w-full max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-4 gap-2">
         <h2 className="text-2xl text-indigo-700 font-bold mb-4">Calendario Semanal</h2>
@@ -248,7 +249,7 @@ function TutorshipTutorVirtual({
                     onClick={() => onSlotClick && onSlotClick(day, hour)}
                     className="h-15 border-r border-b border-gray-200 bg-white focus:outline-none focus:ring-1 focus:ring-indigo-400 transition-colors"
                   >
-                    {data.map((event: VirtualTutorshipEvent) => {
+                    {data.map(event => {
                       const [actualyHour] = event.hour.split(":");
                       const formattedDate = `${String(day.getDate()).padStart(2, "0")}-${String(
                         day.getMonth() + 1

@@ -73,5 +73,6 @@ export const VirtualSessionShema = z.object({
     recording: z.string(),
     transcription: z.string(),
     attendance: z.string(),
-    quizz: z.string()
+    quizz: z.string(),
+    subject: z.string(),
 });
