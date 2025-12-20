@@ -11,7 +11,7 @@ function Tutorship() {
     if(!user) return <Navigate replace to="/login" />
     if(user.role.name === 'Tutor (Supervisor)') return <TutorLeader />
     if(user.infoTutores){
-        if(user.infoTutores?.type === 'VIRTUAL') {
+        if(user.infoTutores.type === 'VIRTUAL') {
             return <TutorshipTutorVirtual />
         }else{
             return <TutorshipTutor />
