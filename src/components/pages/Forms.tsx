@@ -1,9 +1,12 @@
 import type { FormGeneralType, SchemaFormType } from "@/types/forms.types"
+import type { UseMutationResult } from "@tanstack/react-query";
 import { useForm, type FieldErrors, type FieldValues, type UseFormRegister } from "react-hook-form";
 import { Link } from "react-router";
 
 type FormsType = {
   form: FormGeneralType
+  answer?: AnswersType
+  mutation: UseMutationResult<void, Error, AnswersType, unknown>
 }
 
 type AnswersType = Record<string, string>
@@ -19,12 +22,18 @@ const QUESTION_COMPONENTS: Record<string, React.FC<InputType>> = {
   text: TextInput,
 };
 
-function Forms({ form }: FormsType) {
+function Forms({ form, answer, mutation }: FormsType) {
 
-  const {register, handleSubmit, formState: { errors }} = useForm();
+  const {register, handleSubmit, formState: { errors }} = useForm({
+    defaultValues: answer ?? {}
+  });
+
+  console.log(answer)
+
   const questions = form.schema;
-
-  const onSubmit = (data: AnswersType) => console.log(data);
+  const onSubmit = (data: AnswersType) => {
+    mutation.mutate(data);
+  };
 
   return (
     <form onSubmit={ handleSubmit(onSubmit) }>
