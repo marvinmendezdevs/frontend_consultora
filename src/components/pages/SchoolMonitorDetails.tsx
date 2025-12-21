@@ -71,7 +71,7 @@ function SchoolMonitorDetails({ active }: SchoolMonitorDetailsType) {
                 Captura de información escolar
             </p>
             <div className="flex gap-1">
-                <Link className="py-1 px-2 bg-indigo-600 rounded-lg text-white hover:bg-indigo-700" to={"/"}>
+                <Link className="py-1 px-2 bg-indigo-600 rounded-lg text-white hover:bg-indigo-700" to={`/monitores/formulario/${schoolDetails.schoolCode}/optimizacion`}>
                     Optimización
                 </Link>
                 
