@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getMonitorDashboard } from "@/services/schoolmanagement.services";
-import { Clock4, Funnel, Presentation, UserPlus } from "lucide-react";
+import { Clock4, Funnel, FunnelX, Presentation, UserPlus } from "lucide-react";
 import { percentYes } from "@/utils/index.utils";
 import type { MonitorRow, SchoolAnswers, TableRow } from "@/types/schoolmanagement.type";
 
@@ -21,6 +21,9 @@ function MonitorDashboard() {
     const [departmentFilter, setDepartmentFilter] = useState("Todos");
     const [municipalityFilter, setMunicipalityFilter] = useState("Todos");
     const [districtFilter, setDistrictFilter] = useState("Todos");
+
+    // ✅ búsqueda por código o nombre
+    const [search, setSearch] = useState("");
 
     const [page, setPage] = useState(1);
     const pageSize = 10;
@@ -67,30 +70,42 @@ function MonitorDashboard() {
         });
     }, [uniqueBySchool]);
 
+    // ✅ sort sin mover "Todos"
     const departmentOptions = useMemo(() => {
-        return ["Todos", ...Array.from(new Set(contenido.map(item => item.department).filter(Boolean)))].sort();
+        const opts = Array.from(new Set(contenido.map(item => item.department).filter(Boolean))).sort();
+        return ["Todos", ...opts];
     }, [contenido]);
 
     const municipalityOptions = useMemo(() => {
-        return ["Todos", ...Array.from(new Set(contenido.map(item => item.municipality).filter(Boolean)))].sort();
+        const opts = Array.from(new Set(contenido.map(item => item.municipality).filter(Boolean))).sort();
+        return ["Todos", ...opts];
     }, [contenido]);
 
     const districtOptions = useMemo(() => {
-        return ["Todos", ...Array.from(new Set(contenido.map(item => item.district).filter(Boolean)))].sort();
+        const opts = Array.from(new Set(contenido.map(item => item.district).filter(Boolean))).sort();
+        return ["Todos", ...opts];
     }, [contenido]);
 
     const filteredRows = useMemo(() => {
+        const q = search.trim().toLowerCase();
+
         return contenido.filter(item => {
             const departamento = departmentFilter === "Todos" || item.department === departmentFilter;
             const municipio = municipalityFilter === "Todos" || item.municipality === municipalityFilter;
             const distrito = districtFilter === "Todos" || item.district === districtFilter;
-            return departamento && municipio && distrito;
+
+            const matchSearch =
+                q.length === 0 ||
+                item.code.toLowerCase().includes(q) ||
+                item.name.toLowerCase().includes(q);
+
+            return departamento && municipio && distrito && matchSearch;
         });
-    }, [contenido, departmentFilter, municipalityFilter, districtFilter]);
+    }, [contenido, departmentFilter, municipalityFilter, districtFilter, search]);
 
     useEffect(() => {
         setPage(1);
-    }, [departmentFilter, municipalityFilter, districtFilter]);
+    }, [departmentFilter, municipalityFilter, districtFilter, search]);
 
     const filteredPayloads: SchoolAnswers[] = useMemo(() => {
         return filteredRows.map(item => ({
@@ -115,6 +130,14 @@ function MonitorDashboard() {
         return filteredRows.slice(start, start + pageSize);
     }, [filteredRows, page]);
 
+    const clearFilters = () => {
+        setDepartmentFilter("Todos");
+        setMunicipalityFilter("Todos");
+        setDistrictFilter("Todos");
+        setSearch("");
+        setPage(1);
+    };
+
     if (isLoading) {
         return (
             <p className="text-xs text-slate-800 flex justify-center items-center gap-1 p-3">
@@ -134,8 +157,8 @@ function MonitorDashboard() {
 
     return (
         <div className="space-y-4">
-            <div className="flex flex-col md:flex-row gap-4 w-full">
-                <div className="shadow-inner p-4 bg-gray-50 rounded-lg w-full flex flex-col justify-center md:justify-start md:items-start gap-3 items-center">
+            <div className="flex flex-col md:flex-row md:flex-wrap gap-4 w-full">
+                <div className="shadow-inner p-4 bg-gray-50 rounded-lg w-full md:flex-1 md:min-w-[280px] flex flex-col justify-center md:justify-start md:items-start gap-3 items-center">
                     <div className="flex items-center gap-2">
                         <UserPlus className="size-5 text-indigo-600" />
                         <p className="font-semibold">Matrícula</p>
@@ -144,7 +167,7 @@ function MonitorDashboard() {
                     <p className="text-xs">Registradas</p>
                 </div>
 
-                <div className="shadow-inner p-4 bg-gray-50 rounded-lg w-full flex flex-col justify-center md:justify-start md:items-start gap-3 items-center">
+                <div className="shadow-inner p-4 bg-gray-50 rounded-lg w-full md:flex-1 md:min-w-[280px] flex flex-col justify-center md:justify-start md:items-start gap-3 items-center">
                     <div className="flex items-center gap-2">
                         <Clock4 className="size-5 text-indigo-600" />
                         <p className="font-semibold">Carga horaria</p>
@@ -153,7 +176,7 @@ function MonitorDashboard() {
                     <p className="text-xs">Registradas</p>
                 </div>
 
-                <div className="shadow-inner p-4 bg-gray-50 rounded-lg w-full flex flex-col justify-center md:justify-start md:items-start gap-3 items-center">
+                <div className="shadow-inner p-4 bg-gray-50 rounded-lg w-full md:flex-1 md:min-w-[280px] flex flex-col justify-center md:justify-start md:items-start gap-3 items-center">
                     <div className="flex items-center gap-2">
                         <Presentation className="size-5 text-indigo-600" />
                         <p className="font-semibold">Asignación docente</p>
@@ -163,12 +186,16 @@ function MonitorDashboard() {
                 </div>
             </div>
 
+
+
             <div className="space-y-2 mt-12">
                 <div className="flex flex-col md:flex-row gap-2 items-center mb-6">
                     <div className="flex items-center gap-2">
                         <Funnel className="size-5 text-indigo-600" />
                         <p className="text-xs">Filtros:</p>
                     </div>
+
+                    <input type="search" className="border border-gray-200 rounded-md text-gray-600 px-3 py-2 text-xs w-full md:w-72" placeholder="Buscar por código o nombre..." value={search} onChange={(e) => setSearch(e.target.value)} />
 
                     <p className="font-semibold text-xs">Departamento</p>
                     <select className="border border-gray-200 rounded-md text-gray-600 px-3 py-2 text-xs cursor-pointer w-full md:w-auto" value={departmentFilter} onChange={(e) => setDepartmentFilter(e.target.value)}>
@@ -190,6 +217,8 @@ function MonitorDashboard() {
                             <option key={district} value={district}>{district || "—"}</option>
                         ))}
                     </select>
+
+                    <button type="button" onClick={clearFilters} className="text-red-600 hover:text-red-800 cursor-pointer"><FunnelX className="size-5 cursor-pointer" /></button>
                 </div>
 
                 <div className="overflow-x-auto">
@@ -245,13 +274,9 @@ function MonitorDashboard() {
                         </div>
 
                         <div className="flex gap-2">
-                            <button className="px-3 py-1 border rounded disabled:opacity-40" disabled={page === 1} onClick={() => setPage((p) => p - 1)}>
-                                Anterior
-                            </button>
+                            <button className="px-3 py-1 border rounded disabled:opacity-40" disabled={page === 1} onClick={() => setPage((p) => p - 1)}>Anterior</button>
 
-                            <button className="px-3 py-1 border rounded disabled:opacity-40" disabled={page === totalPages} onClick={() => setPage((p) => p + 1)}>
-                                Siguiente
-                            </button>
+                            <button className="px-3 py-1 border rounded disabled:opacity-40" disabled={page === totalPages} onClick={() => setPage((p) => p + 1)}>Siguiente</button>
                         </div>
                     </div>
                 )}
