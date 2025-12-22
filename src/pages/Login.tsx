@@ -27,13 +27,30 @@ function Login() {
     msg: '',
   });
 
-  // Enviar la peticion al backend
+type RedirectKey =
+  | 'Monitor (Gestión Escolar)'
+  | 'Facilitador (Gestión Escolar)'
+  | 'Coordinador (Gestión Escolar)'
+  | 'Tutor (Gestión Escolar)';
+
+type RedirectType = Record<RedirectKey, string>;
+
+const redirects: RedirectType = {
+  'Monitor (Gestión Escolar)': '/monitores',
+  'Facilitador (Gestión Escolar)': '/facilitadores',
+  'Coordinador (Gestión Escolar)': '/dashboard',
+  'Tutor (Gestión Escolar)': '/tutoria',
+};
+
   const mutation = useMutation<LoginResponseType, AxiosError<ErrorResponseApiType>, LoginType>({
     mutationFn: login,
     onSuccess: (data) => {
       localStorage.setItem('AUTH_TOKEN', data.token);
-      navigate('/');
+      const userRole = data.role;
+      const uri = redirects[userRole as keyof typeof redirects] ?? '/';
+      navigate(uri);
     },
+    
     onError: (error) => {
       console.log(error)
       if (error.response) {

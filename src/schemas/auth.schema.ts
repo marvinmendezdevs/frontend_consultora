@@ -7,6 +7,7 @@ export const LoginSchema = z.object({
 
 export const LoginResponseSchema = z.object({
   message: z.string(),
+  role: z.string(),
   token: z.string(),
 });
 
@@ -32,7 +33,8 @@ export const UserSchema = z.object({
   roleId: z.number(),
   createdAt: z.string(),
   role: RoleSchema,
-  infoTutores: InfoTutor
+  infoTutores: InfoTutor,
+  verified: z.boolean(),
 });
 
 export const DistrictShema = z.object({
