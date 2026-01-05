@@ -22,7 +22,6 @@ function MonitorDashboard() {
     const [municipalityFilter, setMunicipalityFilter] = useState("Todos");
     const [districtFilter, setDistrictFilter] = useState("Todos");
 
-    // ✅ búsqueda por código o nombre
     const [search, setSearch] = useState("");
 
     const [page, setPage] = useState(1);
@@ -70,7 +69,6 @@ function MonitorDashboard() {
         });
     }, [uniqueBySchool]);
 
-    // ✅ sort sin mover "Todos"
     const departmentOptions = useMemo(() => {
         const opts = Array.from(new Set(contenido.map(item => item.department).filter(Boolean))).sort();
         return ["Todos", ...opts];

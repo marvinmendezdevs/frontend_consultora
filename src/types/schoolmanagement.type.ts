@@ -22,7 +22,50 @@ export type SchoolInfo = {
     schoolSchedule?: boolean;
     teachingAssignment?: boolean;
     Districts?: DistrictInfo;
+    sections?: {
+      assignments: {
+        id: number;
+        teacherId: number;
+        sectionId: number;
+        subject: string;
+        teacher: {
+          id: number;
+          dui: string;
+          name: string;
+          email: string;
+          telephone: string;
+          status: boolean;
+        }
+      }
+    grade: string;
+    id: number;
+    schoolCode: string;
+    sectionClass: string;
+    shift: string;
+    subtrack: string;
+    track: string;
+    }[]
 };
+
+
+export type SchoolInfoWithUsers = SchoolInfo & {
+  userSchool?: Array<{
+    id: number;
+    userId: number;
+    schoolCode: string;
+    createdAt: string;
+    user: {
+      id: number;
+      email: string;
+      name: string;
+      dui: string;
+      telephone: string;
+      roleId: number;
+      role?: { id: number; name: string };
+    };
+  }>;
+};
+
 
 export type MonitorRow = {
     id: number;
@@ -48,12 +91,21 @@ export type TableRow = {
     department: string;
 };
 
-export type Subdirector = {
-    name: string;
-    email: string;
-    telephone: string;
-    dui: string;
-    username?: string;
-    password?: string;
+export type UpdateDirectorPayload = {
+  schoolCode: string;
+  roleId: number;
+  userSchoolId?: number;
+  userId?: number;
+  email: string;
+  name: string;
+  dui: string;
+  telephone: string;
+};
+
+export type DirectorForm = {
+  email: string;
+  name: string;
+  dui: string;
+  telephone: string;
 };
 
