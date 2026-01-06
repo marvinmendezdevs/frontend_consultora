@@ -36,7 +36,7 @@ export type SchoolInfo = {
           telephone: string;
           status: boolean;
         }
-      }
+      }[]
     grade: string;
     id: number;
     schoolCode: string;
@@ -92,10 +92,17 @@ export type TableRow = {
 };
 
 export type UpdateDirectorPayload = {
-  schoolCode: string;
+  schoolCode: number;
   roleId: number;
-  userSchoolId?: number;
-  userId?: number;
+  email: string;
+  name: string;
+  dui: string;
+  telephone: string;
+};
+
+export type UpdateSubdirectorPayload = {
+  schoolCode: number;
+  roleId: number;
   email: string;
   name: string;
   dui: string;
@@ -108,4 +115,17 @@ export type DirectorForm = {
   dui: string;
   telephone: string;
 };
+
+export type SubdirectorForm = {
+  email: string;
+  name: string;
+  dui: string;
+  telephone: string;
+};
+
+export type DeleteUserSchool = {
+  userId: number;
+  schoolCode: string;
+};
+
 

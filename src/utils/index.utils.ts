@@ -61,3 +61,20 @@ export function percentYes(rows: SchoolAnswers[], key: string): number {
         return v === "si";
     }).length;
 }
+
+export const validDUI = (value: string): boolean => {
+  if (!/^\d{9}$/.test(value)) return false;
+
+  const body = value.slice(0, 8);
+  const dv = Number(value[8]);
+
+  let sum = 0;
+  for (let i = 0; i < 8; i++) {
+    sum += Number(body[i]) * (9 - i);
+  }
+
+  const expected = (10 - (sum % 10)) % 10;
+  return dv === expected;
+};
+
+

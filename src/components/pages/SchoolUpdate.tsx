@@ -74,7 +74,7 @@ function SchoolUpdate() {
             <div><User className="size-8 bg-blue-50 text-blue-700 rounded-lg p-1"/></div>
             <p>Director(a)</p>
           </div>
-          <UpdateDirector schoolCode={data.code} director={director} fallbackName={data.directorName} fallbackPhone={data.directorPhone} onSaved={onSaved} sections={data.sections}/>
+          <UpdateDirector schoolCode={data.code} director={director} fallbackName={data.directorName} fallbackPhone={data.directorPhone} onSaved={onSaved}/>
         </div>
 
         <div className="w-full p-10 border border-gray-200 rounded gap-2 font-semibold bg-gray-50">
@@ -82,7 +82,7 @@ function SchoolUpdate() {
             <div><User className="size-8 bg-blue-50 text-blue-700 rounded-lg p-1"/></div>
             <p>{subdirector ? "Subdirector(a)" : "Agregar subdirector(a)"}</p>
           </div>
-          <UpdateSubdirector schoolCode={data.code} subdirector={subdirector} onSaved={onSaved}/>
+          <UpdateSubdirector schoolCode={data.code} subdirector={subdirector} subdirectores={data} onSaved={onSaved}/>
         </div>
       </div>
     </>

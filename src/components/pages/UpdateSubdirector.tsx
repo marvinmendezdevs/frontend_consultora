@@ -1,41 +1,23 @@
+import type { UpdateSubdirectorPayload } from "@/types/schoolmanagement.type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import type { SubdirectorForm } from "@/types/schoolmanagement.type";
+import { upsertSubdirector } from "@/services/school.services";
+import { validDUI } from "@/utils/index.utils";
+import DeleteSchoolSubdirector from "./DeleteSchoolSubdirector";
 
 const ROLE_SUBDIRECTOR = 8;
-
-type UpsertSubdirectorPayload = {
-  schoolCode: string;
-  roleId: number;
-  userSchoolId?: number;
-  userId?: number;
-  email: string;
-  name: string;
-  dui: string;
-  telephone: string;
-};
-
-type SubdirectorForm = {
-  email: string;
-  name: string;
-  dui: string;
-  telephone: string;
-};
-
-// 🔹 MOCK temporal
-async function upsertSubdirectorMock(dataSubdirector: UpsertSubdirectorPayload) {
-  console.log("📡 Enviando payload Subdirector (mock):", dataSubdirector);
-  await new Promise((r) => setTimeout(r, 700));
-  return { success: true, dataSubdirector };
-}
 
 function UpsertSubdirector({
   schoolCode,
   subdirector,
+  subdirectores,
   onSaved,
 }: {
   schoolCode: string;
   subdirector: any | null;
+  subdirectores: any;
   onSaved: () => void;
 }) {
   const queryClient = useQueryClient();
@@ -58,40 +40,32 @@ function UpsertSubdirector({
 
   useEffect(() => {
     reset({
-      email: subdirector?.user?.email ?? "",
-      name: subdirector?.user?.name ?? "",
-      dui: subdirector?.user?.dui ?? "",
-      telephone: subdirector?.user?.telephone ?? "",
+      email: "",
+      name: "",
+      dui: "",
+      telephone: "",
     });
 
     setErrorMsg(null);
   }, [subdirector, reset]);
 
   const mutation = useMutation({
-    mutationFn: (dataSubdirector: UpsertSubdirectorPayload) =>
-      upsertSubdirectorMock(dataSubdirector),
-
-    onSuccess: (res) => {
-      console.log("✅ Respuesta mutation Subdirector:", res);
-
-      queryClient.invalidateQueries({
-        queryKey: ["school", schoolCode],
-      });
-
+    mutationKey: ["school-user", schoolCode, ROLE_SUBDIRECTOR],
+    mutationFn: upsertSubdirector,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["school", schoolCode] });
       onSaved();
     },
-
-    onError: (error) => {
-      console.error("❌ Error mutation Subdirector:", error);
-      setErrorMsg("Ocurrió un error al guardar el subdirector.");
+    onError: (err: any) => {
+      setErrorMsg(err?.message ?? "Ocurrió un error");
     },
   });
 
   const onSubmit = (values: SubdirectorForm) => {
     setErrorMsg(null);
 
-    const dataSubdirector: UpsertSubdirectorPayload = {
-      schoolCode,
+    const payload: UpdateSubdirectorPayload = {
+      schoolCode: Number(schoolCode),
       roleId: ROLE_SUBDIRECTOR,
       email: values.email.trim(),
       name: values.name.trim(),
@@ -99,9 +73,7 @@ function UpsertSubdirector({
       telephone: values.telephone.trim(),
     };
 
-    console.log(dataSubdirector);
-
-    mutation.mutate(dataSubdirector);
+    mutation.mutate(payload);
   };
 
   return (
@@ -123,11 +95,11 @@ function UpsertSubdirector({
               <label className="text-sm">Email</label>
               <input
                 disabled={mutation.isPending}
-                className="w-full border border-gray-200 rounded p-2"
+                className="w-full border border-gray-200 rounded p-2 font-light text-sm"
                 {...register("email", { required: "Email es obligatorio" })}
               />
               {errors.email?.message && (
-                <p className="text-xs text-red-600 mt-1">{errors.email.message}</p>
+                <p className="text-xs text-red-600 font-semibold mt-1">{errors.email.message}</p>
               )}
             </div>
 
@@ -135,11 +107,11 @@ function UpsertSubdirector({
               <label className="text-sm">Nombre</label>
               <input
                 disabled={mutation.isPending}
-                className="w-full border border-gray-200 rounded p-2"
+                className="w-full border border-gray-200 rounded p-2 font-light text-sm"
                 {...register("name", { required: "Nombre es obligatorio" })}
               />
               {errors.name?.message && (
-                <p className="text-xs text-red-600 mt-1">{errors.name.message}</p>
+                <p className="text-xs text-red-600 font-semibold mt-1">{errors.name.message}</p>
               )}
             </div>
 
@@ -147,8 +119,12 @@ function UpsertSubdirector({
               <label className="text-sm">DUI</label>
               <input
                 disabled={mutation.isPending}
-                className="w-full border border-gray-200 rounded p-2"
-                {...register("dui", { required: "DUI es obligatorio" })}
+                inputMode="numeric"
+                maxLength={9}
+                placeholder="123456789"
+                className="w-full border border-gray-200 rounded p-2 font-light text-sm"
+                {...register("dui", { required: "DUI es obligatorio", validate: (value) =>
+                  validDUI(value) || "El DUI ingresado no es válido", })}
               />
               {errors.dui?.message && (
                 <p className="text-xs text-red-600 mt-1">{errors.dui.message}</p>
@@ -159,17 +135,17 @@ function UpsertSubdirector({
               <label className="text-sm">Teléfono</label>
               <input
                 disabled={mutation.isPending}
-                className="w-full border border-gray-200 rounded p-2"
+                className="w-full border border-gray-200 rounded p-2 font-light text-sm"
                 {...register("telephone", { required: "Teléfono es obligatorio" })}
               />
               {errors.telephone?.message && (
-                <p className="text-xs text-red-600 mt-1">{errors.telephone.message}</p>
+                <p className="text-xs text-red-600 font-semibold mt-1">{errors.telephone.message}</p>
               )}
             </div>
 
             {errorMsg && (
-              <p className="text-sm text-red-600 bg-red-50 border border-red-200 rounded p-2">
-                {errorMsg}
+              <p className="text-sm text-red-500 font-light bg-red-50/50 border border-red-200/50 rounded p-2">
+                Ya existe un registro con estos datos. Verifica la información o intenta con otros valores.
               </p>
             )}
 
@@ -183,6 +159,10 @@ function UpsertSubdirector({
               </button>
             </div>
           </form>
+          <p className="text-indigo-600 font-semibold my-2">Lista de subdirectores</p>
+          <div className="flex flex-col gap-2">
+            <DeleteSchoolSubdirector subdirectores={subdirectores} schoolCode={schoolCode} onSaved={onSaved}/>
+          </div>
         </div>
       </div>
     </div>
