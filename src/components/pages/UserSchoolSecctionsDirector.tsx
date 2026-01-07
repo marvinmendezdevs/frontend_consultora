@@ -1,10 +1,10 @@
-import type { SchoolInfo } from "@/types/schoolmanagement.type";
+import type { SchoolInfoWithUsers } from "@/types/schoolmanagement.type";
 import { BookOpen, Moon, Sun, Plus } from "lucide-react";
 import { useState } from "react";
 import AddSeccionUserSchool from "./AddSeccionUserSchool";
 
 function UserSchoolSecctionsDirector({ school, }: {
-    school: SchoolInfo;
+    school: SchoolInfoWithUsers;
 }) {
 
     console.log(school);
@@ -24,11 +24,11 @@ function UserSchoolSecctionsDirector({ school, }: {
                     <Plus /> Agregar
                 </button>
             </div>
-
-            <div className="flex flex-col gap-2 overflow-y-auto table-fixed w-full h-[400px] divide-y divide-gray-100">
+            <div className="max-h-[250px] overflow-y-auto">
                 {school?.sections?.map((item: any) =>
                     item.assignments.map((assignment: any) =>
-                        assignment.isDirector ? (
+                        assignment && assignment.isDirector ? (
+                            <div className="flex flex-col gap-2 overflow-y-auto table-fixed w-full divide-y divide-gray-100">
                             <div
                                 key={assignment.id}
                                 className="flex items-center justify-between py-4"
@@ -69,10 +69,11 @@ function UserSchoolSecctionsDirector({ school, }: {
                                     Eliminar
                                 </button>
                             </div>
+                        </div>
                         ) : null
                     )
                 )}
-            </div>
+                </div>
 
             <AddSeccionUserSchool
                 isOpen={openAdd}

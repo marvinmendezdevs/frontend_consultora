@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { X } from "lucide-react";
-import type { SectionItem, SchoolInfo } from "@/types/schoolmanagement.type";
+import type { SectionItem, SchoolInfoWithUsers } from "@/types/schoolmanagement.type";
 /* import { useMutation, useQueryClient } from "@tanstack/react-query";
  */
 type SubjectValue = "Lenguaje" | "Matem_tica";
@@ -16,12 +16,13 @@ function AddSeccionUserSchool({
     onClose: () => void;
     sections: SectionItem[];
     schoolCode: string;
-    teacher: SchoolInfo;
+    teacher: SchoolInfoWithUsers;
 }) {
 /*     const queryClient = useQueryClient();
  */
 
-    const director = teacher?.sections?.[0]?.assignments?.find((direct ) => direct.isDirector);
+
+const director = teacher?.userSchool?.find((direct: any ) => direct.user.roleId === 7);
     const [sectionId, setSectionId] = useState<number | "">("");
     const [subject, setSubject] = useState<SubjectValue | "">("");
     const [error, setError] = useState<string>("");
@@ -103,7 +104,7 @@ function AddSeccionUserSchool({
 
         const payload = {
             schoolCode,
-            teacherId: director?.teacherId,
+            teacherId: director?.id,
             sectionId: sectionId,
             subject,
         };
