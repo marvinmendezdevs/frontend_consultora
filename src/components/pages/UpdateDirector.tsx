@@ -63,7 +63,7 @@ function UpdateDirector({school, schoolCode, director, fallbackName, fallbackPho
 
   return (
     <div>
-      <div className="flex flex-col items-center justify-center p-4">
+      <div className="flex flex-col items-center justify-center">
         <div className="w-full bg-white rounded-xl p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold">Actualizar director(a)</h2>
@@ -139,7 +139,7 @@ function UpdateDirector({school, schoolCode, director, fallbackName, fallbackPho
               </button>
             </div>
           </form>
-        <UserSchoolSecctionsDirector school={school} director={director}/>
+        <UserSchoolSecctionsDirector school={school}/>
         </div>
       </div>
     </div>

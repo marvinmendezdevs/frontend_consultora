@@ -17,6 +17,7 @@ import AppRoleValidator from "./components/layouts/AppRoleValidator"
 import MonitorOptimizationForm from "./pages/MonitorOptimizationForm"
 import MonitorDashboard from "./components/pages/MonitorDashboard"
 import SchoolUpdate from "./components/pages/SchoolUpdate"
+import Remediation from "./components/pages/Remediation"
 
 function Router() {
 
@@ -49,11 +50,9 @@ function Router() {
             
             <Route path="/schools" element={<AppRoleValidator allowedRoles={["Monitor (Gestión Escolar)"]} />}>
               <Route path=":schoolCode/update" element={<SchoolUpdate />} />
+              <Route path=":schoolCode/remediation" element={<Remediation />} />
             </Route>
-
             <Route path="/facilitadores" element={<Facilitadores />} />
-
-
           </Route>
         </Route>
       </Routes>

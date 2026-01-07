@@ -12,8 +12,8 @@ function UserSchoolSecctionsDirector({ school, }: {
     const [openAdd, setOpenAdd] = useState(false);
 
     return (
-        <>
-            <div className="flex items-center justify-between my-6">
+        <div className="my-5 p-2 border-t border-gray-200">
+            <div className="flex items-center justify-between mb-2">
                 <p className="text-xl font-semibold my-2">Secciones</p>
 
                 <button
@@ -25,15 +25,15 @@ function UserSchoolSecctionsDirector({ school, }: {
                 </button>
             </div>
 
-            <div className="flex flex-col gap-2 overflow-y-auto table-fixed w-full h-[200px]">
+            <div className="flex flex-col gap-2 overflow-y-auto table-fixed w-full h-[400px] divide-y divide-gray-100">
                 {school?.sections?.map((item: any) =>
                     item.assignments.map((assignment: any) =>
                         assignment.isDirector ? (
                             <div
                                 key={assignment.id}
-                                className="flex items-center justify-between border border-gray-100 rounded p-2 gap-2"
+                                className="flex items-center justify-between py-4"
                             >
-                                <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-2 w-full">
                                     <div className="flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center border bg-blue-50 text-blue-600 border-blue-100">
                                         <BookOpen className="size-5" />
                                     </div>
@@ -81,7 +81,7 @@ function UserSchoolSecctionsDirector({ school, }: {
                 schoolCode={school.code}
                 teacher={school}
             />
-        </>
+        </div>
     );
 }
 

@@ -22,7 +22,6 @@ function AddSeccionUserSchool({
  */
 
     const director = teacher?.sections?.[0]?.assignments?.find((direct ) => direct.isDirector);
-    console.log(director?.teacherId);
     const [sectionId, setSectionId] = useState<number | "">("");
     const [subject, setSubject] = useState<SubjectValue | "">("");
     const [error, setError] = useState<string>("");

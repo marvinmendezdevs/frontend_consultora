@@ -59,8 +59,8 @@ function SchoolUpdate() {
       <h1 className="text-2xl font-semibold text-indigo-600 mb-5">Actualización de datos</h1>
       <Link to="/monitores" className="text-indigo-600 hover:text-indigo-800 text-sm px-2 py-1 rounded bg-indigo-50 hover:bg-indigo-100 disabled:opacity-50">Regresar</Link>
     </div>
-      <div className="flex flex-col gap-2">
-        <div className="w-full p-10 border border-gray-200 rounded gap-2 font-semibold bg-gray-50">
+      <div className="flex flex-col gap-2 mb-5">
+        <div className="w-full px-2 rounded-lg gap-2 font-semibold bg-gray-50 py-4">
           <div className="flex items-center gap-2 mb-5">
             <div><School className="size-8 bg-blue-50 text-blue-700 rounded-lg p-1"/></div>
             <p>Centro escolar</p>
@@ -68,7 +68,7 @@ function SchoolUpdate() {
           <UpdateSchool school={data}/>
         </div>
 
-        <div className="w-full p-10 border border-gray-200 rounded gap-2 font-semibold bg-gray-50">
+        <div className="w-full px-2 rounded-lg gap-2 font-semibold bg-gray-50 py-4">
           <div className="flex items-center gap-2 mb-5">
             <div><User className="size-8 bg-blue-50 text-blue-700 rounded-lg p-1"/></div>
             <p>Director(a)</p>
@@ -76,7 +76,7 @@ function SchoolUpdate() {
           <UpdateDirector schoolCode={data.code} director={director} fallbackName={data.directorName} fallbackPhone={data.directorPhone} onSaved={onSaved} school={data}/>
         </div>
 
-        <div className="w-full p-10 border border-gray-200 rounded gap-2 font-semibold bg-gray-50">
+        <div className="w-full px-2 rounded-lg gap-2 font-semibold bg-gray-50 py-4">
           <div className="flex items-center gap-2 mb-5">
             <div><User className="size-8 bg-blue-50 text-blue-700 rounded-lg p-1"/></div>
             <p>{subdirector ? "Subdirector(a)" : "Agregar subdirector(a)"}</p>

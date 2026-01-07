@@ -1,7 +1,7 @@
 import { getSchoolByMonitor } from "@/services/schoolmanagement.services";
 import type { SchoolByMonitorType } from "@/types/schoolmanagement.type";
 import { useQuery } from "@tanstack/react-query";
-import { Cog, Edit, MapPin, Phone, School, User } from "lucide-react";
+import { Cog, Edit, ListChecks, MapPin, Phone, School, User } from "lucide-react";
 import { Link } from "react-router";
 
 type SchoolMonitorDetailsType = {
@@ -82,9 +82,10 @@ function SchoolMonitorDetails({ active }: SchoolMonitorDetailsType) {
                     Optimización
                 </Link>
 
-                {/* <Link className="text-xs flex items-center bg-gray-100 p-2 justify-center border border-gray-300 gap-2 hover:bg-gray-300" to={"/"}>
-                    Condiciones escolares
-                </Link> */}
+                <Link className="text-xs flex items-center bg-gray-100 p-2 justify-center border border-gray-300 gap-2 hover:bg-gray-300" to={`/schools/${schoolDetails.schoolCode}/remediation`}>
+                <ListChecks className="size-4" />
+                    Remedicación y refuerzo
+                </Link> 
             </div>
 
         </div>
