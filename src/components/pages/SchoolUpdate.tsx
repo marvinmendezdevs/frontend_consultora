@@ -53,7 +53,6 @@ function SchoolUpdate() {
 
   if (!data) return null;
 
-  console.log(data);
   return (
     <>
     <div className="flex items-center justify-between mb-4">
@@ -74,7 +73,7 @@ function SchoolUpdate() {
             <div><User className="size-8 bg-blue-50 text-blue-700 rounded-lg p-1"/></div>
             <p>Director(a)</p>
           </div>
-          <UpdateDirector schoolCode={data.code} director={director} fallbackName={data.directorName} fallbackPhone={data.directorPhone} onSaved={onSaved}/>
+          <UpdateDirector schoolCode={data.code} director={director} fallbackName={data.directorName} fallbackPhone={data.directorPhone} onSaved={onSaved} school={data}/>
         </div>
 
         <div className="w-full p-10 border border-gray-200 rounded gap-2 font-semibold bg-gray-50">

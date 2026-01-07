@@ -1,13 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import type { UpdateDirectorPayload, DirectorForm } from "@/types/schoolmanagement.type";
+import type { UpdateDirectorPayload, DirectorForm  } from "@/types/schoolmanagement.type";
 import { upsertSchoolUser } from "@/services/school.services";
 import { validDUI } from "@/utils/index.utils";
+import type { SchoolInfo } from "@/types/schoolmanagement.type";
+import UserSchoolSecctionsDirector from "./UserSchoolSecctionsDirector";
 
 const ROLE_DIRECTOR = 7;
 
-function UpdateDirector({ schoolCode, director, fallbackName, fallbackPhone, onSaved }: { schoolCode: string; director: any | null; fallbackName?: string; fallbackPhone?: string; onSaved: () => void; }) {
+function UpdateDirector({school, schoolCode, director, fallbackName, fallbackPhone, onSaved }: { school: SchoolInfo; schoolCode: string; director: any | null; fallbackName?: string; fallbackPhone?: string; onSaved: () => void; }) {
   const queryClient = useQueryClient();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -61,7 +63,7 @@ function UpdateDirector({ schoolCode, director, fallbackName, fallbackPhone, onS
 
   return (
     <div>
-      <div className="flex items-center justify-center p-4">
+      <div className="flex flex-col items-center justify-center p-4">
         <div className="w-full bg-white rounded-xl p-5">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold">Actualizar director(a)</h2>
@@ -137,6 +139,7 @@ function UpdateDirector({ schoolCode, director, fallbackName, fallbackPhone, onS
               </button>
             </div>
           </form>
+        <UserSchoolSecctionsDirector school={school} director={director}/>
         </div>
       </div>
     </div>

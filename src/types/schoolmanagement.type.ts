@@ -22,7 +22,7 @@ export type SchoolInfo = {
     schoolSchedule?: boolean;
     teachingAssignment?: boolean;
     Districts?: DistrictInfo;
-    sections?: {
+    sections?: Array<{
       assignments: {
         id: number;
         teacherId: number;
@@ -36,20 +36,20 @@ export type SchoolInfo = {
           telephone: string;
           status: boolean;
         }
-      }[]
-    grade: string;
-    id: number;
-    schoolCode: string;
-    sectionClass: string;
-    shift: string;
-    subtrack: string;
-    track: string;
-    }[]
+      },
+        grade: string;
+        id: number;
+        schoolCode: string;
+        sectionClass: string;
+        shift: string;
+        subtrack: string;
+        track: string;
+    }>;
 };
 
 
 export type SchoolInfoWithUsers = SchoolInfo & {
-  userSchool?: Array<{
+  userSchool: Array<{
     id: number;
     userId: number;
     schoolCode: string;
