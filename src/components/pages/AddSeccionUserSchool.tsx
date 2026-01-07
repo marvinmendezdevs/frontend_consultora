@@ -1,28 +1,25 @@
 import { useEffect, useMemo, useState } from "react";
 import { X } from "lucide-react";
-import type { SectionItem, SchoolInfoWithUsers } from "@/types/schoolmanagement.type";
+import type { SectionItem } from "@/types/schoolmanagement.type";
+import type { UserType } from "@/types/auth.types";
 /* import { useMutation, useQueryClient } from "@tanstack/react-query";
  */
 type SubjectValue = "Lenguaje" | "Matem_tica";
+
+type AddSeccionUserSchoolType = {
+    isOpen: boolean;
+    onClose: () => void;
+    sections: SectionItem[];
+    director: UserType
+}
 
 function AddSeccionUserSchool({
     isOpen,
     onClose,
     sections,
-    schoolCode,
-    teacher,
-}: {
-    isOpen: boolean;
-    onClose: () => void;
-    sections: SectionItem[];
-    schoolCode: string;
-    teacher: SchoolInfoWithUsers;
-}) {
-/*     const queryClient = useQueryClient();
- */
+    director
+}: AddSeccionUserSchoolType) {
 
-
-const director = teacher?.userSchool?.find((direct: any ) => direct.user.roleId === 7);
     const [sectionId, setSectionId] = useState<number | "">("");
     const [subject, setSubject] = useState<SubjectValue | "">("");
     const [error, setError] = useState<string>("");
@@ -33,20 +30,20 @@ const director = teacher?.userSchool?.find((direct: any ) => direct.user.roleId 
         for (const sec of sections ?? []) {
             const set = new Set<string>();
 
-            for (const a of (sec as any).assignments ?? []) {
+            for (const a of (sec).assignments ?? []) {
                 if (a.isDirector) {
                     set.add(a.subject);
                 }
             }
 
-            map.set((sec as any).id, set);
+            map.set((sec).id, set);
         }
 
         return map;
     }, [sections]);
 
     const options = useMemo(() => {
-        return (sections ?? []).map((s: any) => {
+        return (sections ?? []).map((s) => {
             const label = `Grado ${s.grade}° · ${s.sectionClass} · ${s.shift}`;
             const alreadyHasThisSubject =
                 subject !== "" && (assignedBySection.get(s.id)?.has(subject) ?? false);
@@ -74,17 +71,6 @@ const director = teacher?.userSchool?.find((direct: any ) => direct.user.roleId 
         if (has) setSectionId("");
     }, [subject, sectionId, assignedBySection]);
 
-/*     const mutation = useMutation({
-        mutationKey: ["add-section-assignment", schoolCode, directorDui],
-        mutationFn: addSectionAssignment,
-        onSuccess: async () => {
-            await queryClient.invalidateQueries({ queryKey: ["school", schoolCode] });
-            onClose();
-        },
-        onError: (err: any) => {
-            setError(err?.response?.data?.msg ?? err?.message ?? "Error al guardar.");
-        },
-    }); */
 
     if (!isOpen) return null;
 

@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import UpdateSchool from "./UpdateSchool";
 import UpdateDirector from "./UpdateDirector";
 import UpdateSubdirector from "./UpdateSubdirector";
@@ -8,18 +7,8 @@ import type { SchoolInfoWithUsers } from "@/types/schoolmanagement.type";
 import { getSchoolByCode } from "@/services/school.services";
 import { School, User } from "lucide-react";
 
-const ROLE_DIRECTOR = 7;
-const ROLE_SUBDIRECTOR = 8;
-
-const findDirector = (userSchool: SchoolInfoWithUsers['userSchool'] = []) =>
-  userSchool.find((x) => x.user?.roleId === ROLE_DIRECTOR) ?? null;
-
-const findSubdirector = (userSchool: SchoolInfoWithUsers['userSchool'] = []) =>
-  userSchool.find((x) => x.user?.roleId === ROLE_SUBDIRECTOR) ?? null;
-
 function SchoolUpdate() {
   const { schoolCode } = useParams();
-  
 
   const { isLoading, isError, data, refetch } = useQuery<SchoolInfoWithUsers>({
     queryKey: ["school", schoolCode],
@@ -29,11 +18,6 @@ function SchoolUpdate() {
     },
     enabled: !!schoolCode,
   });
-
-  const userSchool = data?.userSchool ?? [];
-
-  const director = useMemo(() => findDirector(userSchool), [userSchool]);
-  const subdirector = useMemo(() => findSubdirector(userSchool), [userSchool]);
 
   const onSaved = () => {
     refetch();
@@ -73,16 +57,19 @@ function SchoolUpdate() {
             <div><User className="size-8 bg-blue-50 text-blue-700 rounded-lg p-1"/></div>
             <p>Director(a)</p>
           </div>
-          <UpdateDirector schoolCode={data.code} director={director} fallbackName={data.directorName} fallbackPhone={data.directorPhone} onSaved={onSaved} school={data}/>
+          <UpdateDirector 
+            users={ data.userSchool }
+            sections={data.sections}
+          />
         </div>
 
-        <div className="w-full px-2 rounded-lg gap-2 font-semibold bg-gray-50 py-4">
+        {/* <div className="w-full px-2 rounded-lg gap-2 font-semibold bg-gray-50 py-4">
           <div className="flex items-center gap-2 mb-5">
             <div><User className="size-8 bg-blue-50 text-blue-700 rounded-lg p-1"/></div>
             <p>{subdirector ? "Subdirector(a)" : "Agregar subdirector(a)"}</p>
           </div>
           <UpdateSubdirector schoolCode={data.code} subdirector={subdirector} subdirectores={data} onSaved={onSaved}/>
-        </div>
+        </div> */}
       </div>
     </>
   );

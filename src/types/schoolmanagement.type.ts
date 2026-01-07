@@ -1,5 +1,6 @@
 import type { SchoolByMonitorSchema } from "@/schemas/schoolmanagement.schema";
 import z from "zod";
+import type { UserType } from "./auth.types";
 
 export type SchoolByMonitorType = z.infer<typeof SchoolByMonitorSchema>
 
@@ -22,7 +23,7 @@ export type SchoolInfo = {
   schoolSchedule?: boolean;
   teachingAssignment?: boolean;
   Districts?: DistrictInfo;
-  sections?: SectionItem[];
+  sections: SectionItem[];
 };
 
 
@@ -32,15 +33,7 @@ export type SchoolInfoWithUsers = SchoolInfo & {
     userId: number;
     schoolCode: string;
     createdAt: string;
-    user: {
-      id: number;
-      email: string;
-      name: string;
-      dui: string;
-      telephone: string;
-      roleId: number;
-      role?: { id: number; name: string };
-    };
+    user: UserType;
   }>;
 };
 

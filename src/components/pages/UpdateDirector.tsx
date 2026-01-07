@@ -1,47 +1,50 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import type { UpdateDirectorPayload, DirectorForm  } from "@/types/schoolmanagement.type";
+import type { UpdateDirectorPayload, DirectorForm, SchoolInfoWithUsers } from "@/types/schoolmanagement.type";
 import { upsertSchoolUser } from "@/services/school.services";
 import { validDUI } from "@/utils/index.utils";
-import type { SchoolInfo } from "@/types/schoolmanagement.type";
 import UserSchoolSecctionsDirector from "./UserSchoolSecctionsDirector";
 
-const ROLE_DIRECTOR = 7;
+type UpdateDirectorType = {
+  users: SchoolInfoWithUsers['userSchool'];
+  sections: SchoolInfoWithUsers['sections']
+}
 
-function UpdateDirector({school, schoolCode, director, fallbackName, fallbackPhone, onSaved }: { school: SchoolInfo; schoolCode: string; director: any | null; fallbackName?: string; fallbackPhone?: string; onSaved: () => void; }) {
+function UpdateDirector({ users, sections }: UpdateDirectorType) {
   const queryClient = useQueryClient();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const { register, handleSubmit, reset, formState: { errors, isValid }, } = useForm<DirectorForm>({
+  const defaultValues = {
+    email: "",
+    name: "",
+    dui: "",
+    telephone: "",
+  }
+
+  // Obtener el director:
+  const director = users.find(user => user.user.roleId === 7);
+
+  if (director) {
+    defaultValues.name = director.user.name;
+    defaultValues.email = director.user.email;
+    defaultValues.dui = director.user.dui;
+    defaultValues.telephone = director.user.telephone;
+  }
+
+  const { register, handleSubmit, formState: { errors, isValid }, } = useForm<DirectorForm>({
     mode: "onChange",
-    defaultValues: {
-      email: director?.user?.email ?? "",
-      name: director?.user?.name ?? fallbackName ?? "",
-      dui: director?.user?.dui ?? "",
-      telephone: director?.user?.telephone ?? fallbackPhone ?? "",
-    },
+    defaultValues,
   });
 
-  useEffect(() => {
-    reset({
-      email: director?.user?.email ?? "",
-      name: director?.user?.name ?? fallbackName ?? "",
-      dui: director?.user?.dui ?? "",
-      telephone: director?.user?.telephone ?? fallbackPhone ?? "",
-    });
-    setErrorMsg(null);
-  }, [director, fallbackName, fallbackPhone, reset]);
-
   const mutation = useMutation({
-    mutationKey: ["school-user", schoolCode, ROLE_DIRECTOR],
+    mutationKey: ["school-user", director?.schoolCode],
     mutationFn: upsertSchoolUser,
-    onSuccess: async (res: any) => {
+    onSuccess: async (res) => {
       console.log(res?.msg);
-      await queryClient.invalidateQueries({ queryKey: ["school", schoolCode] });
-      onSaved();
+      queryClient.invalidateQueries({ queryKey: ["school", director?.schoolCode] });
     },
-    onError: (err: any) => {
+    onError: (err) => {
       setErrorMsg(err?.message ?? "Ocurrió un error");
     },
   });
@@ -50,8 +53,8 @@ function UpdateDirector({school, schoolCode, director, fallbackName, fallbackPho
     setErrorMsg(null);
 
     const payload: UpdateDirectorPayload = {
-      schoolCode: Number(schoolCode),
-      roleId: ROLE_DIRECTOR,
+      schoolCode: Number(director?.schoolCode),
+      roleId: 7,
       email: values.email.trim(),
       name: values.name.trim(),
       dui: values.dui.trim(),
@@ -102,8 +105,10 @@ function UpdateDirector({school, schoolCode, director, fallbackName, fallbackPho
                 maxLength={9}
                 placeholder="123456789"
                 className="w-full border border-gray-200 rounded p-2 font-light text-sm"
-                {...register("dui", { required: "DUI es obligatorio", validate: (value) =>
-                  validDUI(value) || "El DUI ingresado no es válido", })}
+                {...register("dui", {
+                  required: "DUI es obligatorio", validate: (value) =>
+                    validDUI(value) || "El DUI ingresado no es válido",
+                })}
               />
               {errors.dui?.message && (
                 <p className="text-xs text-red-600 mt-1">{errors.dui.message}</p>
@@ -139,7 +144,11 @@ function UpdateDirector({school, schoolCode, director, fallbackName, fallbackPho
               </button>
             </div>
           </form>
-        <UserSchoolSecctionsDirector school={school}/>
+
+          <UserSchoolSecctionsDirector
+            sections={sections}
+            director={director?.user}
+          />
         </div>
       </div>
     </div>
