@@ -11,10 +11,10 @@ import { School, User } from "lucide-react";
 const ROLE_DIRECTOR = 7;
 const ROLE_SUBDIRECTOR = 8;
 
-const findDirector = (userSchool: any[] = []) =>
+const findDirector = (userSchool: SchoolInfoWithUsers['userSchool'] = []) =>
   userSchool.find((x) => x.user?.roleId === ROLE_DIRECTOR) ?? null;
 
-const findSubdirector = (userSchool: any[] = []) =>
+const findSubdirector = (userSchool: SchoolInfoWithUsers['userSchool'] = []) =>
   userSchool.find((x) => x.user?.roleId === ROLE_SUBDIRECTOR) ?? null;
 
 function SchoolUpdate() {

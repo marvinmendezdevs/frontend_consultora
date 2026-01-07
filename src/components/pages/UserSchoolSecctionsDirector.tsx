@@ -6,9 +6,6 @@ import AddSeccionUserSchool from "./AddSeccionUserSchool";
 function UserSchoolSecctionsDirector({ school, }: {
     school: SchoolInfoWithUsers;
 }) {
-
-    console.log(school);
-
     const [openAdd, setOpenAdd] = useState(false);
 
     return (

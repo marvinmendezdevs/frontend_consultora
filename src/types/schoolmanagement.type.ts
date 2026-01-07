@@ -119,6 +119,8 @@ export type SectionItem = {
   grade: number | string;
   sectionClass: string;
   shift: string;
+  subtrack: string;
+  track: string;
   assignments: Assignment[];
 };
 

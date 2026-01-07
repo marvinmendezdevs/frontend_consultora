@@ -21,3 +21,8 @@ export const deleteUserSchool = async (payload: DeleteUserSchool) => {
 
     return data;
 }
+export const remediacionSchool = async (schoolCode: string) => {
+    const { data } = await api.get(`/school/${schoolCode}/training-offer`);
+
+    return data;
+}
