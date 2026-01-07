@@ -22,29 +22,7 @@ export type SchoolInfo = {
   schoolSchedule?: boolean;
   teachingAssignment?: boolean;
   Districts?: DistrictInfo;
-  sections?: Array<{
-    assignments: {
-      id: number;
-      teacherId: number;
-      sectionId: number;
-      subject: string;
-      teacher: {
-        id: number;
-        dui: string;
-        name: string;
-        email: string;
-        telephone: string;
-        status: boolean;
-      }
-    },
-    grade: string;
-    id: number;
-    schoolCode: string;
-    sectionClass: string;
-    shift: string;
-    subtrack: string;
-    track: string;
-  }>;
+  sections?: SectionItem[];
 };
 
 
@@ -131,7 +109,9 @@ export type DeleteUserSchool = {
 export type Assignment = {
   id: number;
   subject: string;
-  teacher: { dui: string };
+  teacherId: number;
+  sectionId: number;
+  isDirector: boolean;
 };
 
 export type SectionItem = {

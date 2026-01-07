@@ -1,25 +1,15 @@
-import type { SchoolInfo, SchoolInfoWithUsers } from "@/types/schoolmanagement.type";
+import type { SchoolInfo } from "@/types/schoolmanagement.type";
 import { BookOpen, Moon, Sun, Plus } from "lucide-react";
 import { useState } from "react";
 import AddSeccionUserSchool from "./AddSeccionUserSchool";
 
-function UserSchoolSecctionsDirector({
-    school,
-    director,
-}: {
+function UserSchoolSecctionsDirector({ school, }: {
     school: SchoolInfo;
-    director: SchoolInfoWithUsers["userSchool"][number];
 }) {
-    const directorDui = director.user.dui;
+
+    console.log(school);
 
     const [openAdd, setOpenAdd] = useState(false);
-
-    const handleAdd = (payload: { sectionId: number; subject: "Lenguaje" | "Matem_tica" }) => {
-        // Aquí mandás a tu backend o hacés mutation
-        // payload.sectionId
-        // payload.subject
-        console.log("AGREGAR:", payload);
-    };
 
     return (
         <>
@@ -38,7 +28,7 @@ function UserSchoolSecctionsDirector({
             <div className="flex flex-col gap-2 overflow-y-auto table-fixed w-full h-[200px]">
                 {school?.sections?.map((item: any) =>
                     item.assignments.map((assignment: any) =>
-                        assignment.teacher.dui === directorDui ? (
+                        assignment.isDirector ? (
                             <div
                                 key={assignment.id}
                                 className="flex items-center justify-between border border-gray-100 rounded p-2 gap-2"
@@ -88,8 +78,8 @@ function UserSchoolSecctionsDirector({
                 isOpen={openAdd}
                 onClose={() => setOpenAdd(false)}
                 sections={school.sections as any}
-                directorDui={director.user.dui}
-                onSubmit={handleAdd}
+                schoolCode={school.code}
+                teacher={school}
             />
         </>
     );

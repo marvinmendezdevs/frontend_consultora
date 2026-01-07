@@ -1,26 +1,28 @@
 import { useEffect, useMemo, useState } from "react";
 import { X } from "lucide-react";
-import type { SectionItem } from "@/types/schoolmanagement.type";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addSectionAssignment } from "@/services/school.services";
-
+import type { SectionItem, SchoolInfo } from "@/types/schoolmanagement.type";
+/* import { useMutation, useQueryClient } from "@tanstack/react-query";
+ */
 type SubjectValue = "Lenguaje" | "Matem_tica";
 
 function AddSeccionUserSchool({
     isOpen,
     onClose,
     sections,
-    directorDui,
     schoolCode,
+    teacher,
 }: {
     isOpen: boolean;
     onClose: () => void;
     sections: SectionItem[];
-    directorDui: string;
-    schoolCode: number;
+    schoolCode: string;
+    teacher: SchoolInfo;
 }) {
-    const queryClient = useQueryClient();
+/*     const queryClient = useQueryClient();
+ */
 
+    const director = teacher?.sections?.[0]?.assignments?.find((direct ) => direct.isDirector);
+    console.log(director?.teacherId);
     const [sectionId, setSectionId] = useState<number | "">("");
     const [subject, setSubject] = useState<SubjectValue | "">("");
     const [error, setError] = useState<string>("");
@@ -32,7 +34,7 @@ function AddSeccionUserSchool({
             const set = new Set<string>();
 
             for (const a of (sec as any).assignments ?? []) {
-                if (a.teacher?.dui === directorDui) {
+                if (a.isDirector) {
                     set.add(a.subject);
                 }
             }
@@ -41,7 +43,7 @@ function AddSeccionUserSchool({
         }
 
         return map;
-    }, [sections, directorDui]);
+    }, [sections]);
 
     const options = useMemo(() => {
         return (sections ?? []).map((s: any) => {
@@ -72,7 +74,7 @@ function AddSeccionUserSchool({
         if (has) setSectionId("");
     }, [subject, sectionId, assignedBySection]);
 
-    const mutation = useMutation({
+/*     const mutation = useMutation({
         mutationKey: ["add-section-assignment", schoolCode, directorDui],
         mutationFn: addSectionAssignment,
         onSuccess: async () => {
@@ -82,7 +84,7 @@ function AddSeccionUserSchool({
         onError: (err: any) => {
             setError(err?.response?.data?.msg ?? err?.message ?? "Error al guardar.");
         },
-    });
+    }); */
 
     if (!isOpen) return null;
 
@@ -100,15 +102,24 @@ function AddSeccionUserSchool({
             return;
         }
 
-        mutation.mutate({
+        const payload = {
+            schoolCode,
+            teacherId: director?.teacherId,
+            sectionId: sectionId,
+            subject,
+        };
+
+        console.log(payload);
+
+        /* mutation.mutate({
             schoolCode,
             directorDui,
             sectionId: sectionId,
             subject,
-        });
+        }); */
     };
 
-    const isSaving = mutation.isPending;
+    const isSaving = false;
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center" role="dialog" aria-modal="true">
