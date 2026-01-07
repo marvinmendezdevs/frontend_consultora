@@ -1,7 +1,7 @@
 import { getSchoolByMonitor } from "@/services/schoolmanagement.services";
 import type { SchoolByMonitorType } from "@/types/schoolmanagement.type";
 import { useQuery } from "@tanstack/react-query";
-import { Edit, MapPin, Phone, School, User } from "lucide-react";
+import { Cog, Edit, MapPin, Phone, School, User } from "lucide-react";
 import { Link } from "react-router";
 
 type SchoolMonitorDetailsType = {
@@ -68,23 +68,25 @@ function SchoolMonitorDetails({ active }: SchoolMonitorDetailsType) {
             </div>
 
             <p className="mt-3 font-bold border-t border-gray-300 border-dashed pt-3">
-                Captura de información escolar
+                Datos del escolar escolar
             </p>
 
-            <Link className="text-xs flex items-center bg-gray-100 p-2 my-3 justify-center border border-gray-300 gap-2 hover:bg-gray-300" to={`/schools/${schoolDetails.schoolCode}/update`}>
-                <Edit className="size-4" />
-                Editar datos del centro escolar
-            </Link>
+            <div className="space-y-2 mt-3">
+                <Link className="text-xs flex items-center bg-gray-100 p-2 justify-center border border-gray-300 gap-2 hover:bg-gray-300" to={`/schools/${schoolDetails.schoolCode}/update`}>
+                    <Edit className="size-4" />
+                    Actualización
+                </Link>
 
-            <div className="flex gap-1">
-                <Link className="py-1 px-2 bg-indigo-600 rounded-lg text-white hover:bg-indigo-700" to={`/monitores/formulario/${schoolDetails.schoolCode}/optimizacion`}>
+                <Link className="text-xs flex items-center bg-gray-100 p-2 justify-center border border-gray-300 gap-2 hover:bg-gray-300" to={`/monitores/formulario/${schoolDetails.schoolCode}/optimizacion`}>
+                    <Cog className="size-4" />
                     Optimización
                 </Link>
-                
-                <Link className="py-1 px-2 bg-green-700 rounded-lg text-white hover:bg-green-800" to={"/"}>
+
+                {/* <Link className="text-xs flex items-center bg-gray-100 p-2 justify-center border border-gray-300 gap-2 hover:bg-gray-300" to={"/"}>
                     Condiciones escolares
-                </Link>
+                </Link> */}
             </div>
+
         </div>
     );
 }
