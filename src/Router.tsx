@@ -18,6 +18,9 @@ import MonitorOptimizationForm from "./pages/MonitorOptimizationForm"
 import MonitorDashboard from "./components/pages/MonitorDashboard"
 import SchoolUpdate from "./components/pages/SchoolUpdate"
 import Remediation from "./components/pages/Remediation"
+import ReinforcementForm from "./components/pages/ReinforcementForm"
+import RemediationForm from "./components/pages/RemediationForm"
+import BaseFormRemediation from "./components/pages/BaseFormRemediation"
 
 function Router() {
 
@@ -47,10 +50,13 @@ function Router() {
               <Route path="dashboard" element={<MonitorDashboard />} />
               <Route path="formulario/:schoolCode/optimizacion" element={<MonitorOptimizationForm />} />
             </Route>
-            
+
             <Route path="/schools" element={<AppRoleValidator allowedRoles={["Monitor (Gestión Escolar)"]} />}>
               <Route path=":schoolCode/update" element={<SchoolUpdate />} />
               <Route path=":schoolCode/remediation" element={<Remediation />} />
+              <Route path="general/form" element={<BaseFormRemediation />} />
+              <Route path="reinforcement/form" element={<ReinforcementForm />} />
+              <Route path="remediation/form" element={<RemediationForm />} />
             </Route>
             <Route path="/facilitadores" element={<Facilitadores />} />
           </Route>

@@ -109,11 +109,13 @@ export type Assignment = {
 
 export type SectionItem = {
   id: number;
-  grade: number | string;
+  grade: number
   sectionClass: string;
   shift: string;
   subtrack: string;
   track: string;
+  activityLabel: string;
+  kind: "remediation" | "reinforcement";
   assignments: Assignment[];
 };
 
