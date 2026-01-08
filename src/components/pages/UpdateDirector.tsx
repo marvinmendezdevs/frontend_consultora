@@ -147,7 +147,7 @@ function UpdateDirector({ users, sections }: UpdateDirectorType) {
 
           <UserSchoolSecctionsDirector
             sections={sections}
-            director={director?.user}
+            user={director?.user}
           />
         </div>
       </div>
