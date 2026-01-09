@@ -31,6 +31,7 @@ export const TeacherSchema = z.object({
     email: z.string(),
     telephone: z.string(),
     status: z.boolean(),
+    teacherAccess: z.boolean(),
 });
 
 export const TeacherTutorSchema = TeacherSchema.extend({

@@ -15,14 +15,14 @@ export type DistrictInfo = {
 export type SchoolInfo = {
   code: string;
   name: string;
-  address?: string;
-  directorName?: string;
-  directorPhone?: string;
-  districtId?: number;
-  schoolEnrollment?: boolean;
-  schoolSchedule?: boolean;
-  teachingAssignment?: boolean;
-  Districts?: DistrictInfo;
+  address: string;
+  directorName: string;
+  directorPhone: string;
+  districtId: number;
+  schoolEnrollment: boolean;
+  schoolSchedule: boolean;
+  teachingAssignment: boolean;
+  Districts: DistrictInfo;
   sections: SectionItem[];
 };
 

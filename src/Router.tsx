@@ -11,7 +11,7 @@ import Feedback from "./pages/Feedback"
 import FeedBackCreate from "./components/pages/FeedBackCreate"
 import FeedBackView from "./components/pages/FeedBackView"
 import TutorshipInfoTutor from "./components/pages/TutorshipInfoTutor"
-import Facilitadores from "./components/pages/Facilitadores"
+import Facilitadores from "./pages/Facilitadores"
 import Monitores from "./pages/Monitores"
 import AppRoleValidator from "./components/layouts/AppRoleValidator"
 import MonitorOptimizationForm from "./pages/MonitorOptimizationForm"
@@ -21,6 +21,7 @@ import Remediation from "./components/pages/Remediation"
 import ReinforcementForm from "./components/pages/ReinforcementForm"
 import RemediationForm from "./components/pages/RemediationForm"
 import BaseFormRemediation from "./components/pages/BaseFormRemediation"
+import FacilitatorTeacherList from "./pages/FacilitatorTeacherList"
 
 function Router() {
 
@@ -58,7 +59,11 @@ function Router() {
               <Route path="reinforcement/form" element={<ReinforcementForm />} />
               <Route path="remediation/form" element={<RemediationForm />} />
             </Route>
-            <Route path="/facilitadores" element={<Facilitadores />} />
+
+            <Route path="/facilitadores" element={<AppRoleValidator allowedRoles={["Facilitador (Gestión Escolar)"]} />}>
+              <Route index element={<Facilitadores />} />
+              <Route path=":schoolCode/escuela" element={<FacilitatorTeacherList />} />
+            </Route>
           </Route>
         </Route>
       </Routes>
