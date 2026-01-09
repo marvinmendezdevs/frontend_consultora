@@ -1,7 +1,7 @@
 import { getSchoolByMonitor } from "@/services/schoolmanagement.services";
 import type { SchoolByMonitorType } from "@/types/schoolmanagement.type";
 import { useQuery } from "@tanstack/react-query";
-import { Cog, Edit, ListChecks, MapPin, Phone, School, User } from "lucide-react";
+import { Cog, MapPin, Phone, School, User } from "lucide-react";
 import { Link } from "react-router";
 
 type SchoolMonitorDetailsType = {
@@ -72,20 +72,20 @@ function SchoolMonitorDetails({ active }: SchoolMonitorDetailsType) {
             </p>
 
             <div className="space-y-2 mt-3">
-                <Link className="text-xs flex items-center bg-gray-100 p-2 justify-center border border-gray-300 gap-2 hover:bg-gray-300" to={`/schools/${schoolDetails.schoolCode}/update`}>
+                {/* <Link className="text-xs flex items-center bg-gray-100 p-2 justify-center border border-gray-300 gap-2 hover:bg-gray-300" to={`/schools/${schoolDetails.schoolCode}/update`}>
                     <Edit className="size-4" />
                     Actualización
-                </Link>
+                </Link> */}
 
                 <Link className="text-xs flex items-center bg-gray-100 p-2 justify-center border border-gray-300 gap-2 hover:bg-gray-300" to={`/monitores/formulario/${schoolDetails.schoolCode}/optimizacion`}>
                     <Cog className="size-4" />
                     Optimización
                 </Link>
 
-                <Link className="text-xs flex items-center bg-gray-100 p-2 justify-center border border-gray-300 gap-2 hover:bg-gray-300" to={`/schools/${schoolDetails.schoolCode}/remediation`}>
+                {/* <Link className="text-xs flex items-center bg-gray-100 p-2 justify-center border border-gray-300 gap-2 hover:bg-gray-300" to={`/schools/${schoolDetails.schoolCode}/remediation`}>
                 <ListChecks className="size-4" />
                     Remedicación y refuerzo
-                </Link> 
+                </Link>  */}
             </div>
 
         </div>

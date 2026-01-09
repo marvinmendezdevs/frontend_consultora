@@ -17,7 +17,7 @@ type newDirectorSection = {
 
 // type Assignaments = SchoolInfoWithUsers['sections'][0]['assignments']
 
-function UserSchoolSecctionsDirector({ sections, user }: UserSchoolSecctionsDirectorProps) {
+function UserSchoolSecctionsDirector({ sections }: UserSchoolSecctionsDirectorProps) {
     const [assignmentsSections, setAssignmentsSections] = useState<newDirectorSection[]>([]);
 
     const handleAddSubjectSection = (subject: string, sectionId: number) => {
