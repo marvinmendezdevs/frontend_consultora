@@ -1,6 +1,5 @@
 import UpdateSchool from "./UpdateSchool";
 import UpdateDirector from "./UpdateDirector";
-import UpdateSubdirector from "./UpdateSubdirector";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router";
 import type { SchoolInfoWithUsers } from "@/types/schoolmanagement.type";
@@ -10,7 +9,7 @@ import { School, User } from "lucide-react";
 function SchoolUpdate() {
   const { schoolCode } = useParams();
 
-  const { isLoading, isError, data, refetch } = useQuery<SchoolInfoWithUsers>({
+  const { isLoading, isError, data } = useQuery<SchoolInfoWithUsers>({
     queryKey: ["school", schoolCode],
     queryFn: () => {
       if (!schoolCode) throw Error("No se proporciono un codigo de centro escolar");
@@ -19,9 +18,9 @@ function SchoolUpdate() {
     enabled: !!schoolCode,
   });
 
-  const onSaved = () => {
-    refetch();
-  };
+  // const onSaved = () => {
+  //   refetch();
+  // };
 
   if (!schoolCode) {
     return <p className="text-sm text-red-600">No se proporcionó un código de centro escolar.</p>;

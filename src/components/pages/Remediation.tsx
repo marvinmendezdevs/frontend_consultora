@@ -11,12 +11,11 @@ function Remediation() {
     queryFn: () => remediacionSchool(schoolCode as string),
   });
 
-  console.log(data);
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error: {isError}</p>;
   if (data) return (
     <div>
-      <h1 className="text-xl font-semibold my-6">Remedicación y refuerzo</h1>
+      <h1 className="text-xl font-semibold my-6">Remediación y refuerzo</h1>
       <div>
         <TableRemediation data={data} />
       </div>

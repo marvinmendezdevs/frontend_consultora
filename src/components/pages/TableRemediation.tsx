@@ -20,9 +20,14 @@ export type SectionRouteState = Pick<
 > & {
     activityLabel: string;
     kind: RowKind;
+    schoolCode: string;
 };
 
-function TableRemediation({ data }: { data: SectionItem[] }) {
+interface TableRemediationProps {
+    data: SectionItem[];
+}
+
+function TableRemediation({ data }: TableRemediationProps) {
     const navigate = useNavigate();
 
     const handleClick = (item: SectionItem, row: Row) => {
@@ -35,8 +40,10 @@ function TableRemediation({ data }: { data: SectionItem[] }) {
             shift: item.shift,
             activityLabel: row.label,
             kind: row.kind,
+            schoolCode: item.schoolCode,
         };
 
+        console.log(payload);
         const path =
             row.kind === "general"
                 ? "/schools/general/form"

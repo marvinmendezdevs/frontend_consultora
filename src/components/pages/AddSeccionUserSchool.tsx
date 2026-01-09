@@ -27,17 +27,17 @@ function AddSeccionUserSchool({
     const assignedBySection = useMemo(() => {
         const map = new Map<number, Set<string>>();
 
-        for (const sec of sections ?? []) {
-            const set = new Set<string>();
+        // for (const sec of sections ?? []) {
+        //     const set = new Set<string>();
 
-            for (const a of (sec).assignments ?? []) {
-                if (a.isDirector) {
-                    set.add(a.subject);
-                }
-            }
+        //     for (const a of (sec).assignments ?? []) {
+        //         if (a.isDirector) {
+        //             set.add(a.subject);
+        //         }
+        //     }
 
-            map.set((sec).id, set);
-        }
+        //     map.set((sec).id, set);
+        // }
 
         return map;
     }, [sections]);
@@ -89,7 +89,7 @@ function AddSeccionUserSchool({
         }
 
         const payload = {
-            schoolCode,
+            // schoolCode,
             teacherId: director?.id,
             sectionId: sectionId,
             subject,
