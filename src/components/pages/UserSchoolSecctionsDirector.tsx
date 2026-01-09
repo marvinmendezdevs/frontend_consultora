@@ -50,7 +50,7 @@ function UserSchoolSecctionsDirector({ sections }: UserSchoolSecctionsDirectorPr
 
     const handleSaveSections = () => {
         const data = {
-            roleId: user?.role.name ?? 'usuario',
+            // roleId: user?.role.name ?? 'usuario',
             sections: sectionsToView
         }
         console.log(data);
