@@ -49,7 +49,11 @@ function UserSchoolSecctionsDirector({ sections, user }: UserSchoolSecctionsDire
     }
 
     const handleSaveSections = () => {
-        
+        const data = {
+            roleId: user?.role.name ?? 'usuario',
+            sections: sectionsToView
+        }
+        console.log(data);
     }
 
 
@@ -58,7 +62,7 @@ function UserSchoolSecctionsDirector({ sections, user }: UserSchoolSecctionsDire
             <h2 className="text-2xl mb-3">Secciones del centro escolar</h2>
 
             {assignmentsSections.length > 0 && (
-                <div className="mb-5">
+                <div className="mb-5 bg-gray-100 p-3 rounded-lg">
                     <p className="text-indigo-600 mb-3">Secciones que atiende el usuario</p>
                     <div className="font-normal">
                         {sectionsToView.map((string, index) => (

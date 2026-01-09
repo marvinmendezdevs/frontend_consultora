@@ -26,3 +26,9 @@ export const remediacionSchool = async (schoolCode: string) => {
 
     return data;
 }
+
+export const setAdditionalInformation = async (schoolCode: string, formData: unknown) => {
+    const { data } = await api.post(`/school/${schoolCode}/additional-information`, formData);
+
+    return data;
+}
