@@ -16,6 +16,18 @@ export default class Env {
 
 }
 
+export const cleanSearchTerm = (str: string) => {
+  if (!str || typeof str !== 'string') return '';
+
+  return str
+    .trim() // 1. Quita espacios al inicio y final
+    .toLowerCase() // 2. Todo a minúsculas
+    .normalize("NFD") // 3. Descompone caracteres (ej: 'ñ' -> 'n' + '~')
+    .replace(/[\u0300-\u036f]/g, "") // 4. Elimina los diacríticos (acentos, tildes)
+    .replace(/[^a-z0-9\s]/g, "") // 5. (Opcional) Elimina todo lo que NO sea letra, número o espacio
+    .replace(/\s+/g, " "); // 6. Convierte múltiples espacios en uno solo ("hola   mundo" -> "hola mundo")
+};
+
 export const getCategoryFromScore = (score: number): Category => {
     // Si el score es mayor o igual a 8, es Alto
     if (score >= 8) {
