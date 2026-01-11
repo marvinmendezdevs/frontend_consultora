@@ -28,13 +28,24 @@ function TeacherAccessListItem({ assignment }: TeacherAccessListItemProps) {
         mutation.mutate(sectionId);
     }
 
+    const checkGrade = (grade: number): string => {
+
+    const highSchoolYears: Record<number, string> = {
+        10: '1er. Año de Bachillerato',
+        11: '2do. Año de Bachillerato',
+        12: '3er. Año de Bachillerato'
+    };
+
+    return highSchoolYears[grade] ?? `${grade}º Grado`;
+}
+
     return (
         <li key={assignment.id}>
             <div className="flex items-center justify-between">
                 <div className="p-3">
                     <div className="font-semibold flex items-center gap-2">
                         <p>
-                            {assignment.id}{assignment.section.grade}º {validateValidName(assignment.section.track)}  "{assignment.section.sectionClass}"
+                            {checkGrade(Number(assignment.section.grade))} {validateValidName(assignment.section.track)}  "{assignment.section.sectionClass}"
                         </p>
                         <span className="text-[10px] font-normal border border-gray-300 p-0.5 rounded">
                             {assignment.subject}
