@@ -105,6 +105,7 @@ export type Assignment = {
   teacherId: number;
   sectionId: number;
   isDirector: boolean;
+  access: string | null
 };
 
 export type SectionItem = {

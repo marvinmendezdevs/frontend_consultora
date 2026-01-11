@@ -1,6 +1,7 @@
 import z from "zod";
 import { DiagnosticResponseSchema } from "./common.schema";
 import { SchoolSchema } from "./school.schema";
+import { TeacherSchema } from "./teacher.schemas";
 
 export const SectionSchema = z.object({
     id: z.number(),
@@ -21,18 +22,11 @@ export const AssignamentSchema = z.object({
     teacherId: z.number(),
     sectionId: z.number(),
     subject: z.string(),
+    access: z.boolean(),
     section: SectionSchoolSchema,
 });
 
-export const TeacherSchema = z.object({
-    id: z.number(),
-    dui: z.string(),
-    name: z.string(),
-    email: z.string(),
-    telephone: z.string(),
-    status: z.boolean(),
-    teacherAccess: z.boolean(),
-});
+
 
 export const TeacherTutorSchema = TeacherSchema.extend({
     assignments: z.array(AssignamentSchema)
