@@ -7,6 +7,7 @@ type SchoolCardComponentProps = {
 }
 
 function SchoolCardComponent({ school }: SchoolCardComponentProps) {
+    
     return (
         <div className="border border-gray-300 rounded p-3 flex flex-col items-center gap-3 md:flex-row" key={school.code}>
             <div className="bg-indigo-600 p-3 rounded-full text-white">

@@ -1,13 +1,13 @@
 import TeacherCardToAccess from "@/components/pages/TeacherCardToAccess";
 import { getTeacherBySchool } from "@/services/school.services";
-import type { TeacherType } from "@/types/index.types";
+import type { TeacherTutorType } from "@/types/tutorship.types";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router"
 
 function FacilitatorTeacherList() {
     const { schoolCode } = useParams();
 
-    const { isLoading, isError, data: teachers } = useQuery<TeacherType[]>({
+    const { isLoading, isError, data: teachers } = useQuery<TeacherTutorType[]>({
         queryKey: ["teacherBySchool", schoolCode],
         queryFn: () => {
 
@@ -52,7 +52,7 @@ function FacilitatorTeacherList() {
                 </Link>
             </div>
 
-            <div className="space-y-2 divide-y divide-gray-200">
+            <div className="space-y-2">
                 {teachers.map(teacher => (
                     <TeacherCardToAccess
                         key={teacher.id}
