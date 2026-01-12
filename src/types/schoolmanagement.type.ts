@@ -1,4 +1,4 @@
-import type { SchoolByMonitorSchema } from "@/schemas/schoolmanagement.schema";
+import type { DashboardFacilitatorSchema, SchoolByMonitorSchema } from "@/schemas/schoolmanagement.schema";
 import z from "zod";
 import type { UserType } from "./auth.types";
 
@@ -125,3 +125,4 @@ export type SectionItem = {
   email: string;
 };
 
+export type DashboardFacilitatorType = z.infer<typeof DashboardFacilitatorSchema>

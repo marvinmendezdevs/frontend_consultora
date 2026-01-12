@@ -73,7 +73,7 @@ function FeedBackForm({ observation }: FeedBackFormType) {
 
     if (data) return (
         <>
-            <h2 className="text-lg font-black text-indigo-600">Observación de clase</h2>
+            <h2 className="text-2xl font-black text-indigo-600">Observación de clase</h2>
             <form
                 onSubmit={handleSubmit}
                 className="overflow-x-auto mt-3"

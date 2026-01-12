@@ -42,7 +42,7 @@ function Observations() {
 
     if (data) return (
         <div>
-            <h2 className="text-lg font-black text-indigo-600">Observaciones de clases</h2>
+            <h2 className="text-2xl font-black text-indigo-600">Observaciones de clases</h2>
 
             <p className="font-bold mt-2">Información del docente</p>
             <div className="flex justify-between items-center">

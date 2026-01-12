@@ -44,7 +44,7 @@ function FeedBackView() {
     if(data) return (
         <>
             <div className="flex justify-between items-center mb-3">
-                <h2 className="text-lg font-black text-indigo-600">Detalles del último informe</h2>
+                <h2 className="text-2xl font-black text-indigo-600">Detalles del último informe</h2>
                 <button className="bg-indigo-600 text-white text-xs py-1 px-2 rounded-lg" onClick={ () => navigate(-1) }>
                     Volver
                 </button>

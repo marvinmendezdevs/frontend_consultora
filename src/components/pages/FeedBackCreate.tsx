@@ -57,7 +57,7 @@ function FeedBackCreate() {
 
     if (observation) return (
         <div>
-            <h2 className="text-lg font-black text-indigo-600">Generador de reportes de retroalimentación docente</h2>
+            <h2 className="text-2xl font-black text-indigo-600">Generador de reportes de retroalimentación docente</h2>
             <p className="text-sm">
                 <span className="font-bold">Propósito del encuentro:</span> Dar a conocer al docente el informe de la sesión observada, resaltando fortalezas y presentando áreas de mejora para el fortalecimiento de su práctica.
             </p>

@@ -31,7 +31,8 @@ type RedirectKey =
   | 'Monitor (Gestión Escolar)'
   | 'Facilitador (Gestión Escolar)'
   | 'Coordinador (Gestión Escolar)'
-  | 'Tutor (Gestión Escolar)';
+  | 'Tutor (Gestión Escolar)'
+  | 'Coordinador de facilitadores (Gestión escolar)'
 
 type RedirectType = Record<RedirectKey, string>;
 
@@ -40,6 +41,7 @@ const redirects: RedirectType = {
   'Facilitador (Gestión Escolar)': '/facilitadores',
   'Coordinador (Gestión Escolar)': '/dashboard',
   'Tutor (Gestión Escolar)': '/tutoria',
+  'Coordinador de facilitadores (Gestión escolar)': '/',
 };
 
   const mutation = useMutation<LoginResponseType, AxiosError<ErrorResponseApiType>, LoginType>({

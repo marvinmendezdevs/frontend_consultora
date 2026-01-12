@@ -73,7 +73,7 @@ function MonitorOptimizationForm() {
 
   return (
     <>
-      <h2 className="text-lg font-black text-indigo-600">Formulario de captura de datos: optimización de centro escolar</h2>
+      <h2 className="text-2xl font-black text-indigo-600">Formulario de captura de datos: optimización de centro escolar</h2>
 
       {mutation.isPending ? (
         <p className="text-xs text-slate-800 flex justify-center items-center gap-1 p-3">

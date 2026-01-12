@@ -82,7 +82,7 @@ function DiagnosticForm({ dataAccess }: DiagnosticFormType) {
 
     if (data) return (
         <div className="mt-5">
-            <h2 className="text-lg font-black text-indigo-600">Instrumento Diagnóstico - Centros educativos</h2>
+            <h2 className="text-2xl font-black text-indigo-600">Instrumento Diagnóstico - Centros educativos</h2>
             <p className="text-sm text-gray-600 mb-3">Proyecto de Modernización Educativa - El Salvador</p>
 
             {mutation.isPending ? (

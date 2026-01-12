@@ -1,6 +1,5 @@
 import {
   Menu,
-  Bell
 } from 'lucide-react';
 import useAuth from '@/hooks/useAuth.hooks';
 import AsideLayout from './AsideLayout';
@@ -52,11 +51,11 @@ function AppLayout(){
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="relative p-2 text-slate-500 hover:bg-slate-100 rounded-full">
+            {/* <button className="relative p-2 text-slate-500 hover:bg-slate-100 rounded-full">
               <Bell size={20} />
               <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-            </button>
-            <div className="flex items-center gap-3 pl-4 border-l border-slate-200">
+            </button> */}
+            <div className="flex items-center gap-3 pl-4">
               <div className="text-right hidden md:block">
                 <p className="text-sm font-medium text-slate-900">{user.name}</p>
                 <p className="text-xs text-slate-500">{user.role.name}</p>

@@ -39,7 +39,7 @@ function TutorLeader() {
 
     if (data) return (
         <>
-            <h2 className="text-lg font-black text-indigo-600">Información de tutores</h2>
+            <h2 className="text-2xl font-black text-indigo-600">Información de tutores</h2>
             <TutorshipCountVirtualPresencial setTutorType={setTutorType} />
             <TutorshipInfoTutores
                 tutor={data.data}
