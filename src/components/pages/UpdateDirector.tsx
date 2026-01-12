@@ -11,6 +11,7 @@ type UpdateDirectorType = {
   sections: SchoolInfoWithUsers['sections']
 }
 
+
 function UpdateDirector({ users, sections }: UpdateDirectorType) {
   const queryClient = useQueryClient();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);

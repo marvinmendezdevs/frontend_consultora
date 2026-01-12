@@ -1,5 +1,6 @@
 import UpdateSchool from "./UpdateSchool";
 import UpdateDirector from "./UpdateDirector";
+import UpdateSubdirector from "./UpdateSubdirector";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useParams } from "react-router";
 import type { SchoolInfoWithUsers } from "@/types/schoolmanagement.type";
@@ -18,10 +19,6 @@ function SchoolUpdate() {
     enabled: !!schoolCode,
   });
 
-  // const onSaved = () => {
-  //   refetch();
-  // };
-
   if (!schoolCode) {
     return <p className="text-sm text-red-600">No se proporcionó un código de centro escolar.</p>;
   }
@@ -36,6 +33,7 @@ function SchoolUpdate() {
 
   if (!data) return null;
 
+  
   return (
     <>
     <div className="flex items-center justify-between mb-4">
@@ -59,16 +57,20 @@ function SchoolUpdate() {
           <UpdateDirector 
             users={ data.userSchool }
             sections={data.sections}
-          />
+            />
         </div>
 
-        {/* <div className="w-full px-2 rounded-lg gap-2 font-semibold bg-gray-50 py-4">
+        <div className="w-full px-2 rounded-lg gap-2 font-semibold bg-gray-50 py-4">
           <div className="flex items-center gap-2 mb-5">
             <div><User className="size-8 bg-blue-50 text-blue-700 rounded-lg p-1"/></div>
-            <p>{subdirector ? "Subdirector(a)" : "Agregar subdirector(a)"}</p>
+            <p>Agregar Subdirector(a)</p>
           </div>
-          <UpdateSubdirector schoolCode={data.code} subdirector={subdirector} subdirectores={data} onSaved={onSaved}/>
-        </div> */}
+          <UpdateSubdirector 
+            users={ data.userSchool }
+            sections={data.sections}   
+            schoolCode={data.code}     
+          />
+        </div>
       </div>
     </>
   );

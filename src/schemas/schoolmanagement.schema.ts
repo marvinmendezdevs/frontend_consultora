@@ -8,3 +8,19 @@ export const SchoolByMonitorSchema = z.object({
     createdAt: z.string(),
     school: SchoolSchema
 });
+
+export const SubdirectorForm = z.object ({
+  email: z.string(),
+  name: z.string(),
+  dui: z.string(),
+  telephone: z.string(),
+});
+
+export const UpdateSubdirectorPayload = z.object ({
+  schoolCode: z.number(),
+  roleId: z.number(),
+  email: z.string(),
+  name: z.string(),
+  dui: z.string(),
+  telephone: z.string()
+});

@@ -1,8 +1,10 @@
-import type { SchoolByMonitorSchema } from "@/schemas/schoolmanagement.schema";
+import type { SchoolByMonitorSchema, SubdirectorForm, UpdateSubdirectorPayload } from "@/schemas/schoolmanagement.schema";
 import z from "zod";
 import type { UserType } from "./auth.types";
 
 export type SchoolByMonitorType = z.infer<typeof SchoolByMonitorSchema>
+export type SubdirectorForm = z.infer<typeof SubdirectorForm>
+export type UpdateSubdirectorPayload = z.infer<typeof UpdateSubdirectorPayload>
 
 export type SchoolAnswers = Record<string, string | null | undefined>;
 export type DistrictInfo = {
@@ -71,32 +73,11 @@ export type UpdateDirectorPayload = {
   telephone: string;
 };
 
-export type UpdateSubdirectorPayload = {
-  schoolCode: number;
-  roleId: number;
-  email: string;
-  name: string;
-  dui: string;
-  telephone: string;
-};
-
 export type DirectorForm = {
   email: string;
   name: string;
   dui: string;
   telephone: string;
-};
-
-export type SubdirectorForm = {
-  email: string;
-  name: string;
-  dui: string;
-  telephone: string;
-};
-
-export type DeleteUserSchool = {
-  userId: number;
-  schoolCode: string;
 };
 
 export type Assignment = {
