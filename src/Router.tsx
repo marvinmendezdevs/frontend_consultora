@@ -22,6 +22,7 @@ import ReinforcementForm from "./components/pages/ReinforcementForm"
 import RemediationForm from "./components/pages/RemediationForm"
 import BaseFormRemediation from "./components/pages/BaseFormRemediation"
 import FacilitatorTeacherList from "./pages/FacilitatorTeacherList"
+import FacilitadoresHome from "./pages/FacilitadoresHome"
 
 function Router() {
 
@@ -61,6 +62,7 @@ function Router() {
             </Route>
 
             <Route path="/facilitadores" element={<AppRoleValidator allowedRoles={["Facilitador (Gestión Escolar)"]} />}>
+              <Route element={<FacilitadoresHome />} />
               <Route index element={<Facilitadores />} />
               <Route path=":schoolCode/escuela" element={<FacilitatorTeacherList />} />
             </Route>

@@ -65,6 +65,15 @@ function AsideLayout() {
             </NavLinksVerificator>
           </div>
 
+          <NavLinksVerificator allowedRoles={["Facilitador (Gestión Escolar)"]} userRole={user.role.name}>
+            <SidebarItem
+              icon={<GraduationCap />}
+              label="Centros Escolares"
+              active={activeTab === "/facilitadores"}
+              path="facilitadores"
+            />
+          </NavLinksVerificator>
+
           <p className="px-4 text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4 mt-8">
             Administración
           </p>
