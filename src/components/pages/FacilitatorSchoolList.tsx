@@ -2,17 +2,31 @@ import { getAllSchools } from "@/services/school.services";
 import type { SchoolInfo } from "@/types/schoolmanagement.type";
 import { useQuery } from "@tanstack/react-query"
 import SchoolCardComponent from "./SchoolCardComponent";
-import { useState } from "react";
-import { cleanSearchTerm } from "@/utils/index.utils"
+import { usePagination } from "@/hooks/usePagination";
+import { cleanSearchTerm } from "@/utils/index.utils";
 
 
 function FacilitatorSchoolList() {
-    const [searchTerm, setSearchTerm] = useState("");
-
     const { isLoading, isError, data: schools } = useQuery<SchoolInfo[]>({
         queryKey: ["allSchools"],
         queryFn: getAllSchools,
         retry: false,
+    });
+
+    const schoolFiltered = (school: SchoolInfo, searchTerm: string) => {
+        return school.code.includes(searchTerm) || cleanSearchTerm(school.name).includes(cleanSearchTerm(searchTerm))
+    }
+
+    const {
+        handleSetSearchTerm,
+        totalPage,
+        itemsPage: schoolsPage,
+        setPage,
+        page
+    } = usePagination<SchoolInfo>({
+        data: schools ?? [],
+        perPage: 5,
+        fn: schoolFiltered
     });
 
     if (isLoading) return (
@@ -29,26 +43,34 @@ function FacilitatorSchoolList() {
     );
 
     if (!schools) return <p>No hay lista de centro escolares disponible. Contacte con soporte.</p>
-
-    // Filtro de escuelas
-    const schoolFiltered = schools.filter(school => school.code.includes(searchTerm) || cleanSearchTerm(school.name).includes(cleanSearchTerm(searchTerm)));
-
     return (
         <>
             <input
                 className="p-2 border border-gray-300 block mb-3 outline-0 w-full md:ms-auto"
                 type="search"
                 placeholder="Digita el código o nombre del centro escolar"
-                onChange={ e => setSearchTerm(e.target.value) }
+                onChange={handleSetSearchTerm}
             />
 
             <div className="space-y-2">
-                {schoolFiltered.map(school => (
+                {schoolsPage.map(school => (
                     <SchoolCardComponent
                         key={school.code}
-                        school={ school }
+                        school={school}
                     />
                 ))}
+                <div className="flex justify-between">
+                    {schoolsPage.length !== 0 && page > 1 ? (
+                        <button onClick={() => setPage(page - 1)} className="inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 focus:ring-slate-200 shadow-sm px-4 py-2.5 text-sm rounded-xl gap-2 cursor-pointer">anterior</button>
+                    ) : (
+                        <button className="inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 focus:ring-slate-200 shadow-sm px-4 py-2.5 text-sm rounded-xl gap-2 cursor-not-allowed ">anterior</button>
+                    )}
+                    {schoolsPage.length !== 0 && page < totalPage ? (
+                        <button onClick={() => setPage(page + 1)} className="inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 focus:ring-slate-200 shadow-sm px-4 py-2.5 text-sm rounded-xl gap-2 cursor-pointer">siguiente</button>
+                    ) : (
+                        <button className="inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 focus:ring-slate-200 shadow-sm px-4 py-2.5 text-sm rounded-xl gap-2 cursor-not-allowed">siguiente</button>
+                    )}
+                </div>
             </div>
         </>
     )
