@@ -18,6 +18,6 @@ export const DashboardFacilitatorSchema = z.object({
     sectionPerFacilitator: z.array(UserSchema.extend({
         _count: z.object({
             teacherSectionAccess: z.number()
-        })
-    }))
+        }),
+    })),
 });
