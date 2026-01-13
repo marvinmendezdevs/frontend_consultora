@@ -36,8 +36,8 @@ function SchoolUpdate() {
   
   return (
     <>
-    <div className="flex items-center justify-between mb-4">
-      <h1 className="text-2xl font-semibold text-indigo-600 mb-5">Actualización de datos</h1>
+    <div className="flex items-center justify-between mb-5">
+      <h1 className="text-2xl font-semibold text-indigo-600">Actualización de datos</h1>
       <Link to="/monitores" className="text-indigo-600 hover:text-indigo-800 text-sm px-2 py-1 rounded bg-indigo-50 hover:bg-indigo-100 disabled:opacity-50">Regresar</Link>
     </div>
       <div className="flex flex-col gap-2 mb-5">

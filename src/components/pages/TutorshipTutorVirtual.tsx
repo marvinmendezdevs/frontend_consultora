@@ -24,10 +24,10 @@ interface VirtualTutorshipEvent {
   date: string;
   hour: string;
   subject: string;
-  transcription?: string;
-  attendance?: string;
-  quizz?: string;
-  recording?: string;
+  transcription: string;
+  attendance: string;
+  quizz: string;
+  recording: string;
 }
 
 const HOURS = Array.from({ length: 13 }, (_, i) => 7 + i);
