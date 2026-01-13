@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query"
 import SchoolCardComponent from "./SchoolCardComponent";
 import { usePagination } from "@/hooks/usePagination";
 import { cleanSearchTerm } from "@/utils/index.utils";
+import Pagination from "../ui/Pagination";
 
 
 function FacilitatorSchoolList() {
@@ -59,18 +60,11 @@ function FacilitatorSchoolList() {
                         school={school}
                     />
                 ))}
-                <div className="flex justify-between">
-                    {schoolsPage.length !== 0 && page > 1 ? (
-                        <button onClick={() => setPage(page - 1)} className="inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 focus:ring-slate-200 shadow-sm px-4 py-2.5 text-sm rounded-xl gap-2 cursor-pointer">anterior</button>
-                    ) : (
-                        <button className="inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 focus:ring-slate-200 shadow-sm px-4 py-2.5 text-sm rounded-xl gap-2 cursor-not-allowed ">anterior</button>
-                    )}
-                    {schoolsPage.length !== 0 && page < totalPage ? (
-                        <button onClick={() => setPage(page + 1)} className="inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 focus:ring-slate-200 shadow-sm px-4 py-2.5 text-sm rounded-xl gap-2 cursor-pointer">siguiente</button>
-                    ) : (
-                        <button className="inline-flex items-center justify-center font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 focus:ring-slate-200 shadow-sm px-4 py-2.5 text-sm rounded-xl gap-2 cursor-not-allowed">siguiente</button>
-                    )}
-                </div>
+                <Pagination
+                    setPage={ setPage }
+                    totalPage={ totalPage }
+                    page={ page }
+                />
             </div>
         </>
     )
