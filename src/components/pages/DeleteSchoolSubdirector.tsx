@@ -1,53 +1,45 @@
-import { useState } from "react";
-import type { DeleteUserSchool } from "@/types/schoolmanagement.type";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteUserSchool } from "@/services/school.services";
+import { useState } from "react"
+import UpdateSubdirector from "./UpdateSubdirector"
 
-function DeleteSchoolSubdirector({ subdirectores, schoolCode, onSaved }: { subdirectores: any; schoolCode: string; onSaved: () => void; }) {
-  const queryClient = useQueryClient();
-
-  const [deletingUserId, setDeletingUserId] = useState<number | null>(null);
-
-  const mutationDelete = useMutation({
-    mutationKey: ["delete-userSchool", schoolCode],
-    mutationFn: deleteUserSchool,
-    onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["school", schoolCode] });
-      onSaved();
-      setDeletingUserId(null);
-    },
-    onError: (err: any) => {
-      console.log(err);
-      setDeletingUserId(null);
-    },
-  });
-
-  const handleDelete = (payload: DeleteUserSchool) => {
-    setDeletingUserId(payload.userId);
-    mutationDelete.mutate({ userId: payload.userId, schoolCode: payload.schoolCode });
-  };
-
-  return (
-    <>
-      { subdirectores.userSchool.filter((x: any) => x.user.roleId === 8).length > 0 ? (
-          subdirectores.userSchool.filter((x: any) => x.user.roleId === 8).map((subdirector: any) => {
-              const isThisDeleting = mutationDelete.isPending && deletingUserId === subdirector.userId;
-              return (
-                  <div key={subdirector.id} className="border border-gray-100 rounded p-2 flex flex-col md:flex-row items-center md:justify-between">
-                  <p className="font-light">{subdirector.user.name}</p>
-  
-                  <button type="button" disabled={isThisDeleting} onClick={() => handleDelete({ userId: subdirector.userId, schoolCode: subdirector.schoolCode })}
-                      className="px-2 py-1 rounded border border-red-500 bg-red-50 text-red-500 hover:cursor-pointer disabled:opacity-50 text-xs font-semibold">
-                      {isThisDeleting ? "Eliminando..." : "Eliminar"}
-                  </button>
-                  </div>
-              );
-              })
-      ) : (
-        <p className="text-center">No hay subdirectores agregados</p>
-      )}
-    </>
-  );
+interface deleteUserProps{
+  userId: number,
+  schoolCode: number,
 }
 
-export default DeleteSchoolSubdirector;
+function DeleteSchoolSubdirector({userId, schoolCode}: deleteUserProps) {
+
+  const [closeModal, setCloseModal] = useState<number>()
+  console.log(userId, schoolCode, closeModal)
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur">
+      <div className="bg-white w-full max-w-md p-6 rounded-xl shadow-2xl transform transition-all">
+        
+        <h3 className="text-xl font-bold text-gray-900 mb-2">
+          ¿Eliminar usuario?
+        </h3>
+        
+        <p className="text-gray-500 mb-6">
+          Esta acción eliminará al usuario permanentemente de la escuela. No podrás deshacer este cambio.
+        </p>
+
+        <div className="flex justify-end gap-3">
+          <button onClick={() => setCloseModal(0)}
+            className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+          >
+            Cancelar
+          </button>
+          <button 
+            className="px-4 py-2 text-white bg-red-600 hover:bg-red-700 rounded-lg font-medium transition-colors"
+          >
+            Eliminar
+          </button>
+        </div>
+      </div>
+      <UpdateSubdirector
+        closeModal={closeModal}
+      />
+    </div>
+  )
+}
+
+export default DeleteSchoolSubdirector

@@ -5,17 +5,25 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { FingerprintPattern, GraduationCap, Info, Mail, Phone, Trash2, User } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import DeleteSchoolSubdirector from "./DeleteSchoolSubdirector";
 
 interface UpdateSubirectorType {
   users: SchoolInfoWithUsers['userSchool'];
   sections: SchoolInfoWithUsers['sections']
   schoolCode: SchoolInfo['code']
+  closeModal: number
 }
 
-function UpdateSubdirector({ users, schoolCode }: UpdateSubirectorType) {
+function UpdateSubdirector({ users, schoolCode, closeModal }: UpdateSubirectorType) {
   const queryClient = useQueryClient();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [succesMsg, setSuccesMsg] = useState(false);
+  const [modalDeleteUser, setModalDeleteUser] = useState<number>()
+
+  console.log(closeModal)
+  if(closeModal){
+    setModalDeleteUser(closeModal)
+  }
 
   const subdirectores = users.filter(item => item.user.roleId === 8);
 
@@ -185,11 +193,17 @@ function UpdateSubdirector({ users, schoolCode }: UpdateSubirectorType) {
                               <GraduationCap className="size-4"/>
                               Secciones
                             </button>
-                            <button className="flex items-center gap-1 text-xs font-normal bg-red-100 p-1 text-red-800 rounded-lg text-center">
+                            <button onClick={() => setModalDeleteUser(subdirector.userId)} className="flex items-center gap-1 text-xs font-normal bg-red-100 p-1 text-red-800 rounded-lg text-center">
                               <Trash2 className="size-4"/>
                               Eliminar
                             </button>
                         </div>
+                          {modalDeleteUser === subdirector.userId && 
+                            <DeleteSchoolSubdirector
+                              userId={Number(subdirector.userId)}
+                              schoolCode={Number(schoolCode)}
+                            />
+                          } 
                       </div>
                     ))
                 ):(

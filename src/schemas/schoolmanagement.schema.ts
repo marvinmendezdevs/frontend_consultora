@@ -24,3 +24,8 @@ export const UpdateSubdirectorPayload = z.object ({
   dui: z.string(),
   telephone: z.string()
 });
+
+export const DeleteUserSchool = z.object({
+  userId: z.number(),
+  schoolCode: z.number()
+});
