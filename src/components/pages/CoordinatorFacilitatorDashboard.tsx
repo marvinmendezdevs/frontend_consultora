@@ -4,7 +4,7 @@ import type { DashboardFacilitatorType } from "@/types/schoolmanagement.type";
 import { useQuery } from "@tanstack/react-query"
 import { GraduationCap, NotebookText } from "lucide-react";
 import Pagination from "../ui/Pagination";
-import { cleanSearchTerm } from "@/utils/index.utils";
+import { cleanSearchTerm, formatDate, getHours } from "@/utils/index.utils";
 
 type sectionPerFacilitatorType = {
   id: number;
@@ -16,6 +16,7 @@ type sectionPerFacilitatorType = {
   roleId: number;
   createdAt: string;
   verified: boolean;
+  lastLogin?: string;
   _count: {
     teacherSectionAccess: number;
   };
@@ -134,6 +135,7 @@ function CoordinatorFacilitatorDashboard() {
             <thead className="bg-gray-200 border-b-2">
               <tr>
                 <th className="p-2">Nombre</th>
+                <th>Últ. conexión</th>
                 <th className="p-2 max-w-14">Secciones</th>
               </tr>
             </thead>
@@ -143,6 +145,12 @@ function CoordinatorFacilitatorDashboard() {
                 <tr key={facilitator.id}>
                   <td className="p-2">
                     {facilitator.name}
+                  </td>
+                  <td>
+                    <p className="text-xs text-gray-700 text-center">
+                      {formatDate(facilitator.lastLogin as string)}, {" "}
+                      {getHours(facilitator.lastLogin as string)}
+                    </p>
                   </td>
                   <td className="text-center p-2">
                     {facilitator._count.teacherSectionAccess}
