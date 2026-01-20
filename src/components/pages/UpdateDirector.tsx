@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import type { UpdateDirectorPayload, DirectorForm, SchoolInfoWithUsers } from "@/types/schoolmanagement.type";
 import { upsertSchoolUser } from "@/services/school.services";
 import { validDUI } from "@/utils/index.utils";
-import UserSchoolSecctionsDirector from "./UserSchoolSecctionsDirector";
+import AddSectionsTeacher from "./AddSectionsTeacher";
 
 type UpdateDirectorType = {
   users: SchoolInfoWithUsers['userSchool'];
@@ -146,7 +146,7 @@ function UpdateDirector({ users, sections }: UpdateDirectorType) {
             </div>
           </form>
 
-          <UserSchoolSecctionsDirector
+          <AddSectionsTeacher
             sections={sections}
             user={director?.user}
           />

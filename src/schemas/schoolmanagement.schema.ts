@@ -27,5 +27,10 @@ export const UpdateSubdirectorPayload = z.object ({
 
 export const DeleteUserSchool = z.object({
   userId: z.number(),
-  schoolCode: z.number()
+  schoolCode: z.string()
 });
+
+export const selectSeccionTeacher = z.object({
+  subject: z.string(),
+  sectionId: z.number() 
+})

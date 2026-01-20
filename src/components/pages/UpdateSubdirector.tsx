@@ -6,26 +6,23 @@ import { FingerprintPattern, GraduationCap, Info, Mail, Phone, Trash2, User } fr
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import DeleteSchoolSubdirector from "./DeleteSchoolSubdirector";
+import ModalAddSectionsSubdirector from "./ModalAddSectionsSubdirector";
 
 interface UpdateSubirectorType {
   users: SchoolInfoWithUsers['userSchool'];
   sections: SchoolInfoWithUsers['sections']
   schoolCode: SchoolInfo['code']
-  closeModal: number
 }
 
-function UpdateSubdirector({ users, schoolCode, closeModal }: UpdateSubirectorType) {
+function UpdateSubdirector({ users, sections, schoolCode, }: UpdateSubirectorType) {
   const queryClient = useQueryClient();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [succesMsg, setSuccesMsg] = useState(false);
   const [modalDeleteUser, setModalDeleteUser] = useState<number>()
-
-  console.log(closeModal)
-  if(closeModal){
-    setModalDeleteUser(closeModal)
-  }
+  const [modalAddSections, setModalAddSections] = useState<number>()
 
   const subdirectores = users.filter(item => item.user.roleId === 8);
+  const subdirectorInfo = users.find(item => item.userId === modalAddSections)
 
   const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm<SubdirectorForm>({
     mode: "onChange",
@@ -141,6 +138,7 @@ function UpdateSubdirector({ users, schoolCode, closeModal }: UpdateSubirectorTy
                 Ya existe un registro con estos datos. Verifica la información o intenta con otros valores.
               </p>
             )}
+              {succesMsg === true && <p className="font-normal text-sm bg-green-100 rounded-sm p-2 text-green-700 my-2">Subdirector agregado correctamente...</p>}
               {subdirectores.length === 2 ? (
                 <div className="text-sm font-normal flex items-center gap-1 w-full bg-blue-100 rounded-sm p-2 text-blue-700">
                   <Info className="size-5"/>
@@ -157,7 +155,6 @@ function UpdateSubdirector({ users, schoolCode, closeModal }: UpdateSubirectorTy
                   </button>
                 </div>  
               )}
-              {succesMsg === true && <p className="font-normal text-sm bg-green-100 rounded-sm p-2 text-green-700 my-2">Subdirector agregado correctamente...</p>}
           </form>
         </div>
         <div className="bg-white rounded-lg p-5">
@@ -189,25 +186,33 @@ function UpdateSubdirector({ users, schoolCode, closeModal }: UpdateSubirectorTy
                             </div>
                         </div>
                         <div className="flex justify-between md:flex-col w-full md:w-auto gap-2 mt-2 md:mt-0">
-                            <button className="flex items-center gap-1 text-xs font-normal bg-indigo-100 p-1 text-indigo-800 rounded-lg text-center">
+                            <button onClick={() => setModalAddSections(subdirector.userId)} className="flex items-center justify-center gap-1 text-xs font-normal bg-indigo-100 p-1 text-indigo-800 rounded-lg text-center active:scale-95 transition-all cursor-pointer">
                               <GraduationCap className="size-4"/>
                               Secciones
                             </button>
-                            <button onClick={() => setModalDeleteUser(subdirector.userId)} className="flex items-center gap-1 text-xs font-normal bg-red-100 p-1 text-red-800 rounded-lg text-center">
+                            <button onClick={() => setModalDeleteUser(subdirector.userId)} className="flex items-center justify-center gap-1 text-xs font-normal bg-red-100 p-1 text-red-800 rounded-lg text-center active:scale-95 transition-all cursor-pointer">
                               <Trash2 className="size-4"/>
                               Eliminar
                             </button>
                         </div>
                           {modalDeleteUser === subdirector.userId && 
                             <DeleteSchoolSubdirector
-                              userId={Number(subdirector.userId)}
-                              schoolCode={Number(schoolCode)}
+                              userId={subdirector.userId}
+                              schoolCode={schoolCode}
+                              onClose={() => setModalDeleteUser(0)}
                             />
                           } 
+                          {modalAddSections === subdirector.userId &&
+                            <ModalAddSectionsSubdirector
+                              user={subdirectorInfo?.user} 
+                              sections={sections}
+                              onClose={() => setModalAddSections(0)}
+                            />
+                          }
                       </div>
                     ))
                 ):(
-                  <p className="font-normal text-sm bg-blue-100 rounded-sm p-1 text-blue-700 mt-2">No hay subdirectores agregados.</p>
+                  <p className="font-normal text-sm bg-blue-100 rounded-sm p-2 text-blue-700 mt-2">No hay subdirectores agregados.</p>
                 )}
               </div>
         </div>

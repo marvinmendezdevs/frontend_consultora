@@ -1,4 +1,4 @@
-import type { DeleteUserSchool, SchoolByMonitorSchema, SubdirectorForm, UpdateSubdirectorPayload } from "@/schemas/schoolmanagement.schema";
+import type { DeleteUserSchool, SchoolByMonitorSchema, selectSeccionTeacher, SubdirectorForm, UpdateSubdirectorPayload } from "@/schemas/schoolmanagement.schema";
 import z from "zod";
 import type { UserType } from "./auth.types";
 
@@ -6,6 +6,8 @@ export type SchoolByMonitorType = z.infer<typeof SchoolByMonitorSchema>
 export type SubdirectorForm = z.infer<typeof SubdirectorForm>
 export type UpdateSubdirectorPayload = z.infer<typeof UpdateSubdirectorPayload>
 export type DeleteUserSchool = z.infer<typeof DeleteUserSchool>
+export type selectSeccionTeacher = z.infer<typeof selectSeccionTeacher>
+
 
 export type SchoolAnswers = Record<string, string | null | undefined>;
 export type DistrictInfo = {
@@ -37,6 +39,7 @@ export type SchoolInfoWithUsers = SchoolInfo & {
     schoolCode: string;
     createdAt: string;
     user: UserType;
+    SectionItem: object
   }>;
 };
 
