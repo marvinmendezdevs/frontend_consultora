@@ -49,7 +49,7 @@ function FeedBackView() {
                     Volver
                 </button>
             </div>
-            <p className="text-sm text-gray-600 mb-3"><span className="font-bold">Propósito:</span> dar a conocer al docente el informe de la sesión observada, resaltando fortalizas y presentando áreas de mejora para el fortalecimiento de su práctica</p>
+            <p className="text-sm text-gray-600 mb-3"><span className="font-bold">Propósito:</span> dar a conocer al docente el informe de la sesión observada, resaltando fortalezas y presentando áreas de mejora para el fortalecimiento de su práctica</p>
 
             <div className="bg-gray-100 border border-gray-300 p-3 rounded">
                 <p className="font-bold">Fecha: <span className="font-normal">{formatDate(data.createdAt)}, {getHours(data.createdAt)}</span></p>

@@ -8,8 +8,12 @@ export const getMetricsTutorship = async () => {
     return data;
 }
 
-export const getTeachersByTutors = async (search: string) => {
-    const { data } = await api.get(`/tutorship/tutor/teachers?search=${search}`);
+export const getTeachersByTutors = async (search: string = "") => {
+    const { data } = await api.get(`/tutorship/tutor/teachers`, {
+        params: {
+            search
+        }
+    });
     return data;
 }
 

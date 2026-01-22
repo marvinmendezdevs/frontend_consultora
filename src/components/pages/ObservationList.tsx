@@ -97,36 +97,38 @@ function ObservationList({ teacherDui }: ObservationListType) {
                     </p>
                   </div>
 
-                  {observation.utilitiesLink && (
-                    <div className="mt-2 flex items-center gap-3">
-                      <a
-                        href={observation.utilitiesLink.video}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-indigo-500  text-xs flex items-center gap-1 p-1 rounded-lg hover:bg-indigo-100"
-                      >
-                        <Clapperboard size={12} /> Ver grabación
-                      </a>
-                      
-                      <a
-                        href={observation.utilitiesLink.transcription}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-indigo-500  text-xs flex items-center gap-1 p-1 rounded-lg hover:bg-indigo-100"
-                      >
-                        <FileText size={12} /> Ver transcripción
-                      </a>
-
-                      {observation.coachingSession && (
-                        <Link
+                  <div className="mt-2 flex items-center gap-3">
+                    {observation.utilitiesLink && (
+                      <>
+                        <a
+                          href={observation.utilitiesLink.video}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="text-indigo-500  text-xs flex items-center gap-1 p-1 rounded-lg hover:bg-indigo-100"
-                          to={`/retroalimentacion/${observation.coachingSession.id}/view`}
                         >
-                          <MessageSquareDot size={12} /> Ver retroalimentación
-                        </Link>
-                      )}
-                    </div>
-                  )}
+                          <Clapperboard size={12} /> Ver grabación
+                        </a>
+
+                        <a
+                          href={observation.utilitiesLink.transcription}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-indigo-500  text-xs flex items-center gap-1 p-1 rounded-lg hover:bg-indigo-100"
+                        >
+                          <FileText size={12} /> Ver transcripción
+                        </a>
+                      </>
+                    )}
+
+                    {observation.coachingSession && (
+                      <Link
+                        className="text-indigo-500  text-xs flex items-center gap-1 p-1 rounded-lg hover:bg-indigo-100"
+                        to={`/retroalimentacion/${observation.coachingSession.id}/view`}
+                      >
+                        <MessageSquareDot size={12} /> Ver retroalimentación
+                      </Link>
+                    )}
+                  </div>
 
                   <div className="flex gap-3 items-center bg-gray-100 p-2 mt-3 text-indigo-700 text-sm">
                     {observation.coachingSession ? (

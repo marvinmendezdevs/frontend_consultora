@@ -109,9 +109,9 @@ function FeedBackCreate() {
 
                             <div className="my-3 grid gap-1">
                                 <label htmlFor="tracking">Seguimiento al ciclo anterior: </label>
-                                <input className="p-2 border border-gray-200 rounded" type="text" id="tracking" placeholder="Seguimiento al ciclo anterior"
+                                <textarea className="p-2 border border-gray-200 rounded" id="tracking" placeholder="Seguimiento al ciclo anterior"
                                     {...register('tracking')}
-                                />
+                                ></textarea>
                             </div>
                         </fieldset>
                     )}
@@ -140,7 +140,7 @@ function FeedBackCreate() {
 
                     <div className="flex items-center gap-2 justify-end">
                         <Link className="bg-red-500 text-white px-3 py-2 rounded" to="/tutoria">Cancelar</Link>
-                        <button type="submit" className="bg-indigo-500 text-white px-3 py-2 rounded">Guardar</button>
+                        <button type="submit" className="bg-indigo-500 text-white px-3 py-2 rounded disabled:opacity-50 disabled:cursor-not-allowed" disabled={mutation.isPending}>Guardar</button>
                     </div>
                 </form>
             )}

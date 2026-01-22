@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FunnelX, Search } from "lucide-react";
 import SearchTutor from "./SearchTutor";
+import TutorTeacherList from "./TutorTeacherList";
 
 function TutorshipTutor() {
     const [search, setSearch] = useState('');
@@ -40,12 +41,22 @@ function TutorshipTutor() {
 
             </div>
             {!search.length ? (
-                <p className="my-5 text-sm text-center">Realice una búsqueda de docente por DUI</p>
+                <p className="my-5 text-sm text-center p-2 bg-indigo-50 border border-indigo-600 text-indigo-600">Realice una búsqueda de docente por DUI</p>
             ) : (
                 <SearchTutor
                     search={search}
                 />
             )}
+
+            <div className="border-t border-gray-300 my-3"></div>
+
+            <h2 className="text-2xl font-black text-indigo-600">Lista de docentes asignados</h2>
+
+            <TutorTeacherList
+                setSearch={ setSearch }
+                setReadOnly={ setReadOnly }
+                setSearchTerm={ setSearchTerm }
+            />
         </>
     )
 }

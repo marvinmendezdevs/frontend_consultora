@@ -17,15 +17,15 @@ export default class Env {
 }
 
 export const cleanSearchTerm = (str: string) => {
-  if (!str || typeof str !== 'string') return '';
+    if (!str || typeof str !== 'string') return '';
 
-  return str
-    .trim() // 1. Quita espacios al inicio y final
-    .toLowerCase() // 2. Todo a minúsculas
-    .normalize("NFD") // 3. Descompone caracteres (ej: 'ñ' -> 'n' + '~')
-    .replace(/[\u0300-\u036f]/g, "") // 4. Elimina los diacríticos (acentos, tildes)
-    .replace(/[^a-z0-9\s]/g, "") // 5. (Opcional) Elimina todo lo que NO sea letra, número o espacio
-    .replace(/\s+/g, " "); // 6. Convierte múltiples espacios en uno solo ("hola   mundo" -> "hola mundo")
+    return str
+        .trim() // 1. Quita espacios al inicio y final
+        .toLowerCase() // 2. Todo a minúsculas
+        .normalize("NFD") // 3. Descompone caracteres (ej: 'ñ' -> 'n' + '~')
+        .replace(/[\u0300-\u036f]/g, "") // 4. Elimina los diacríticos (acentos, tildes)
+        .replace(/[^a-z0-9\s]/g, "") // 5. (Opcional) Elimina todo lo que NO sea letra, número o espacio
+        .replace(/\s+/g, " "); // 6. Convierte múltiples espacios en uno solo ("hola   mundo" -> "hola mundo")
 };
 
 export const getCategoryFromScore = (score: number): Category => {
@@ -75,18 +75,23 @@ export function percentYes(rows: SchoolAnswers[], key: string): number {
 }
 
 export const validDUI = (value: string): boolean => {
-  if (!/^\d{9}$/.test(value)) return false;
+    if (!/^\d{9}$/.test(value)) return false;
 
-  const body = value.slice(0, 8);
-  const dv = Number(value[8]);
+    const body = value.slice(0, 8);
+    const dv = Number(value[8]);
 
-  let sum = 0;
-  for (let i = 0; i < 8; i++) {
-    sum += Number(body[i]) * (9 - i);
-  }
+    let sum = 0;
+    for (let i = 0; i < 8; i++) {
+        sum += Number(body[i]) * (9 - i);
+    }
 
-  const expected = (10 - (sum % 10)) % 10;
-  return dv === expected;
+    const expected = (10 - (sum % 10)) % 10;
+    return dv === expected;
 };
+
+export const calculatePercentage = (total: number, access: number) => {
+    if (total === 0) return "0.00";
+    return ((access / total) * 100).toFixed(2);
+}
 
 

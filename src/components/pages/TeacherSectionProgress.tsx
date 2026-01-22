@@ -1,3 +1,4 @@
+import { calculatePercentage } from "@/utils/index.utils";
 import { GraduationCap, NotebookText } from "lucide-react"
 
 type TeacherSectionProgressProps = {
@@ -10,10 +11,6 @@ type TeacherSectionProgressProps = {
 }
 
 function TeacherSectionProgress({ data }: TeacherSectionProgressProps) {
-    const calculatePercentage = (total: number, access: number) => {
-        if (total === 0) return "0.00";
-        return ((access / total) * 100).toFixed(2);
-    }
 
     return (
         <div className="my-3 grid gap-4 md:grid-cols-2">
