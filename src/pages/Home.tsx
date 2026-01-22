@@ -4,6 +4,7 @@ import { Navigate } from "react-router";
 import MonitorDashboard from "@/components/pages/MonitorDashboard";
 import FacilitadoresHome from "./FacilitadoresHome";
 import CoordinatorFacilitatorDashboard from "@/components/pages/CoordinatorFacilitatorDashboard";
+import Docentes from "./Docentes";
 function Home() {
   const { data: user } = useAuth();
 
@@ -16,6 +17,8 @@ function Home() {
   if (user.role.name === 'Facilitador (Gestión Escolar)') return <FacilitadoresHome />
   
   if (user.role.name === 'Coordinador de facilitadores (Gestión escolar)') return <CoordinatorFacilitatorDashboard />
+
+  if(user.role.name === 'Director' || user.role.name === 'Subdirector') return <Docentes/>
 
   return <p>Acceso denegado</p>
 }
