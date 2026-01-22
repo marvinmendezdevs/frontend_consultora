@@ -3,6 +3,7 @@ import useAuth from "@/hooks/useAuth.hooks";
 import { Navigate } from "react-router";
 import MonitorDashboard from "@/components/pages/MonitorDashboard";
 import FacilitadoresHome from "./FacilitadoresHome";
+import Admin from "./Admin";
 function Home() {
   const { data: user } = useAuth();
 
@@ -13,6 +14,8 @@ function Home() {
   if (user.role.name === 'Monitor (Gestión Escolar)') return <MonitorDashboard />
 
   if (user.role.name === 'Facilitador (Gestión Escolar)') return <FacilitadoresHome />
+
+  if (user.role.name === 'Administrador') return <Admin/>
 
   return <p>Acceso denegado</p>
 }

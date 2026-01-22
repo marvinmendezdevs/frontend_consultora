@@ -23,6 +23,7 @@ import RemediationForm from "./components/pages/RemediationForm"
 import BaseFormRemediation from "./components/pages/BaseFormRemediation"
 import FacilitatorTeacherList from "./pages/FacilitatorTeacherList"
 import FacilitadoresHome from "./pages/FacilitadoresHome"
+import Admin from "./pages/Admin"
 
 function Router() {
 
@@ -65,6 +66,10 @@ function Router() {
               <Route element={<FacilitadoresHome />} />
               <Route index element={<Facilitadores />} />
               <Route path=":schoolCode/escuela" element={<FacilitatorTeacherList />} />
+            </Route>
+
+            <Route path="/admin" element={<AppRoleValidator allowedRoles={["Administrador"]} />}>
+              <Route index element={<Admin />} />
             </Route>
           </Route>
         </Route>
