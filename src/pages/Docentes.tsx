@@ -8,7 +8,7 @@ function Docentes() {
 
         if(!user) return <Navigate replace to="/login" />
         if(user.role.name === 'Director') return <Director/>
-        if(user.role.name === 'Director') return <Subdirector/>
+        if(user.role.name === 'Subdirector') return <Subdirector/>
 }
 
 export default Docentes

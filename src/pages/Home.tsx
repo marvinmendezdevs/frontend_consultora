@@ -5,6 +5,7 @@ import MonitorDashboard from "@/components/pages/MonitorDashboard";
 import FacilitadoresHome from "./FacilitadoresHome";
 import CoordinatorFacilitatorDashboard from "@/components/pages/CoordinatorFacilitatorDashboard";
 import Docentes from "./Docentes";
+import TecnicoGestionEscolar from "./TecnicoGestionEscolar";
 function Home() {
   const { data: user } = useAuth();
 
@@ -19,6 +20,8 @@ function Home() {
   if (user.role.name === 'Coordinador de facilitadores (Gestión escolar)') return <CoordinatorFacilitatorDashboard />
 
   if(user.role.name === 'Director' || user.role.name === 'Subdirector') return <Docentes/>
+
+  if(user.role.name === 'Técnico (Gestión Escolar)') return <TecnicoGestionEscolar />
 
   return <p>Acceso denegado</p>
 }

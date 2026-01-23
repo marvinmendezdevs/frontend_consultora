@@ -109,7 +109,7 @@ function FuncionamientoCe() {
             </div>
             <div className="flex flex-col md:flex-row md:col-span-2 w-full gap-5 -mt-6">
                 <div className="flex flex-col w-full">
-                    <label className="text-gray-700 font-semibold">Presentes</label>
+                    <label className="text-gray-700 font-semibold">Asistencia</label>
                     <input type="number" placeholder="Ej. 20" defaultValue={0} min={0}  className="flex flex-col gap-5 p-2 rounded-lg border border-gray-200 text-gray-600 w-full"
                         {...register("teacherAssistance.asisten", { required: "El campo Presentes es obligatorio" })}
                         />
@@ -118,7 +118,7 @@ function FuncionamientoCe() {
                     )}
                 </div>
                 <div className="flex flex-col w-full">
-                    <label className="text-gray-700 font-semibold">No presentes</label>
+                    <label className="text-gray-700 font-semibold">Inasistencia</label>
                     <input id="nopresentes" type="number" placeholder="Ej. 20" defaultValue={0} min={0} className="flex flex-col gap-5 p-2 rounded-lg border border-gray-200 text-gray-600"
                         {...register("teacherAssistance.noAsisten", { required: "El campo No Presentes es obligatorio" })}
                         />
