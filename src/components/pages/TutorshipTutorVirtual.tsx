@@ -285,30 +285,36 @@ function TutorshipTutorVirtual({
                                 <List className="size-3 font-bold text-black cursor-pointer" />
                               </button>
                             </div>
-                            { event.recording && event.transcription && event.attendance && event.quizz && (
+                            <div className="flex gap-2 justify-center items-center">
+                              {event.recording &&(
                                 <div className="flex gap-2 justify-center items-center">
-                                    <div className="flex gap-2 justify-center items-center">
-                                        <a href={event.recording} target="_blank" rel="noreferrer">
-                                            <Video className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
-                                        </a>
-                                    </div>
-                                    <div className="flex gap-2 justify-center items-center">
-                                        <a href={event.transcription} target="_blank" rel="noreferrer">
-                                        <Captions className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
-                                        </a>
-                                    </div>
-                                    <div className="flex gap-2 justify-center items-center">
-                                        <a href={event.attendance} target="_blank" rel="noreferrer">
-                                        <UserCheck className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
-                                        </a>
-                                    </div>
-                                    <div className="flex gap-2 justify-center items-center">
-                                        <a href={event.quizz} target="_blank" rel="noreferrer">
-                                        <PencilLine className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
-                                        </a>
-                                    </div>
+                                    <a href={event.recording} target="_blank" rel="noreferrer">
+                                        <Video className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
+                                    </a>
                                 </div>
-                            )}
+                              )}
+                              {event.transcription &&(
+                                <div className="flex gap-2 justify-center items-center">
+                                    <a href={event.transcription} target="_blank" rel="noreferrer">
+                                    <Captions className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
+                                    </a>
+                                </div>
+                              )}
+                              {event.attendance && (
+                                <div className="flex gap-2 justify-center items-center">
+                                    <a href={event.attendance} target="_blank" rel="noreferrer">
+                                    <UserCheck className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
+                                    </a>
+                                </div>
+                              )}
+                              {event.quizz && (
+                                <div className="flex gap-2 justify-center items-center">
+                                    <a href={event.quizz} target="_blank" rel="noreferrer">
+                                    <PencilLine className="size-4 cursor-pointer text-gray-500 hover:text-gray-700" />
+                                    </a>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         )
                       );
@@ -334,7 +340,6 @@ function TutorshipTutorVirtual({
                     type="text"
                     className="text-sm text-gray-900 truncate border border-gray-200 my-2 rounded-lg p-2 w-full"
                     {...register("recording", {
-                      required: true,
                       pattern: { value: /https:/, message: "Formato inválido" },
                     })}
                     placeholder="https://drive.google.com/file/d/abc123"
@@ -352,15 +357,11 @@ function TutorshipTutorVirtual({
                     type="text"
                     className="text-sm text-gray-900 truncate border border-gray-200 my-2 rounded-lg p-2 w-full"
                     {...register("transcription", {
-                      required: true,
                       pattern: { value: /https:/, message: "Formato inválido" },
                     })}
                     placeholder="https://drive.google.com/file/d/abc123"
                   />
                 </label>
-                {errors.transcription && (
-                  <p className="text-red-600 text-xs mt-1">El campo Transcripción es obligatorio</p>
-                )}
               </div>
 
               <div>
@@ -369,14 +370,10 @@ function TutorshipTutorVirtual({
                   type="text"
                   className="text-sm text-gray-900 truncate border border-gray-200 my-2 rounded-lg p-2 w-full"
                   {...register("attendance", {
-                    required: true,
                     pattern: { value: /https:/, message: "Formato inválido" },
                   })}
                   placeholder="https://drive.google.com/file/d/abc123"
                 />
-                {errors.attendance && (
-                  <p className="text-red-600 text-xs mt-1">El campo Asistencia es obligatorio</p>
-                )}
               </div>
 
               <div>
@@ -385,12 +382,10 @@ function TutorshipTutorVirtual({
                   type="text"
                   className="text-sm text-gray-900 truncate border border-gray-200 my-2 rounded-lg p-2 w-full"
                   {...register("quizz", {
-                    required: true,
                     pattern: { value: /https:/, message: "Formato inválido" },
                   })}
                   placeholder="https://drive.google.com/file/d/abc123"
                 />
-                {errors.quizz && <p className="text-red-600 text-xs mt-1">El campo Quiz es obligatorio</p>}
               </div>
 
               <button
