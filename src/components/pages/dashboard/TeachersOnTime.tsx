@@ -1,8 +1,102 @@
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import type { DashboardRecord, teacherDataProps } from './Teacher';
 
-function TeachersOnTime() {
-  return (
-    <div>TeachersOnTime</div>
-  )
+ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+);
+
+type GroupedRow = {
+    [date: string]: DashboardRecord[]
+}
+
+function TeachersOnTime({ teacherData }: teacherDataProps) {
+    // Procesar los datos de los docentes para agrupar por fechas:
+    const rowByDate = teacherData.reduce<GroupedRow>((acc, item) => {
+        if (!acc[item.dateReported]) {
+            acc[item.dateReported] = [];
+        }
+
+        acc[item.dateReported].push(item);
+
+        return acc;
+    }, {});
+
+    const labelsToChart = Object.keys(rowByDate);
+    const dataToChart: Record<string, number[]> = {
+        total: [],
+        demo: [],
+        access: [],
+    }
+
+    for(const label of labelsToChart){
+        console.log(rowByDate[label])
+        console.log("####");
+        
+        dataToChart.total.push(rowByDate[label][0].total)
+        dataToChart.demo.push(rowByDate[label][1].demo)
+        dataToChart.access.push(rowByDate[label][2].access)
+    }
+
+    const options = {
+        type: "time",
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top' as const,
+            },
+        },
+    };
+
+    const labels = Object.keys(rowByDate);
+
+    const data = {
+        labels,
+        datasets: [
+            {
+                label: 'Total de docentes',
+                data: dataToChart.total,
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            },
+            {
+                label: 'Docentes demo',
+                data: dataToChart.demo,
+                borderColor: 'rgb(53, 162, 235)',
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            },
+            {
+                label: 'Docentes con acceso',
+                data: dataToChart.access,
+                borderColor: 'rgba(25, 40, 145,0.6)',
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            },
+        ],
+    };
+
+
+    return (
+        <div className="bg-white p-5 border border-gray-200 rounded-lg my-5">
+            <h2 className="font-bold text-slate-600 uppercase">Histórico de docentes</h2>
+
+            <Line options={options} data={data} />
+        </div>
+    )
 }
 
 export default TeachersOnTime

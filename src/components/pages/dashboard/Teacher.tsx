@@ -18,15 +18,16 @@ ChartJS.register(
     Legend
 );
 
-type DashboardRecord = {
+export type DashboardRecord = {
     id: number,
     total: number,
     demo: number,
     access: number,
-    group: number
+    group: number,
+    dateReported: string
 }
 
-type teacherDataProps = {
+export type teacherDataProps = {
     teacherData: DashboardRecord[]
 }
 
@@ -89,9 +90,6 @@ function Teacher({ teacherData }: teacherDataProps) {
             },
         },
     };
-
-    console.log(teacherData)
-    console.log(teacherData.map(item => item.total))
 
     const data = {
         // ESTOS SON TUS ITEMS (Eje X)

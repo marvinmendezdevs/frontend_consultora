@@ -1,5 +1,6 @@
 import StatCard from "@/components/pages/dashboard/StatCard"
 import Teacher from "@/components/pages/dashboard/Teacher"
+import TeachersOnTime from "@/components/pages/dashboard/TeachersOnTime";
 import { getTeacherInfo } from "@/services/dashboard.services";
 import { useQuery } from "@tanstack/react-query"
 import { Key, LayoutDashboard, ShieldCheck, Users } from "lucide-react"
@@ -62,6 +63,7 @@ function Dahsboard() {
     }
 
     const teacherInfo = datosParaMostrar.filter(item => item.type === "Docentes");
+    const teacherOnTimeInfo = data.filter(item => item.type === "Docentes");
 
     // Obtener metricas ahora si
     const totalTeacher = (category: "total" | "demo" | "access") => teacherInfo.reduce((acc, item) => {
@@ -103,6 +105,8 @@ function Dahsboard() {
                 </div>
 
                 <Teacher teacherData={teacherInfo} />
+
+                <TeachersOnTime teacherData={teacherOnTimeInfo} />
             </div>
         </div>
     )
