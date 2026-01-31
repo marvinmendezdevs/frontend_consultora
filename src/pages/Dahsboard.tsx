@@ -69,7 +69,7 @@ function Dahsboard() {
     }, 0);
 
     return (
-        <div className="bg-linear-to-br from-indigo-50 via-white to-indigo-50 h-screen">
+        <div className="bg-linear-to-br from-indigo-50 via-white to-indigo-50 min-h-screen">
 
             <div className="w-11/12 max-w-7xl mx-auto py-3">
                 <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">

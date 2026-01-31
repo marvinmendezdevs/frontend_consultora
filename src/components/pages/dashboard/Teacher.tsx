@@ -122,7 +122,7 @@ function Teacher({ teacherData }: teacherDataProps) {
             <h2 className="font-bold text-slate-600 uppercase">Información de docentes</h2>
 
             <div className="grid gap-5 mt-3 items-center lg:grid-cols-2">
-                <div>
+                <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead>
                             <tr className="bg-slate-50/50">
@@ -156,7 +156,7 @@ function Teacher({ teacherData }: teacherDataProps) {
                         </tbody>
                     </table>
                 </div>
-                <div>
+                <div className="overflow-x-auto">
                     <Bar options={options} data={data} />
                 </div>
             </div>
