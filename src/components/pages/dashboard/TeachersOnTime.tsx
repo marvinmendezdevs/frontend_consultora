@@ -44,18 +44,15 @@ function TeachersOnTime({ teacherData }: teacherDataProps) {
         access: [],
     }
 
-    for(const label of labelsToChart){
-        console.log(rowByDate[label])
-        console.log("####");
-        
+    for(const label of labelsToChart){        
         dataToChart.total.push(rowByDate[label][0].total)
         dataToChart.demo.push(rowByDate[label][1].demo)
         dataToChart.access.push(rowByDate[label][2].access)
     }
 
     const options = {
-        type: "time",
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
             legend: {
                 position: 'top' as const,
@@ -94,7 +91,9 @@ function TeachersOnTime({ teacherData }: teacherDataProps) {
         <div className="bg-white p-5 border border-gray-200 rounded-lg my-5">
             <h2 className="font-bold text-slate-600 uppercase">Histórico de docentes</h2>
 
-            <Line options={options} data={data} />
+            <div className="min-h-[300px]">
+                <Line options={options} data={data} />
+            </div>
         </div>
     )
 }
