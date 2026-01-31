@@ -23,6 +23,7 @@ import RemediationForm from "./components/pages/RemediationForm"
 import BaseFormRemediation from "./components/pages/BaseFormRemediation"
 import FacilitatorTeacherList from "./pages/FacilitatorTeacherList"
 import FacilitadoresHome from "./pages/FacilitadoresHome"
+import Dahsboard from "./pages/Dahsboard"
 
 function Router() {
 
@@ -30,6 +31,7 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={<Dahsboard />} />
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/" element={<Home />} />
