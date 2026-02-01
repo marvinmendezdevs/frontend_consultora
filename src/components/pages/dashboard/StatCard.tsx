@@ -1,3 +1,4 @@
+import { formatNumber } from "@/utils/index.utils";
 import type { LucideIcon } from "lucide-react";
 
 type StatCardProps = {
@@ -22,7 +23,7 @@ const StatCard = ({ title, value, icon: Icon, color }: StatCardProps) => {
       <div>
         <p className="text-sm font-medium text-slate-500 uppercase tracking-wide">{title}</p>
         <div className="flex items-baseline gap-2 mt-1">
-          <h4 className="text-2xl font-bold text-slate-900">{value}</h4>
+          <h4 className="text-2xl font-bold text-slate-900">{formatNumber(value)}</h4>
         </div>
       </div>
     </div>

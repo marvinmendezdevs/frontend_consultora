@@ -94,4 +94,8 @@ export const calculatePercentage = (total: number, access: number) => {
     return ((access / total) * 100).toFixed(2);
 }
 
-
+export const formatNumber = (quantity: string | number) => {
+    return Intl.NumberFormat("es-SV", {
+        style: "decimal"
+    }).format(Number(quantity));
+}

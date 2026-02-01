@@ -24,6 +24,9 @@ import BaseFormRemediation from "./components/pages/BaseFormRemediation"
 import FacilitatorTeacherList from "./pages/FacilitatorTeacherList"
 import FacilitadoresHome from "./pages/FacilitadoresHome"
 import Dahsboard from "./pages/Dahsboard"
+import TeacherDashboard from "./components/pages/dashboard/TeacherDashboard"
+import SectionDashboard from "./components/pages/dashboard/SectionDashboard"
+import StudentDashboard from "./components/pages/dashboard/StudentDashboard"
 
 function Router() {
 
@@ -31,7 +34,11 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dahsboard />} />
+        <Route element={<Dahsboard />}>
+          <Route path="dashboard" element={<TeacherDashboard />} />
+          <Route path="dashboard/secciones" element={<SectionDashboard />} />
+          <Route path="dashboard/estudiantes" element={<StudentDashboard />} />
+        </Route>
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/" element={<Home />} />

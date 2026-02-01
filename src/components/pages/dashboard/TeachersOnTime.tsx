@@ -9,7 +9,8 @@ import {
     Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import type { DashboardRecord, teacherDataProps } from './Teacher';
+import type { teacherDataProps } from './GeneralInformation';
+import type { DashboardRecord } from '@/types/dashboard.types';
 
 ChartJS.register(
     CategoryScale,
@@ -25,7 +26,7 @@ type GroupedRow = {
     [date: string]: DashboardRecord[]
 }
 
-function TeachersOnTime({ teacherData }: teacherDataProps) {
+function TeachersOnTime({ teacherData, title }: teacherDataProps) {
     // Procesar los datos de los docentes para agrupar por fechas:
     const rowByDate = teacherData.reduce<GroupedRow>((acc, item) => {
         if (!acc[item.dateReported]) {
@@ -89,7 +90,7 @@ function TeachersOnTime({ teacherData }: teacherDataProps) {
 
     return (
         <div className="bg-white p-5 border border-gray-200 rounded-lg my-5">
-            <h2 className="font-bold text-slate-600 uppercase">Histórico de docentes</h2>
+            <h2 className="font-bold text-slate-600 uppercase">{title}</h2>
 
             <div className="min-h-[300px]">
                 <Line options={options} data={data} />

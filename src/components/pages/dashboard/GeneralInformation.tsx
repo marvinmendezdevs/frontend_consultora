@@ -1,3 +1,5 @@
+import type { DashboardRecord } from '@/types/dashboard.types';
+import { formatNumber } from '@/utils/index.utils';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -18,21 +20,15 @@ ChartJS.register(
     Legend
 );
 
-export type DashboardRecord = {
-    id: number,
-    total: number,
-    demo: number,
-    access: number,
-    group: number,
-    dateReported: string
-}
+
 
 export type teacherDataProps = {
     teacherData: DashboardRecord[]
+    title: string
 }
 
 
-function Teacher({ teacherData }: teacherDataProps) {
+function GeneralInformation({ teacherData, title }: teacherDataProps) {
 
     const options = {
         responsive: true,
@@ -84,7 +80,7 @@ function Teacher({ teacherData }: teacherDataProps) {
                         size: 11,
                         weight: 400 // Número directo
                     },
-                    stepSize: 5,
+                    stepSize: 200,
                     padding: 10,
                 },
             },
@@ -117,7 +113,7 @@ function Teacher({ teacherData }: teacherDataProps) {
 
     return (
         <div className="bg-white p-5 border border-gray-200 rounded-lg my-5">
-            <h2 className="font-bold text-slate-600 uppercase">Información de docentes</h2>
+            <h2 className="font-bold text-slate-600 uppercase">{title}</h2>
 
             <div className="grid gap-5 mt-3 items-center lg:grid-cols-2">
                 <div className="overflow-x-auto">
@@ -137,16 +133,16 @@ function Teacher({ teacherData }: teacherDataProps) {
                                         Grupo {row.group}
                                     </td>
                                     <td className="px-6 py-4 text-center">
-                                        <span className="text-slate-600 font-medium">{row.total}</span>
+                                        <span className="text-slate-600 font-medium">{formatNumber(row.total)}</span>
                                     </td>
                                     <td className="px-6 py-4 text-center">
                                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
-                                            {row.access}
+                                            {formatNumber(row.access)}
                                         </span>
                                     </td>
                                     <td className="px-6 py-4 text-center">
                                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">
-                                            {row.demo}
+                                            {formatNumber(row.demo)}
                                         </span>
                                     </td>
                                 </tr>
@@ -162,4 +158,4 @@ function Teacher({ teacherData }: teacherDataProps) {
     )
 }
 
-export default Teacher
+export default GeneralInformation

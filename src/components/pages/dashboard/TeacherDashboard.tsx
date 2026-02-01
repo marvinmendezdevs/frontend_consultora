@@ -1,0 +1,76 @@
+import StatCard from "@/components/pages/dashboard/StatCard"
+import Teacher from "@/components/pages/dashboard/GeneralInformation"
+import TeachersOnTime from "@/components/pages/dashboard/TeachersOnTime";
+import useDashboard from "@/hooks/useDashboard.hooks";
+import { getTeacherInfo } from "@/services/dashboard.services";
+import { useQuery } from "@tanstack/react-query"
+import { Key, ShieldCheck, Users } from "lucide-react"
+
+type DashboardRecord = {
+    id: number,
+    total: number,
+    demo: number,
+    access: number,
+    type: string,
+    dateReported: string,
+    group: number
+}
+
+function TeacherDashboard() {
+    const { isLoading, isError, data } = useQuery<DashboardRecord[]>({
+        queryKey: ["dashboard"],
+        queryFn: getTeacherInfo,
+        retry: false,
+        refetchOnWindowFocus: false
+    });
+
+    const {totalInfo, onTimeInfo, calculateTotals} = useDashboard(data || [], "Docentes")
+
+    if (isLoading) {
+        return (
+            <p className="text-xs text-slate-800 flex justify-center items-center gap-1 p-3">
+                <span className="h-5 w-5 block rounded-full border-2 border-gray-300 border-t-indigo-600 animate-spin"></span>
+                Cargando información...
+            </p>
+        );
+    }
+
+    if (isError || !data) {
+        return (
+            <p className="text-xs text-red-600 text-center p-3">
+                ¡Error inespertado! contacte con soporte.
+            </p>
+        );
+    }
+
+    return (
+        <div>
+            <div className="grid grid-cols-1 mt-5 md:grid-cols-3 gap-6">
+                <StatCard
+                    title="Total Docentes"
+                    value={calculateTotals("total")}
+                    icon={Users}
+                    color="blue"
+                />
+                <StatCard
+                    title="Docentes con Acceso"
+                    value={calculateTotals("access")}
+                    icon={Key}
+                    color="emerald"
+                />
+                <StatCard
+                    title="Docentes Demo"
+                    value={calculateTotals("demo")}
+                    icon={ShieldCheck}
+                    color="rose"
+                />
+            </div>
+
+            <Teacher title="Información de Docentes" teacherData={totalInfo} />
+
+            <TeachersOnTime title="Histórico de Docentes" teacherData={onTimeInfo} />
+        </div>
+    )
+}
+
+export default TeacherDashboard
