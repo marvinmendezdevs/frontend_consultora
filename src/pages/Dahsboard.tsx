@@ -1,5 +1,6 @@
 import { useNavbar } from "@/stores/index.store";
 import { LayoutDashboard, Menu, X } from "lucide-react";
+import { useEffect } from "react";
 import { Link, Outlet, useLocation } from "react-router";
 
 function Dahsboard() {
@@ -7,6 +8,10 @@ function Dahsboard() {
     const toggleNavBar = useNavbar(state => state.setIsOpen)
 
     const { pathname } = useLocation();
+
+    useEffect(() => {
+        toggleNavBar()
+    }, [pathname, toggleNavBar])
 
     return (
         <div className="bg-linear-to-br from-indigo-50 via-white to-indigo-50 h-screen overflow-hidden flex flex-col lg:grid lg:grid-cols-[200px_1fr]">
