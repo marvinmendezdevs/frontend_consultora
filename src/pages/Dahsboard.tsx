@@ -10,8 +10,10 @@ function Dahsboard() {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        toggleNavBar()
-    }, [pathname, toggleNavBar])
+        if(isOpenNavBar){
+            toggleNavBar()
+        }
+    }, [pathname, toggleNavBar, isOpenNavBar])
 
     return (
         <div className="bg-linear-to-br from-indigo-50 via-white to-indigo-50 h-screen overflow-hidden flex flex-col lg:grid lg:grid-cols-[200px_1fr]">
