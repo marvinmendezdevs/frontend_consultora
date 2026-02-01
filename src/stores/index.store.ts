@@ -3,6 +3,7 @@ import { create } from "zustand";
 type UseNavbarType = {
     isOpen: boolean
     setIsOpen: () => void
+    setClose: () => void
 }
 
 type UseActiveNavType = {
@@ -12,7 +13,8 @@ type UseActiveNavType = {
 
 export const useNavbar = create<UseNavbarType>((set) => ({
     isOpen: false,
-    setIsOpen: () => set(state => ({ isOpen: !state.isOpen }))
+    setIsOpen: () => set(state => ({ isOpen: !state.isOpen })),
+    setClose: () => set({ isOpen: false }),
 }));
 
 export const useActiveNavItem = create<UseActiveNavType>((set) => ({
