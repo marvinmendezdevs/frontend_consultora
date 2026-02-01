@@ -30,7 +30,7 @@ export default function useDashboard(data: DashboardRecord[], type: string): Use
 
     const totalInfo = datosParaMostrar.filter(item => item.type === type);
     const onTimeInfo = data.filter(item => item.type === type).sort((a, b) =>
-        new Date(b.dateReported).getTime() - new Date(a.dateReported).getTime()
+        new Date(a.dateReported).getTime() - new Date(b.dateReported).getTime()
     );
 
     const calculateTotals = (category: "total" | "demo" | "access") => totalInfo.reduce((acc, item) => {
