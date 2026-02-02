@@ -59,7 +59,7 @@ function SectionDashboard() {
 
             <GeneralInformation title="Información de secciones" teacherData={totalInfo} />
 
-            <TeachersOnTime title="Hisórico de secciones" teacherData={onTimeInfo} />
+            <TeachersOnTime title="Histórico de secciones" teacherData={onTimeInfo} />
         </div>
     )
 }

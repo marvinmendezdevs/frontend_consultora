@@ -27,6 +27,8 @@ type GroupedRow = {
 }
 
 function TeachersOnTime({ teacherData, title }: teacherDataProps) {
+    const [, , type] = title.split(" ");
+
     // Procesar los datos de los docentes para agrupar por fechas:
     const rowByDate = teacherData.reduce<GroupedRow>((acc, item) => {
         if (!acc[item.dateReported]) {
@@ -67,19 +69,19 @@ function TeachersOnTime({ teacherData, title }: teacherDataProps) {
         labels,
         datasets: [
             {
-                label: 'Total de docentes',
+                label: `TOTAL ${type.toUpperCase()}`,
                 data: dataToChart.total,
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             },
             {
-                label: 'Docentes demo',
+                label: `${type.toUpperCase()} CON DEMO`,
                 data: dataToChart.demo,
                 borderColor: 'rgb(53, 162, 235)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',
             },
             {
-                label: 'Docentes con acceso',
+                label: `${type.toUpperCase()} CON ACCESO`,
                 data: dataToChart.access,
                 borderColor: 'rgba(25, 40, 145,0.6)',
                 backgroundColor: 'rgba(53, 162, 235, 0.5)',

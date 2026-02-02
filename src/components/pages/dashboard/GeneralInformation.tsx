@@ -30,6 +30,8 @@ export type teacherDataProps = {
 
 function GeneralInformation({ teacherData, title }: teacherDataProps) {
 
+    const [, , type] = title.split(" ");
+
     const options = {
         responsive: true,
         maintainAspectRatio: false,
@@ -94,17 +96,17 @@ function GeneralInformation({ teacherData, title }: teacherDataProps) {
         // AQUÍ ESTÁN LAS 3 BARRAS POR CADA ITEM
         datasets: [
             {
-                label: 'Total docentes', // Barra 1
+                label: `TOTAL ${type.toUpperCase()}`, // Barra 1
                 data: teacherData.map(item => item.total),       // Valores para cada escuela
                 backgroundColor: 'rgba(53, 162, 235, 0.7)', // Azul
             },
             {
-                label: 'Docentes con acceso', // Barra 2
+                label: `${type.toUpperCase()} CON ACCESO`, // Barra 2
                 data: teacherData.map(item => item.access),       // Valores para cada escuela
                 backgroundColor: 'rgba(75, 192, 192, 0.7)', // Verde azulado
             },
             {
-                label: 'Docentes demo',      // Barra 3
+                label: `${type.toUpperCase()} DEMO`,      // Barra 3
                 data: teacherData.map(item => item.demo),        // Valores para cada escuela
                 backgroundColor: 'rgba(255, 99, 132, 0.7)', // Rojo/Rosado
             },
