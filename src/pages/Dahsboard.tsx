@@ -46,7 +46,7 @@ function Dahsboard() {
                                 <LayoutDashboard size={20} />
                                 <span className="text-sm font-semibold uppercase tracking-wider">Sistema de Gestión</span>
                             </div>
-                            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Informe de progresos</h1>
+                            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Métricas acumuladas</h1>
                         </div>
                     </header>
                     <Outlet />

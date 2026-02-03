@@ -27,8 +27,15 @@ export type teacherDataProps = {
     title: string
 }
 
+/* type GeneralInformationType = teacherDataProps & {
+    filterByDate: (date: string) => void
+} */
+
 
 function GeneralInformation({ teacherData, title }: teacherDataProps) {
+    const currentDate = teacherData[0].dateReported;
+
+    console.log(currentDate)
 
     const [, , type] = title.split(" ");
 
@@ -115,7 +122,11 @@ function GeneralInformation({ teacherData, title }: teacherDataProps) {
 
     return (
         <div className="bg-white p-5 border border-gray-200 rounded-lg my-5">
-            <h2 className="font-bold text-slate-600 uppercase">{title}</h2>
+            <div>
+                <h2 className="font-bold text-slate-600 uppercase">{title}</h2>
+
+                {/* <input type="date" value={currentDate} onChange={e => filterByDate(e.target.value)} /> */}
+            </div>
 
             <div className="grid gap-5 mt-3 items-center lg:grid-cols-2">
                 <div className="overflow-x-auto">

@@ -4,6 +4,7 @@ type UseDashboardTypeReturn = {
     totalInfo: DashboardRecord[],
     onTimeInfo: DashboardRecord[],
     calculateTotals: (category: "total" | "demo" | "access") => number,
+    filterByDate: (date: string) => void
 }
 
 export default function useDashboard(data: DashboardRecord[], type: string): UseDashboardTypeReturn {
@@ -37,9 +38,14 @@ export default function useDashboard(data: DashboardRecord[], type: string): Use
         return item[category] + acc
     }, 0);
 
+    const filterByDate = (date: string) => {
+        console.log(date)
+    }
+
     return {
         totalInfo,
         onTimeInfo,
         calculateTotals,
+        filterByDate
     }
 }

@@ -24,7 +24,7 @@ function TeacherDashboard() {
         refetchOnWindowFocus: false
     });
 
-    const {totalInfo, onTimeInfo, calculateTotals} = useDashboard(data || [], "Docentes")
+    const {totalInfo, onTimeInfo, calculateTotals } = useDashboard(data || [], "Docentes")
 
     if (isLoading) {
         return (
