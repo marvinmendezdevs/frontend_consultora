@@ -176,7 +176,6 @@ function TutorshipTutorVirtual({
         </p>
     );
 
-    console.log(data)
   if(data) return (
     <div className="w-full max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-4 gap-2">
