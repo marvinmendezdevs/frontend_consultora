@@ -31,6 +31,9 @@ function Dahsboard() {
                 <Link className={`${pathname === "/dashboard/estudiantes" ? "bg-linear-to-br from-white via-indigo-50 to-white text-indigo-600" : ""} p-2 rounded-lg font-semibold`} to={"/dashboard/estudiantes"}>
                     Estudiantes
                 </Link>
+                <Link className={`${pathname === "/dashboard/tutoria" ? "bg-linear-to-br from-white via-indigo-50 to-white text-indigo-600" : ""} p-2 rounded-lg font-semibold`} to={"/dashboard/tutoria"}>
+                    Tutoría y formación
+                </Link>
             </aside>
 
             <div className="flex justify-end p-3 mb-3 lg:hidden">

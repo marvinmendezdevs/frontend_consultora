@@ -3,6 +3,17 @@ import type { SectionType, TeacherType } from "@/types/index.types";
 import type { CoachingSessionType, CoachingSessionCreateType, DiagnosticMutationBody, MultimediaType } from "@/types/intruments.types";
 import { LinksSchema } from "@/schemas/instruments.schema";
 
+export const getDataPublic = async (startDate: string, endDate: string) => {
+    const { data } = await api.get("/tutorship/dashboard", {
+        params: {
+            startDate,
+            endDate
+        }
+    });
+
+    return data;
+}
+
 export const getMetricsTutorship = async () => {
     const { data } = await api.get('/tutorship');
     return data;

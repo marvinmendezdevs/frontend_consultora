@@ -47,10 +47,14 @@ function TeachersOnTime({ teacherData, title }: teacherDataProps) {
         access: [],
     }
 
-    for(const label of labelsToChart){        
-        dataToChart.total.push(rowByDate[label][0].total)
-        dataToChart.demo.push(rowByDate[label][1].demo)
-        dataToChart.access.push(rowByDate[label][2].access)
+    for(const label of labelsToChart){
+        const total = rowByDate[label].reduce((acc,item) => acc + item.total, 0);
+        const access = rowByDate[label].reduce((acc,item) => acc + item.access, 0);
+        const demo = rowByDate[label].reduce((acc,item) => acc + item.demo, 0);
+        
+        dataToChart.total.push(total)
+        dataToChart.demo.push(demo)
+        dataToChart.access.push(access)
     }
 
     const options = {
