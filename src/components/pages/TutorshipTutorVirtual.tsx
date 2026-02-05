@@ -176,7 +176,6 @@ function TutorshipTutorVirtual({
         </p>
     );
 
-    console.log(data)
   if(data) return (
     <div className="w-full max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-4 gap-2">
@@ -252,14 +251,12 @@ function TutorshipTutorVirtual({
                   >
                     {data.map(event => {
                       const [actualyHour] = event.hour.split(":");
-                      const formattedDay = (d: Date) =>
-                    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+                      const formattedDay = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
-                    const targetDate = formattedDay(day);
+                      const targetDate = formattedDay(day);
+                      const eventDate = String(event.date).slice(0, 10); 
 
-                    const eventDate = formattedDay(new Date(event.date));
-
-                    const sameDay = eventDate === targetDate;
+                      const sameDay = eventDate === targetDate;
 
                       return (
                         sameDay &&
