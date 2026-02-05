@@ -38,7 +38,7 @@ function InicioSemana(date: string | number | Date, weekStartsOnMonday = true) {
   let diff;
 
   if (weekStartsOnMonday) {
-    diff = (day === 0 ? -6 : 1) - day;
+    diff = (day === 0 ? -7 : 1) - day;
   } else {
     diff = -day;
   }
@@ -61,7 +61,7 @@ function formatHour(hour: number | string) {
 }
 
 function formatWeekRange(start: Date) {
-  const end = addDays(start, 6);
+  const end = addDays(start, 7);
   const baseOpts: Intl.DateTimeFormatOptions = { day: "numeric", month: "short" };
 
   const startStr = start.toLocaleDateString("es-ES", baseOpts);
@@ -175,7 +175,7 @@ function TutorshipTutorVirtual({
             ¡Error inespertado! contacte con soporte.
         </p>
     );
-
+    
   if(data) return (
     <div className="w-full max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-4 gap-2">
@@ -251,12 +251,12 @@ function TutorshipTutorVirtual({
                   >
                     {data.map(event => {
                       const [actualyHour] = event.hour.split(":");
-                      const formattedDay = (d: Date) =>
-                    `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+                    const formattedDay = (d: Date) =>
+                      `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
                     const targetDate = formattedDay(day);
 
-                    const eventDate = formattedDay(new Date(event.date));
+                    const eventDate = String(event.date).slice(0, 10); 
 
                     const sameDay = eventDate === targetDate;
 
