@@ -11,16 +11,17 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
 ChartJS.register(
     CategoryScale,
     LinearScale,
     BarElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    ChartDataLabels,
 );
-
-
 
 export type teacherDataProps = {
     teacherData: DashboardRecord[]
@@ -33,68 +34,100 @@ export type teacherDataProps = {
 
 
 function GeneralInformation({ teacherData, title }: teacherDataProps) {
-    const currentDate = teacherData[0].dateReported;
-
-    console.log(currentDate)
+    // const currentDate = teacherData[0].dateReported;
 
     const [, , type] = title.split(" ");
+    const sumTotal = teacherData.map(item => item.total);
+    const sumAcess = teacherData.map(item => item.access);
+    const sumDemo = teacherData.map(item => item.demo);
 
     const options = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: true,
-            },
-            tooltip: {
-                backgroundColor: '#1e293b',
-                padding: 12,
-                borderRadius: 8,
-                titleFont: {
-                    size: 14,
-                    weight: 700 // Número directo para evitar error de tipo 'string'
-                },
-                bodyFont: {
-                    size: 13,
-                    weight: 400 // Número directo
-                },
-                displayColors: true,
-                boxPadding: 6,
-            },
+  responsive: true,
+  maintainAspectRatio: false,
+  // 1. Evita que las barras toquen los bordes laterales
+  layout: {
+    padding: {
+      top: 35,    // Espacio extra arriba para los números
+      right: 20,
+      left: 10,
+      bottom: 10
+    }
+  },
+  // 2. Ajuste de ancho de barras para que se vean agrupadas
+  barPercentage: 0.8,      // Ancho de la barra individual
+  categoryPercentage: 0.6, // Espacio del grupo (ajusta para separar más los grupos)
+  
+  plugins: {
+    datalabels: {
+      anchor: 'end' as const,
+      align: 'top' as const,
+      offset: 8,           // Separación entre el número y la barra
+      color: '#1e293b',    // Color oscuro para legibilidad
+      font: {
+        size: 13,
+        weight: 700 as const,
+      },
+      // Formateador por si quieres añadir separador de miles
+      formatter: (value: number) => value.toLocaleString(),
+    },
+    legend: {
+      display: true,
+      position: 'top' as const,
+      labels: {
+        usePointStyle: true,
+        pointStyle: 'rect', // Hace que el icono sea un cuadrado como en la imagen
+        padding: 25,
+        color: '#64748b',
+        font: {
+          size: 12,
+          weight: 500 as const
+        }
+      },
+    },
+    tooltip: {
+      enabled: true,
+      backgroundColor: '#1e293b',
+      padding: 12,
+      borderRadius: 8,
+    },
+  },
+  scales: {
+    x: {
+      grid: {
+        display: false, // Sin líneas verticales
+      },
+      border: {
+        display: false, // Quita la línea del eje
+      },
+      ticks: {
+        color: '#94a3b8',
+        font: {
+          size: 12,
         },
-        scales: {
-            x: {
-                grid: {
-                    display: false,
-                },
-                ticks: {
-                    color: '#64748b',
-                    font: {
-                        size: 11,
-                        weight: 500 // Número directo
-                    },
-                },
-            },
-            y: {
-                grid: {
-                    color: '#f1f5f9',
-                    drawTicks: false,
-                },
-                border: {
-                    display: false,
-                },
-                ticks: {
-                    color: '#94a3b8',
-                    font: {
-                        size: 11,
-                        weight: 400 // Número directo
-                    },
-                    stepSize: 200,
-                    padding: 10,
-                },
-            },
+      },
+    },
+    y: {
+      // 3. LA CLAVE: Añade un margen porcentual automático al tope del eje
+      grace: '15%', 
+      beginAtZero: true,
+      border: {
+        display: false,
+      },
+      grid: {
+        color: '#f1f5f9',
+        drawTicks: false,
+      },
+      ticks: {
+        color: '#94a3b8',
+        stepSize: 600,
+        padding: 15,
+        font: {
+          size: 11,
         },
-    };
+      },
+    },
+  },
+};
 
     const data = {
         // ESTOS SON TUS ITEMS (Eje X)
@@ -104,17 +137,17 @@ function GeneralInformation({ teacherData, title }: teacherDataProps) {
         datasets: [
             {
                 label: `TOTAL ${type.toUpperCase()}`, // Barra 1
-                data: teacherData.map(item => item.total),       // Valores para cada escuela
+                data: sumTotal,       // Valores para cada escuela
                 backgroundColor: 'rgba(53, 162, 235, 0.7)', // Azul
             },
             {
                 label: `${type.toUpperCase()} CON ACCESO`, // Barra 2
-                data: teacherData.map(item => item.access),       // Valores para cada escuela
+                data: sumAcess,       // Valores para cada escuela
                 backgroundColor: 'rgba(75, 192, 192, 0.7)', // Verde azulado
             },
             {
                 label: `${type.toUpperCase()} DEMO`,      // Barra 3
-                data: teacherData.map(item => item.demo),        // Valores para cada escuela
+                data: sumDemo,        // Valores para cada escuela
                 backgroundColor: 'rgba(255, 99, 132, 0.7)', // Rojo/Rosado
             },
         ],
@@ -161,9 +194,30 @@ function GeneralInformation({ teacherData, title }: teacherDataProps) {
                                 </tr>
                             ))}
                         </tbody>
+
+                        <tfoot className="border-t-2">
+                            <tr className="hover:bg-slate-50/80 transition-colors group">
+                                <td className="px-6 py-4 font-semibold text-slate-900">
+                                    Total
+                                </td>
+                                <td className="px-6 py-4 text-center">
+                                    <span className="text-slate-600 font-medium">{formatNumber(sumTotal.reduce((acc, item) => acc + item, 0))}</span>
+                                </td>
+                                <td className="px-6 py-4 text-center">
+                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
+                                        {formatNumber(sumAcess.reduce((acc, item) => acc + item, 0))}
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4 text-center">
+                                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">
+                                        {formatNumber(sumDemo.reduce((acc, item) => acc + item, 0))}
+                                    </span>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto h-full">
                     <Bar options={options} data={data} />
                 </div>
             </div>
