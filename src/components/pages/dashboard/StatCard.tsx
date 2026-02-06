@@ -12,7 +12,9 @@ const StatCard = ({ title, value, icon: Icon, color }: StatCardProps) => {
   const colorMap: Record<string, string> = {
     blue: 'bg-blue-50 text-blue-600',
     emerald: 'bg-emerald-50 text-emerald-600',
-    rose: 'bg-rose-50 text-rose-600'
+    rose: 'bg-rose-50 text-rose-600',
+    red: 'bg-red-50 text-red-600',
+    green: 'bg-green-50 text-green-600',
   };
 
   return (
