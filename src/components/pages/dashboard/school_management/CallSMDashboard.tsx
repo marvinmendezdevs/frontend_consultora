@@ -37,15 +37,23 @@ function CallSMDashboard() {
     }
 
     return (
-        <div>
-            <div className="bg-white w-42 p-2 flex gap-3 justify-center rounded-lg text-xs ms-auto border border-gray-200 mb-3">
-                <button className={`${page === "directores" ? "bg-gray-100 font-bold" : ""} cursor-pointer px-2 p-1 rounded-lg`} onClick={() => setPage("directores")}>Directores</button>
-                <button className={`${page === "docentes" ? "bg-gray-100 font-bold" : ""} cursor-pointer px-"docentes" p-1 rounded-lg`} onClick={() => setPage("docentes")}>Docentes</button>
+        <>
+            <div className="flex items-center justify-between mb-5">
+                <div>
+                    <p className="text-xl font-black">Registro de llamadas</p>
+                    <p className="text-xs text-gray-600">Centro escolares del grupo 1, fase 2</p>
+                </div>
+                <div className="bg-white w-42 p-2 flex gap-3 justify-center rounded-lg text-xs border border-gray-200 mb-3">
+                    <button className={`${page === "directores" ? "bg-gray-100 font-bold" : ""} cursor-pointer px-2 p-1 rounded-lg`} onClick={() => setPage("directores")}>Directores</button>
+                    <button className={`${page === "docentes" ? "bg-gray-100 font-bold" : ""} cursor-pointer px-"docentes" p-1 rounded-lg`} onClick={() => setPage("docentes")}>Docentes</button>
+                </div>
             </div>
-            <h2 className="text-xl font-black">Métricas de llamadas</h2>
+
+
+            <h2 className="text-xl font-black text-gray-600">Métricas de llamadas</h2>
             <div className="mt-3 grid gap-3 md:grid-cols-2">
                 <StatCard
-                    title="Centros escolares"
+                    title={page.toUpperCase()}
                     value={currentData?.total ?? 0}
                     color="emerald"
                     icon={School}
@@ -73,8 +81,8 @@ function CallSMDashboard() {
                 />
             </div>
 
-            <div className="p-10 mt-3 bg-white shadow rounded-lg">
-                <h2 className="text-xl font-black mb-3">Detalle de las llamadas</h2>
+            <div className="p-10 pt-3 mt-3 bg-white shadow rounded-lg">
+                <h2 className="text-xl font-black mb-3 text-gray-600">Detalle de las llamadas</h2>
                 <table className="w-full rounded-lg overflow-hidden">
                     <thead className="bg-indigo-50 border-b-2 border-indigo-600">
                         <tr>
@@ -86,7 +94,7 @@ function CallSMDashboard() {
                     <tbody className="divide-y divide-gray-200">
                         {Object.keys(currentData?.detalles ?? []).map((key, index) => (
                             <tr key={index}>
-                                <td className="p-1 text-center">{index+1}</td>
+                                <td className="p-1 text-center">{index + 1}</td>
                                 <td className="p-1">{key}</td>
                                 <td className="p-1 text-center">
                                     <span className="inline-block bg-indigo-100 text-indigo-600 p-1 rounded-full px-2 text-xs">
@@ -98,7 +106,7 @@ function CallSMDashboard() {
                     </tbody>
                 </table>
             </div>
-        </div>
+        </>
     )
 }
 
