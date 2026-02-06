@@ -28,6 +28,7 @@ import TeacherDashboard from "./components/pages/dashboard/TeacherDashboard"
 import SectionDashboard from "./components/pages/dashboard/SectionDashboard"
 import StudentDashboard from "./components/pages/dashboard/StudentDashboard"
 import TutorshipDashboard from "./components/pages/dashboard/TutorshipDashboard"
+import SchoolManagementDashboard from "./components/pages/dashboard/school_management/SchoolManagementDashboard"
 
 function Router() {
 
@@ -40,6 +41,7 @@ function Router() {
           <Route path="dashboard/secciones" element={<SectionDashboard />} />
           <Route path="dashboard/estudiantes" element={<StudentDashboard />} />
           <Route path="dashboard/tutoria" element={<TutorshipDashboard />} />
+          <Route path="dashboard/gestion-escolar" element={<SchoolManagementDashboard />} />
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
