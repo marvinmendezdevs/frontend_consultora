@@ -126,3 +126,23 @@ export type SectionItem = {
 };
 
 export type DashboardFacilitatorType = z.infer<typeof DashboardFacilitatorSchema>
+
+type DetailsPublicDashboard = {
+  total: number;
+  detalles: Record<string, number>,
+  llamadas: {
+    respondidas: number;
+    no_respondidas: number;
+  }
+}
+
+export type DashboardPublicGS = {
+    id: number,
+    dateReported: string,
+    type: string,
+    json: {
+        docentes: DetailsPublicDashboard,
+        directores: DetailsPublicDashboard
+    },
+    category: string
+}
